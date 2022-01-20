@@ -7,6 +7,7 @@ public class CameraMotion : MonoBehaviour
     
     public float speed = 20f;
     public float scrollSpeed = 10f;
+    private Vector3 dragOrigin;
 
     private Camera zoomCamera;
     // Start is called before the first frame update
@@ -53,6 +54,20 @@ public class CameraMotion : MonoBehaviour
 
         transform.position = pos;
     
+    }
+
+    public void PanCamera()
+    {
+        if(Input.GetMouseButtonDown(0))
+        {
+            dragOrigin = zoomCamera.ScreenToWorldPoint(Input.mousePosition);
+        }
+
+        if(Input.GetMouseButton(0))
+        {
+            Vector3 difference = dragOrigin - zoomCamera.ScreenToWorldPoint(Input.mousePosition);
+            zoomCamera.transform.position += difference;
+        }
     }
 
     
