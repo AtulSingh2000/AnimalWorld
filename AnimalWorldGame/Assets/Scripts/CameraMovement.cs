@@ -39,7 +39,7 @@ private void Awake()
     void Update()
     {
 
-        //PanCamera();
+        PanCamera();
 
   
         ZoomInOut();
@@ -88,18 +88,18 @@ private void Awake()
         {
             Vector3 difference = dragOrigin - zoomCamera.ScreenToWorldPoint(Input.mousePosition);
             zoomCamera.transform.position = ClampCamera(zoomCamera.transform.position + difference);
-           // zoomCamera.transform.position += difference;
+            zoomCamera.transform.position += difference;
         }
     }
 
     public void ZoomInOut()
     {
-      float FOV = zoomCamera.orthographicSize;
+      float FOV = zoomCamera.fieldOfView;
       FOV -=  Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
 
       FOV = Mathf.Clamp(FOV, minFOV, maxFOV);
-      zoomCamera.orthographicSize = FOV;
-     // zoomCamera.transform.position = ClampCamera(zoomCamera.transform.position);
+      zoomCamera.fieldOfView = FOV;
+      //zoomCamera.transform.position = ClampCamera(zoomCamera.transform.position);
     }
 
     private Vector3 ClampCamera(Vector3 targetPosition)
@@ -114,9 +114,9 @@ private void Awake()
 
         float newX = Mathf.Clamp(targetPosition.x, minX, maxX);
         float newZ = Mathf.Clamp(targetPosition.z, minZ, maxZ);
-        float newY = Mathf.Clamp(targetPosition.y, 55f, 130f);
+        //float newY = Mathf.Clamp(targetPosition.y, 55f, 130f);
 
-        return new Vector3(newX, newY, newZ);
+        return new Vector3(newX, targetPosition.y, newZ);
 
     }
 
