@@ -71,8 +71,8 @@ private void Awake()
             pos.z -= speed *Time.deltaTime;
         }
 
-        pos.x = Mathf.Clamp(pos.x, -120f, 90f);
-        pos.z = Mathf.Clamp(pos.z, 90f, 180f);
+        pos.x = Mathf.Clamp(pos.x, -70f, 120f);
+        pos.z = Mathf.Clamp(pos.z, 30f, 180f);
         transform.position = pos; 
     
     }
