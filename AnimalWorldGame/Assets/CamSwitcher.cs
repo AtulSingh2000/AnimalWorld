@@ -10,6 +10,8 @@ public class CamSwitcher : MonoBehaviour
    private bool overworldCam = true;
    
    public CinemachineVirtualCamera OverworldCam;
+
+   public GameObject player;
    
    
     public float scrollSpeed = 10f;
@@ -38,12 +40,17 @@ public class CamSwitcher : MonoBehaviour
            if(overworldCam)
            {
                animator.Play("ThirdPerson");
+               player.GetComponent<ThirdPersonMovement>().enabled = true;
+               player.GetComponent<Animator>().enabled = true;
            }
            
            else
            {
                animator.Play("Overworld");
                ZoomInOut();
+               player.GetComponent<ThirdPersonMovement>().enabled = false;
+               player.GetComponent<Animator>().enabled = false;
+
            }
            overworldCam = !overworldCam;
        }
