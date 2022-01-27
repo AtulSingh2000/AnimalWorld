@@ -42,7 +42,7 @@ private void Awake()
         PanCamera();
 
   
-        ZoomInOut();
+       // ZoomInOut();
 
        Vector3 pos = transform.position;
        
