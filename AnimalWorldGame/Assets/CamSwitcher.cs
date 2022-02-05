@@ -8,8 +8,10 @@ public class CamSwitcher : MonoBehaviour
    
    private Animator animator;
    private bool overworldCam = true;
+   //private bool thirdPersonCam = true;
    
    public CinemachineVirtualCamera OverworldCam;
+  
 
    public GameObject player;
    
@@ -39,20 +41,26 @@ public class CamSwitcher : MonoBehaviour
        {
            if(overworldCam)
            {
-               animator.Play("ThirdPerson");
-               player.GetComponent<ThirdPersonMovement>().enabled = true;
-               player.GetComponent<Animator>().enabled = true;
+               animator.Play("Overworld");
+               OverworldCam.transform.position = new Vector3(51f, 51.25f, 78.6f);
+               player.GetComponent<ThirdPersonMovement>().enabled = false;
+               player.GetComponent<Animator>().enabled = false;
+               
+               Cursor.visible = true;
+               
            }
            
            else
            {
-               animator.Play("Overworld");
+               animator.Play("ThirdPerson");
                ZoomInOut();
-               player.GetComponent<ThirdPersonMovement>().enabled = false;
-               player.GetComponent<Animator>().enabled = false;
+               player.GetComponent<ThirdPersonMovement>().enabled = true;
+               player.GetComponent<Animator>().enabled = true;
+               Cursor.visible = false;
 
            }
            overworldCam = !overworldCam;
+           //thirdPersonCam = !thirdPersonCam;
        }
     }
 
