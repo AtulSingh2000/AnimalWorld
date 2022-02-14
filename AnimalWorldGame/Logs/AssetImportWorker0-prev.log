@@ -15,11 +15,11 @@ C:/AnimalWorld/AnimalWorld/AnimalWorldGame
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-53859
+51905
 Successfully changed project path to: C:/AnimalWorld/AnimalWorld/AnimalWorldGame
 C:/AnimalWorld/AnimalWorld/AnimalWorldGame
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 80.00 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 101.74 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.19f1 (68f137dc9bbe)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.19f1/Editor/Data/Resources/UnitySubsystems
@@ -35,75 +35,75 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.19f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.19f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.19f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56684
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56064
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.19f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.19f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.002076 seconds.
+Registered in 0.002152 seconds.
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 81.09 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 98.52 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.931 seconds
+- Completed reload, in  0.947 seconds
 Domain Reload Profiling:
-	ReloadAssembly (931ms)
+	ReloadAssembly (947ms)
 		BeginReloadAssembly (42ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (363ms)
+		EndReloadAssembly (380ms)
 			LoadAssemblies (40ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (117ms)
+			SetupTypeCache (116ms)
 			ReleaseScriptCaches (0ms)
 			RebuildScriptCaches (23ms)
-			SetupLoadedEditorAssemblies (173ms)
+			SetupLoadedEditorAssemblies (190ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (4ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (81ms)
-				BeforeProcessingInitializeOnLoad (9ms)
-				ProcessInitializeOnLoadAttributes (58ms)
-				ProcessInitializeOnLoadMethodAttributes (20ms)
+				RefreshPlugins (99ms)
+				BeforeProcessingInitializeOnLoad (10ms)
+				ProcessInitializeOnLoadAttributes (57ms)
+				ProcessInitializeOnLoadMethodAttributes (19ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.003185 seconds.
+Registered in 0.003404 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 83.18 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 105.44 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.955 seconds
+- Completed reload, in  0.967 seconds
 Domain Reload Profiling:
-	ReloadAssembly (955ms)
-		BeginReloadAssembly (116ms)
+	ReloadAssembly (968ms)
+		BeginReloadAssembly (117ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (3ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (17ms)
-		EndReloadAssembly (788ms)
+			CreateAndSetChildDomain (18ms)
+		EndReloadAssembly (797ms)
 			LoadAssemblies (70ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (255ms)
+			SetupTypeCache (245ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (43ms)
-			SetupLoadedEditorAssemblies (326ms)
+			RebuildScriptCaches (42ms)
+			SetupLoadedEditorAssemblies (347ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (4ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (83ms)
+				RefreshPlugins (106ms)
 				BeforeProcessingInitializeOnLoad (69ms)
-				ProcessInitializeOnLoadAttributes (161ms)
+				ProcessInitializeOnLoadAttributes (159ms)
 				ProcessInitializeOnLoadMethodAttributes (3ms)
 				AfterProcessingInitializeOnLoad (6ms)
 				EditorAssembliesLoaded (0ms)
@@ -112,15 +112,15 @@ Domain Reload Profiling:
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
-Refreshing native plugins compatible for Editor in 1.18 ms, found 2 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Refreshing native plugins compatible for Editor in 1.61 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2908 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 137.2 MB.
-System memory in use after: 137.3 MB.
+Unloading 2914 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 143.9 MB.
+System memory in use after: 144.1 MB.
 
-Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 3349.
-Total: 3.695100 ms (FindLiveObjects: 0.303400 ms CreateObjectMapping: 0.064100 ms MarkObjects: 3.233400 ms  DeleteObjects: 0.093200 ms)
+Unloading 19 unused Assets to reduce memory usage. Loaded Objects now: 3356.
+Total: 3.531500 ms (FindLiveObjects: 0.335600 ms CreateObjectMapping: 0.079000 ms MarkObjects: 3.025700 ms  DeleteObjects: 0.090100 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
@@ -134,57 +134,138 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  path: Assets/NewImport
-  artifactKey: Guid(4be1dba1666e27a4390d065b772b74b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/NewImport using Guid(4be1dba1666e27a4390d065b772b74b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6f66a245091296a8ea44325722681fee') in 0.009978 seconds 
-  Import took 0.015566 seconds .
+  path: Assets/Imports/PolygonFarm/Materials/New Material.mat
+  artifactKey: Guid(c14a8d5d408d31441b4bf49490b69d25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Imports/PolygonFarm/Materials/New Material.mat using Guid(c14a8d5d408d31441b4bf49490b69d25) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4795b3330ca465e1e479680bdf4951bd') in 0.180413 seconds 
+  Import took 0.185689 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000166 seconds.
+  path: Assets/Imports/PolygonFarm/Materials/New Material 1.mat
+  artifactKey: Guid(a4c2293526edc974eb432fb16f33b1e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Imports/PolygonFarm/Materials/New Material 1.mat using Guid(a4c2293526edc974eb432fb16f33b1e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3ecc435d083f04a6b46553d1e1f9b9de') in 0.016073 seconds 
+  Import took 0.020391 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 152.558472 seconds.
+  path: Assets/Imports/PolygonFarm/Materials/New Material 1.mat
+  artifactKey: Guid(a4c2293526edc974eb432fb16f33b1e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Imports/PolygonFarm/Materials/New Material 1.mat using Guid(a4c2293526edc974eb432fb16f33b1e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '14f7deaf96012add2d1c9f33b3dbc333') in 0.011870 seconds 
+  Import took 0.017577 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 258.556648 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/MeshesRebaked
+  artifactKey: Guid(f345b3f920ee3be49b73046f9d97c8db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/MeshesRebaked using Guid(f345b3f920ee3be49b73046f9d97c8db) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8a015ebfc7cdc5c6c2ffef0b9b945998') in 0.007501 seconds 
+  Import took 0.012721 seconds .
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.004190 seconds.
+Registered in 0.003884 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.84 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 2.04 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.865 seconds
+- Completed reload, in  0.959 seconds
 Domain Reload Profiling:
-	ReloadAssembly (865ms)
-		BeginReloadAssembly (102ms)
+	ReloadAssembly (959ms)
+		BeginReloadAssembly (121ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (3ms)
+			DisableScriptedObjects (5ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (32ms)
-		EndReloadAssembly (708ms)
-			LoadAssemblies (72ms)
+			CreateAndSetChildDomain (41ms)
+		EndReloadAssembly (779ms)
+			LoadAssemblies (76ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (256ms)
+			SetupTypeCache (273ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (36ms)
-			SetupLoadedEditorAssemblies (244ms)
+			RebuildScriptCaches (39ms)
+			SetupLoadedEditorAssemblies (264ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (5ms)
 				SetLoadedEditorAssemblies (0ms)
 				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (73ms)
-				ProcessInitializeOnLoadAttributes (154ms)
-				ProcessInitializeOnLoadMethodAttributes (3ms)
+				BeforeProcessingInitializeOnLoad (80ms)
+				ProcessInitializeOnLoadAttributes (166ms)
+				ProcessInitializeOnLoadMethodAttributes (5ms)
 				AfterProcessingInitializeOnLoad (6ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (11ms)
+			AwakeInstancesAfterBackupRestoration (16ms)
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.71 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 1.81 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2786 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 134.4 MB.
-System memory in use after: 134.5 MB.
+Unloading 2784 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 140.2 MB.
+System memory in use after: 140.4 MB.
 
-Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 3355.
-Total: 3.757900 ms (FindLiveObjects: 0.351100 ms CreateObjectMapping: 0.077200 ms MarkObjects: 3.234400 ms  DeleteObjects: 0.093900 ms)
+Unloading 14 unused Assets to reduce memory usage. Loaded Objects now: 3436.
+Total: 4.231000 ms (FindLiveObjects: 0.602500 ms CreateObjectMapping: 0.070800 ms MarkObjects: 3.524900 ms  DeleteObjects: 0.030600 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.004349 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 1.81 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.953 seconds
+Domain Reload Profiling:
+	ReloadAssembly (953ms)
+		BeginReloadAssembly (104ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (39ms)
+		EndReloadAssembly (790ms)
+			LoadAssemblies (76ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (278ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (40ms)
+			SetupLoadedEditorAssemblies (266ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (5ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (2ms)
+				BeforeProcessingInitializeOnLoad (79ms)
+				ProcessInitializeOnLoadAttributes (168ms)
+				ProcessInitializeOnLoadMethodAttributes (5ms)
+				AfterProcessingInitializeOnLoad (6ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (17ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 1.97 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 2784 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 140.3 MB.
+System memory in use after: 140.5 MB.
+
+Unloading 14 unused Assets to reduce memory usage. Loaded Objects now: 3438.
+Total: 3.941300 ms (FindLiveObjects: 0.449700 ms CreateObjectMapping: 0.096600 ms MarkObjects: 3.361500 ms  DeleteObjects: 0.031800 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
@@ -198,155 +279,778 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 1164.870732 seconds.
-  path: Assets/Farm Life
-  artifactKey: Guid(fd32fdcf886e63941b6083378728ed0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Farm Life using Guid(fd32fdcf886e63941b6083378728ed0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '45b3c19683196b2c18301c448017e747') in 0.010250 seconds 
-  Import took 0.016167 seconds .
+  Time since last request: 878.008129 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes
+  artifactKey: Guid(bed56e7f57b833441ba6cb54771e8bdd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes using Guid(bed56e7f57b833441ba6cb54771e8bdd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd978b14f04744251d4ab2e7bd80f70ed') in 0.010533 seconds 
+  Import took 0.016784 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.116474 seconds.
-  path: Assets/Farm Life/ColorGrading.asset
-  artifactKey: Guid(62b12b4613abb6d469d7bf8a19e9da45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Farm Life/ColorGrading.asset using Guid(62b12b4613abb6d469d7bf8a19e9da45) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2d8fc52d16f438c7c6052e9dc45aef43') in 0.036734 seconds 
-  Import took 0.041952 seconds .
+  Time since last request: 0.000148 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_3_WF_Medium.fbx
+  artifactKey: Guid(e5066ab390f232147966907c792bda78) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_3_WF_Medium.fbx using Guid(e5066ab390f232147966907c792bda78) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c971171cd60678b68d0eae15c2b23930') in 0.187119 seconds 
+  Import took 0.192201 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000159 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_6_Low.fbx
+  artifactKey: Guid(d5f01ae7dab23bb428be4e3d34be337a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_6_Low.fbx using Guid(d5f01ae7dab23bb428be4e3d34be337a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6620d113c68df82735d62dfd98f9dd05') in 0.025625 seconds 
+  Import took 0.030297 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000187 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Bush1.fbx
+  artifactKey: Guid(4b4954a4f57591a42a9e93e3fdcbeff9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Bush1.fbx using Guid(4b4954a4f57591a42a9e93e3fdcbeff9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4949602bf757947691f906f6f9a8c1fe') in 0.024715 seconds 
+  Import took 0.029237 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000150 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_5_Medium.fbx
+  artifactKey: Guid(1edd966fb5be4604a86f96dd777a6a66) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_5_Medium.fbx using Guid(1edd966fb5be4604a86f96dd777a6a66) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a471b7907e6c0604944ff8df38a92c36') in 0.024423 seconds 
+  Import took 0.028848 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000160 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_5_Low.fbx
+  artifactKey: Guid(b6aa0ecae0b263f44b7ff13212230e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_5_Low.fbx using Guid(b6aa0ecae0b263f44b7ff13212230e72) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '90689742b26c184db86046184f10ed17') in 0.024942 seconds 
+  Import took 0.029662 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000154 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_2_High_WF.fbx
+  artifactKey: Guid(c6ab948b7804a8c45add4db35f5e8856) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_2_High_WF.fbx using Guid(c6ab948b7804a8c45add4db35f5e8856) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0980c0071892d7c6b2ab8cde8be173e8') in 0.025817 seconds 
+  Import took 0.030448 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000208 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_1_High.fbx
+  artifactKey: Guid(30b2c9c54999233469df912a7f54048d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_1_High.fbx using Guid(30b2c9c54999233469df912a7f54048d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd5f71f482f2add4dd85d1902689d39d0') in 0.026245 seconds 
+  Import took 0.030608 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000159 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_2_Low.fbx
+  artifactKey: Guid(376f0859834fe0c438e7fe69192c1b5c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_2_Low.fbx using Guid(376f0859834fe0c438e7fe69192c1b5c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c1f67541d6338fb2e7989e22594d76bb') in 0.025157 seconds 
+  Import took 0.029717 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000198 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_2_Medium_WF.fbx
+  artifactKey: Guid(fadbd4847d8e0b74cb5c956588adc05a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_2_Medium_WF.fbx using Guid(fadbd4847d8e0b74cb5c956588adc05a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8a96633eb16624291a7fac3532202d71') in 0.024777 seconds 
+  Import took 0.029096 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000155 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_6_Medium.fbx
+  artifactKey: Guid(16a026efd9c4fb24d9c04b0b0d2296ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_6_Medium.fbx using Guid(16a026efd9c4fb24d9c04b0b0d2296ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21e6241837c7966294bff04658711826') in 0.024387 seconds 
+  Import took 0.029122 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000160 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_1_High_WF.fbx
+  artifactKey: Guid(2d847a3574a6a324ab984d830634f398) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_1_High_WF.fbx using Guid(2d847a3574a6a324ab984d830634f398) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8ffdcf5579662c338bcc2b864a8ba984') in 0.028172 seconds 
+  Import took 0.032672 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000188 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_3_High.fbx
+  artifactKey: Guid(6116b8a665402f947bcc2fea31d4cfdf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_3_High.fbx using Guid(6116b8a665402f947bcc2fea31d4cfdf) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '95c5822eaa87343450b530c04cc7e6d4') in 0.023158 seconds 
+  Import took 0.028308 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000161 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_1_Low.fbx
+  artifactKey: Guid(42f56d11568b94d47b8d918da0943ba0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_1_Low.fbx using Guid(42f56d11568b94d47b8d918da0943ba0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7b4c654990dc39db499ddc124ab791b0') in 0.026375 seconds 
+  Import took 0.030762 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000204 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_2_Low_WF.fbx
+  artifactKey: Guid(2b16b51b07942e14da3975ade50284c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_2_Low_WF.fbx using Guid(2b16b51b07942e14da3975ade50284c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f7512752ddc2c69df7ba826ee0c26390') in 0.022326 seconds 
+  Import took 0.027006 seconds .
 
 ========================================================================
 Received Import Request.
   Time since last request: 0.000164 seconds.
-  path: Assets/Farm Life/ColorGradingDark.asset
-  artifactKey: Guid(fedf795b59afbbc419d9059ce40f85c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Farm Life/ColorGradingDark.asset using Guid(fedf795b59afbbc419d9059ce40f85c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '74a940bd741fe71dd2b211a573523fea') in 0.007683 seconds 
-  Import took 0.012142 seconds .
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_3_Medium.fbx
+  artifactKey: Guid(9d875b523343e8845adcb2026cbbdec2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_3_Medium.fbx using Guid(9d875b523343e8845adcb2026cbbdec2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9693502701ab50cba601924c1ae72485') in 0.023484 seconds 
+  Import took 0.028039 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 1.218905 seconds.
-  path: Assets/Farm Life/FarmLife_Editable
-  artifactKey: Guid(65b382516c27a6f4ab92f70ce5a7a257) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Farm Life/FarmLife_Editable using Guid(65b382516c27a6f4ab92f70ce5a7a257) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '36c1f08d671691c18cd331b5e1b9fc7d') in 0.005965 seconds 
-  Import took 0.010743 seconds .
+  Time since last request: 0.000168 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_3_WF_Low.fbx
+  artifactKey: Guid(9d93c6b8a1816c740ad5eee596d988d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_3_WF_Low.fbx using Guid(9d93c6b8a1816c740ad5eee596d988d6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '21317e2177ba8bcfa5d118c6fe9c04a8') in 0.023860 seconds 
+  Import took 0.028773 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.563677 seconds.
-  path: Assets/Farm Life/FarmLife_Optimised
-  artifactKey: Guid(5e03c61b6672dad4091b40ecec636f02) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Farm Life/FarmLife_Optimised using Guid(5e03c61b6672dad4091b40ecec636f02) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8bd5a564545f1ae7d47a22c3d521660b') in 0.005841 seconds 
-  Import took 0.010750 seconds .
+  Time since last request: 0.000160 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_3_WF_High.fbx
+  artifactKey: Guid(0b8e01a17d33bf848b5cd05960c2f700) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_3_WF_High.fbx using Guid(0b8e01a17d33bf848b5cd05960c2f700) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ae586eb3ec1d18803737df33ee5f3e0d') in 0.025651 seconds 
+  Import took 0.030028 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 6.518757 seconds.
-  path: Assets/Farm Life/FarmLife_Optimised/Scenes
-  artifactKey: Guid(7b30ee1ef98a85f4f85b2ca9a0ed0e71) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Farm Life/FarmLife_Optimised/Scenes using Guid(7b30ee1ef98a85f4f85b2ca9a0ed0e71) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a9766aa844317f5999f5aca98d26151b') in 0.005083 seconds 
-  Import took 0.009846 seconds .
+  Time since last request: 0.000178 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Bush_2.fbx
+  artifactKey: Guid(96c560d6a876e9542aee688516460988) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Bush_2.fbx using Guid(96c560d6a876e9542aee688516460988) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1bd80765acff6a03100e7743d67d6111') in 0.028446 seconds 
+  Import took 0.032837 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000172 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_5_High.fbx
+  artifactKey: Guid(ce18325290a1f0941a634051ae7493d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_5_High.fbx using Guid(ce18325290a1f0941a634051ae7493d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b95a406b10c108497af57340542b0008') in 0.023250 seconds 
+  Import took 0.027591 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000165 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Bush_2_WF.fbx
+  artifactKey: Guid(77f670c9dfd732c42b9c557941c8868c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Bush_2_WF.fbx using Guid(77f670c9dfd732c42b9c557941c8868c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3a2b128e368249246ef2cad492f4e8c0') in 0.023427 seconds 
+  Import took 0.028237 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000155 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_3_Low.fbx
+  artifactKey: Guid(c8b4d460b0d6be14393526a8c1ee1c00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_3_Low.fbx using Guid(c8b4d460b0d6be14393526a8c1ee1c00) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6caa65f7dc0460470c21ca7ef279e82d') in 0.024723 seconds 
+  Import took 0.029336 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000161 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_2_High.fbx
+  artifactKey: Guid(184c88ea62b699b4ebdd4d3bd723e210) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_2_High.fbx using Guid(184c88ea62b699b4ebdd4d3bd723e210) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b6950d90a50edb3a0d9c9fea3465e993') in 0.024238 seconds 
+  Import took 0.028457 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000156 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_2_Medium.fbx
+  artifactKey: Guid(fc8fd64850f228749a54e7f48f81c274) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_2_Medium.fbx using Guid(fc8fd64850f228749a54e7f48f81c274) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b54bb9fa29544954324b87f5c2182c39') in 0.024017 seconds 
+  Import took 0.028484 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000168 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_6_High.fbx
+  artifactKey: Guid(daaeb03355c0797439d9b0aa956f4988) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_6_High.fbx using Guid(daaeb03355c0797439d9b0aa956f4988) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c64a82cd538e841c9d572b3838e86e2a') in 0.022707 seconds 
+  Import took 0.027237 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000156 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_7.fbx
+  artifactKey: Guid(3081d123eee60a643adc59a958f5f1ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_7.fbx using Guid(3081d123eee60a643adc59a958f5f1ce) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0db85cf85b8adda589534a9482581c68') in 0.022670 seconds 
+  Import took 0.027502 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000179 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_4a.fbx
+  artifactKey: Guid(5ba2f043a93a7c649960a64c424fc421) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_4a.fbx using Guid(5ba2f043a93a7c649960a64c424fc421) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0f6cc7044f23a2c2324dbddab1205589') in 0.022191 seconds 
+  Import took 0.027046 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000244 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Bush1_WF.fbx
+  artifactKey: Guid(dc4194f9cb41afc4089fa8ab1c272f0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Bush1_WF.fbx using Guid(dc4194f9cb41afc4089fa8ab1c272f0b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '53526d27bcb3b08b4d8bac72ffc23c21') in 0.026006 seconds 
+  Import took 0.030476 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000158 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_1_Low_WF.fbx
+  artifactKey: Guid(0502f2d2e05c17c46b37bf235df775cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_1_Low_WF.fbx using Guid(0502f2d2e05c17c46b37bf235df775cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '52293e9ee0bd5c6055bc9d4bffdef396') in 0.023605 seconds 
+  Import took 0.027968 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000195 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_4b.fbx
+  artifactKey: Guid(d1d16fdf35c7dfb44a5aab305ca14747) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Trees & Bushes/Tree_4b.fbx using Guid(d1d16fdf35c7dfb44a5aab305ca14747) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '607f04203522f948f65d0e9c70710111') in 0.022349 seconds 
+  Import took 0.027281 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.575365 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Rocks
+  artifactKey: Guid(eaec69ba15f3d9b4291b306aa8c0524e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Rocks using Guid(eaec69ba15f3d9b4291b306aa8c0524e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cf51642973c375cbb40738b0b561be13') in 0.006611 seconds 
+  Import took 0.011537 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.089169 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_1.fbx
+  artifactKey: Guid(1ae08932aabf011498309bf15fc3267b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_1.fbx using Guid(1ae08932aabf011498309bf15fc3267b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bf2548f2fa39e7b065b2bdcac0f94d7c') in 0.032792 seconds 
+  Import took 0.037875 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000166 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_9.fbx
+  artifactKey: Guid(f4a82d0aa11c1854fbc8c781f93a8be2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_9.fbx using Guid(f4a82d0aa11c1854fbc8c781f93a8be2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f0b3479e49157f57d93d0fed7aaaab6b') in 0.040217 seconds 
+  Import took 0.044435 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000154 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rocks_4.fbx
+  artifactKey: Guid(9988efc79cf7bf746af771d285b238ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rocks_4.fbx using Guid(9988efc79cf7bf746af771d285b238ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '44aa8dd2ddebbab3041ab3d8b9348e74') in 0.027635 seconds 
+  Import took 0.031984 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000197 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_6.fbx
+  artifactKey: Guid(ac69ba1478e59eb47ad89c33d8bc55d5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_6.fbx using Guid(ac69ba1478e59eb47ad89c33d8bc55d5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5637a6fcd71adc8bedbceb6a5da41c82') in 0.029190 seconds 
+  Import took 0.034113 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000161 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rocks_2.fbx
+  artifactKey: Guid(a83c71c1c82e90a4e8d86385e0eda11e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rocks_2.fbx using Guid(a83c71c1c82e90a4e8d86385e0eda11e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5b2de3832b5a67e5e7fdd6929dddc888') in 0.029670 seconds 
+  Import took 0.034016 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000176 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_8.fbx
+  artifactKey: Guid(eae1b25f44a858c46a3f5641a780552e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_8.fbx using Guid(eae1b25f44a858c46a3f5641a780552e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f43f8bdeaf276fe1838d38c5455d4d98') in 0.027535 seconds 
+  Import took 0.031965 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000166 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_3.fbx
+  artifactKey: Guid(4e9eb7d4afc4535449699acaccf80165) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_3.fbx using Guid(4e9eb7d4afc4535449699acaccf80165) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1e0cde514432ac0ff5d43e47d8dc0d63') in 0.028420 seconds 
+  Import took 0.033113 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000168 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rocks_3.fbx
+  artifactKey: Guid(eef4a74f9a0206d44bbb5a9924fa2486) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rocks_3.fbx using Guid(eef4a74f9a0206d44bbb5a9924fa2486) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cce1dedaccefbb89f7d78d685e3def46') in 0.029506 seconds 
+  Import took 0.034016 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000152 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rocks_1.fbx
+  artifactKey: Guid(b44c4e977282a954d80acfe403600351) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rocks_1.fbx using Guid(b44c4e977282a954d80acfe403600351) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '127388308405a9f08437fbfc4a2eabdf') in 0.028794 seconds 
+  Import took 0.033475 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000158 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_2.fbx
+  artifactKey: Guid(5abad57d37423b14595cb16cb049e1fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_2.fbx using Guid(5abad57d37423b14595cb16cb049e1fb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '897bb74e28d311ee3c8cdc1a30aa0df4') in 0.027012 seconds 
+  Import took 0.031275 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000172 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_5.fbx
+  artifactKey: Guid(80e041708f1bb824791a0e956425c984) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_5.fbx using Guid(80e041708f1bb824791a0e956425c984) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd363920648c53e0a2f661fb975264388') in 0.028074 seconds 
+  Import took 0.032448 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000145 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_4.fbx
+  artifactKey: Guid(ccf1009248f825a4088d0d9fb5cb7213) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_4.fbx using Guid(ccf1009248f825a4088d0d9fb5cb7213) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '34c6753f010a046fab999f6fe446a7d6') in 0.028231 seconds 
+  Import took 0.032875 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000149 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_7.fbx
+  artifactKey: Guid(6c27ea766768ec84a90e4e5620874f49) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Rocks/Rock_7.fbx using Guid(6c27ea766768ec84a90e4e5620874f49) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c7d2c228faaf385c963bb494ab377166') in 0.027964 seconds 
+  Import took 0.032742 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.467877 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Plants
+  artifactKey: Guid(b543c483f926ad04bbc7b5758cfe2e21) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Plants using Guid(b543c483f926ad04bbc7b5758cfe2e21) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0bc024681fa8003b8c7ca492b3af6329') in 0.006776 seconds 
+  Import took 0.011718 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.087250 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Plants/Flower.fbx
+  artifactKey: Guid(dac0d6d767bf8274ba8644f71f0347a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Plants/Flower.fbx using Guid(dac0d6d767bf8274ba8644f71f0347a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '74b90c12ec55092bf9bc3eda10285b10') in 0.030760 seconds 
+  Import took 0.035808 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000185 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Plants/Grass_3.fbx
+  artifactKey: Guid(00d3bd697a10cbd4cbb3098500b898dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Plants/Grass_3.fbx using Guid(00d3bd697a10cbd4cbb3098500b898dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '970b519c74c66d62274cdac9d63428b7') in 0.051124 seconds 
+  Import took 0.055903 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000146 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Plants/Grass_1.fbx
+  artifactKey: Guid(937779b6f987d7a4a887dcac1fd2ab12) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Plants/Grass_1.fbx using Guid(937779b6f987d7a4a887dcac1fd2ab12) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '48e465e5c22e3bd8232a8d382542fb96') in 0.047771 seconds 
+  Import took 0.052459 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000172 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Plants/Grass_5.fbx
+  artifactKey: Guid(166bdcc346ddc034e8e9523f855b5ed1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Plants/Grass_5.fbx using Guid(166bdcc346ddc034e8e9523f855b5ed1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a5a6d64529edd46bbc1d66bcee6447ad') in 0.053765 seconds 
+  Import took 0.058151 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000157 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Plants/Grass_4.fbx
+  artifactKey: Guid(09d2783626316ff408fc194403731e39) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Plants/Grass_4.fbx using Guid(09d2783626316ff408fc194403731e39) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0eb4edaebbf6990f6f838442511236e7') in 0.047726 seconds 
+  Import took 0.052068 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000344 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Plants/Grass_2.fbx
+  artifactKey: Guid(01ff373358cf54c488d4b6b59fb9cb0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Plants/Grass_2.fbx using Guid(01ff373358cf54c488d4b6b59fb9cb0d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed4f941e71c7a49c6a1603757e5fdbc8') in 0.039552 seconds 
+  Import took 0.044385 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 225.070301 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops
+  artifactKey: Guid(4bf1107ccd92f5140b98abe74b81dec6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops using Guid(4bf1107ccd92f5140b98abe74b81dec6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ea16735d215f1d89595b2671ff173eed') in 0.005323 seconds 
+  Import took 0.010556 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.206871 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Apple.fbx
+  artifactKey: Guid(fc0d09e1c1594254e8783309f98bcf31) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Apple.fbx using Guid(fc0d09e1c1594254e8783309f98bcf31) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e9af8001d7f427dba0c186570fd48a3c') in 0.027936 seconds 
+  Import took 0.033038 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000160 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Hay_1.fbx
+  artifactKey: Guid(f60c0df59b030924caaf0d421f7447d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Hay_1.fbx using Guid(f60c0df59b030924caaf0d421f7447d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '780e18bd4cee20153e664a044f07ab98') in 0.033316 seconds 
+  Import took 0.037807 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000165 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Carrot.fbx
+  artifactKey: Guid(4a293fdaac8372640b9718586d597cfb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Carrot.fbx using Guid(4a293fdaac8372640b9718586d597cfb) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8a1d0905631fb2c3f03f52c338f83393') in 0.027989 seconds 
+  Import took 0.032780 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000198 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Tomato_Brach.fbx
+  artifactKey: Guid(f7e5828b67230ef4c92c98797b810cb2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Tomato_Brach.fbx using Guid(f7e5828b67230ef4c92c98797b810cb2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd69cfade0c79f41ff61f5bb16e866265') in 0.031440 seconds 
+  Import took 0.035913 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000211 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Hay_3.fbx
+  artifactKey: Guid(9a5930deeed87934384c54280f86953e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Hay_3.fbx using Guid(9a5930deeed87934384c54280f86953e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5123fbcf1c9f4a0e9cac3b928b039304') in 0.030340 seconds 
+  Import took 0.034695 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000158 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Apple_WL.fbx
+  artifactKey: Guid(c7fa544a8c251144793e3e679713965f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Apple_WL.fbx using Guid(c7fa544a8c251144793e3e679713965f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9ffcf9692ba56ed5ef88891c0f547e10') in 0.024200 seconds 
+  Import took 0.028931 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000155 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Corn.fbx
+  artifactKey: Guid(5845280f9e4ff4143be903a672f7c811) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Corn.fbx using Guid(5845280f9e4ff4143be903a672f7c811) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '14941ed84c867e8e7a460b7231c3d8e3') in 0.029168 seconds 
+  Import took 0.033447 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000161 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Wheat.fbx
+  artifactKey: Guid(72ec714f624ccae4bb3abbb61c422493) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Wheat.fbx using Guid(72ec714f624ccae4bb3abbb61c422493) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '97ff8827e55c072b7c36e3dc42ce4cfa') in 0.024535 seconds 
+  Import took 0.028984 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000169 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Hay_4.fbx
+  artifactKey: Guid(2b51900547cd1dc498fc855464737412) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Hay_4.fbx using Guid(2b51900547cd1dc498fc855464737412) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4e26ee5c9b4cf685d24fb69f3c093316') in 0.024663 seconds 
+  Import took 0.029666 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000167 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/BeetRoot.fbx
+  artifactKey: Guid(d96d3efc476a09e4a983883f17149b89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/BeetRoot.fbx using Guid(d96d3efc476a09e4a983883f17149b89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '50fe1f63efb0f57c82f3c92a304d6dd2') in 0.027225 seconds 
+  Import took 0.031718 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000151 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Hay_2.fbx
+  artifactKey: Guid(985893cff4f0c094fb2d69796f84f418) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Hay_2.fbx using Guid(985893cff4f0c094fb2d69796f84f418) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '49049531a0918195c25e74ad207606f6') in 0.028413 seconds 
+  Import took 0.032870 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000171 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Cabbage.fbx
+  artifactKey: Guid(296f76daa24de1d4eb5730ca5673f8e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Cabbage.fbx using Guid(296f76daa24de1d4eb5730ca5673f8e8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f05c14d35e1a35217e9b97ff6378267') in 0.027529 seconds 
+  Import took 0.032038 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000160 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Wheat_Multiple.fbx
+  artifactKey: Guid(5c27923e230c9554bbcf5ca43d3f7c61) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Wheat_Multiple.fbx using Guid(5c27923e230c9554bbcf5ca43d3f7c61) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b86decd4d4f8f077ec95ed869099a8c8') in 0.023530 seconds 
+  Import took 0.028238 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000149 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Corn_2.fbx
+  artifactKey: Guid(c31392a7053c9144398986a8dc211a48) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Corn_2.fbx using Guid(c31392a7053c9144398986a8dc211a48) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f4d86e2d4692a449542fdb42c41074e') in 0.026592 seconds 
+  Import took 0.031262 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000165 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Pepper.fbx
+  artifactKey: Guid(458a21093698e1d47b41d79c66d11e39) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Pepper.fbx using Guid(458a21093698e1d47b41d79c66d11e39) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '61fdca56dd8e8c8780e801716454d3a7') in 0.025101 seconds 
+  Import took 0.029923 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000170 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Onion.fbx
+  artifactKey: Guid(872efdc0233a3054ba2a10cba56b5a43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Onion.fbx using Guid(872efdc0233a3054ba2a10cba56b5a43) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c03cddc4000eeb533f40c894abbac495') in 0.025640 seconds 
+  Import took 0.030496 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000165 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Sunflower.fbx
+  artifactKey: Guid(ab0e533cd302df44d99ac5b9578cf0f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Sunflower.fbx using Guid(ab0e533cd302df44d99ac5b9578cf0f7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e4cf7ac3dff78905037452af649cca84') in 0.024429 seconds 
+  Import took 0.029071 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000147 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Pumpkin.fbx
+  artifactKey: Guid(41aff83036006344c87a55f1b4c6077b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Pumpkin.fbx using Guid(41aff83036006344c87a55f1b4c6077b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd50fc215b155a706ddb28eadb3215b71') in 0.024927 seconds 
+  Import took 0.029416 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000145 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Leek.fbx
+  artifactKey: Guid(236af118e626ba14b9c63b393315b9d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Leek.fbx using Guid(236af118e626ba14b9c63b393315b9d9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '31cf974d2ce0d1a51efc2242e77a0c17') in 0.024350 seconds 
+  Import took 0.028808 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000152 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Tomato.fbx
+  artifactKey: Guid(af1817f1eedaa1944a482a2a09b6ea5d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Tomato.fbx using Guid(af1817f1eedaa1944a482a2a09b6ea5d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '233634751a6c2ef39b6cee1cdce8d71b') in 0.023552 seconds 
+  Import took 0.028561 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000163 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Pumpkins.fbx
+  artifactKey: Guid(653927307c9eb2a4e8ac7dcf76888e2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Pumpkins.fbx using Guid(653927307c9eb2a4e8ac7dcf76888e2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f192a1de8ebbf5afd4bf5c6ff6666f84') in 0.024211 seconds 
+  Import took 0.029438 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000214 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Hay_5.fbx
+  artifactKey: Guid(349bdcfb041d01240b678e82486c7658) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Crops/Hay_5.fbx using Guid(349bdcfb041d01240b678e82486c7658) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '289dd29f91ea62fc52587bf1c6d82b45') in 0.023364 seconds 
+  Import took 0.028772 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 25.359412 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines
+  artifactKey: Guid(d4a7e93f49323fb4ea279b982ddce9c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines using Guid(d4a7e93f49323fb4ea279b982ddce9c3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6e04e858ddd9520e624a0f318668bdc7') in 0.004902 seconds 
+  Import took 0.014772 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.021605 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Agricultural_Machine_1.fbx
+  artifactKey: Guid(d6eb297fa1eb18243b1a04d7acf70d4a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Agricultural_Machine_1.fbx using Guid(d6eb297fa1eb18243b1a04d7acf70d4a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5acf065283b1457d92b1de9edaa22041') in 0.029078 seconds 
+  Import took 0.034289 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000157 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Trailer_1.fbx
+  artifactKey: Guid(f2310a7683278b24181942d835a4f6ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Trailer_1.fbx using Guid(f2310a7683278b24181942d835a4f6ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5adeb835bf821ab35353b152b8112188') in 0.031502 seconds 
+  Import took 0.036069 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000173 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Agricultural_Machine_3.fbx
+  artifactKey: Guid(fc726d59a6db4c74c9de5bbe08813da7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Agricultural_Machine_3.fbx using Guid(fc726d59a6db4c74c9de5bbe08813da7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0ee1ea06525a61857083af3fddc2b7af') in 0.034262 seconds 
+  Import took 0.038803 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000151 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Truck.fbx
+  artifactKey: Guid(b8f3c3c79f89a944b87b94c38f64fc32) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Truck.fbx using Guid(b8f3c3c79f89a944b87b94c38f64fc32) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5e9431884b651b35d424216b65f11825') in 0.036514 seconds 
+  Import took 0.041265 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000160 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Trailer_3.fbx
+  artifactKey: Guid(996f140b618900849a518a7f8fe29903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Trailer_3.fbx using Guid(996f140b618900849a518a7f8fe29903) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ad58a11ab02d9ae4356ee9fb653b297a') in 0.027494 seconds 
+  Import took 0.032403 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000164 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Harvester.fbx
+  artifactKey: Guid(c2368972cdf8b1d4288cf87aa4b687e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Harvester.fbx using Guid(c2368972cdf8b1d4288cf87aa4b687e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6512b7a8e648f6ad11f4ff12c0837b34') in 0.027929 seconds 
+  Import took 0.033011 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000159 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Jeep.fbx
+  artifactKey: Guid(93c44343c7a7b5b41af50a21ddb5b952) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Jeep.fbx using Guid(93c44343c7a7b5b41af50a21ddb5b952) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2e9c92e3af3f6144f82c4f8a7e92762b') in 0.028677 seconds 
+  Import took 0.033134 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000148 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Agricultural_Machine_2.fbx
+  artifactKey: Guid(134151be87fa83f4494c706da335eab2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Agricultural_Machine_2.fbx using Guid(134151be87fa83f4494c706da335eab2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '80a030f7c999b9690095b4436964721c') in 0.028804 seconds 
+  Import took 0.033529 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000150 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Pickup.fbx
+  artifactKey: Guid(ef1ca67f4ea769b4d800360532471d77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Pickup.fbx using Guid(ef1ca67f4ea769b4d800360532471d77) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd7db75af3509c8d25785e30988bb3f73') in 0.029661 seconds 
+  Import took 0.034298 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000160 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Bike.fbx
+  artifactKey: Guid(e54d7b9867f2853499b6b655b8a8d161) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Bike.fbx using Guid(e54d7b9867f2853499b6b655b8a8d161) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a2e6dc543e9d88d1009dfe8a8a823072') in 0.029408 seconds 
+  Import took 0.033769 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000196 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Tractor.fbx
+  artifactKey: Guid(00ad93bd87791fa4f99dc049730b132c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Tractor.fbx using Guid(00ad93bd87791fa4f99dc049730b132c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6b1f6bd4219b2179b48f1101b82aa0a3') in 0.023981 seconds 
+  Import took 0.028535 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000150 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Trailer_4.fbx
+  artifactKey: Guid(b1dfad3be20fdcf4f84b10aadf63cd89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Trailer_4.fbx using Guid(b1dfad3be20fdcf4f84b10aadf63cd89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5780a0e5e3dc3b48f327a5be0152c2bf') in 0.029563 seconds 
+  Import took 0.034095 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000165 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Boat.fbx
+  artifactKey: Guid(8c9b0294e13dae84b9589110de7986f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Boat.fbx using Guid(8c9b0294e13dae84b9589110de7986f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bab225b90aca185ae3c0977a759d38e9') in 0.025245 seconds 
+  Import took 0.029696 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000159 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Barrow.fbx
+  artifactKey: Guid(241cb447ba993274a9f5bc57cf2727dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Barrow.fbx using Guid(241cb447ba993274a9f5bc57cf2727dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c69690a4d928341a7b52b957559a588b') in 0.027630 seconds 
+  Import took 0.032675 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000158 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Bicycle.fbx
+  artifactKey: Guid(729ef314894916c42864d3e779013f48) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Bicycle.fbx using Guid(729ef314894916c42864d3e779013f48) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '33daced8130abb55077e76d8a92844a5') in 0.025035 seconds 
+  Import took 0.029750 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000151 seconds.
+  path: Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Trailer_2.fbx
+  artifactKey: Guid(7264016fd950c10428da11a9d14f78ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Farm Life/FarmLife_Editable/Meshes/Vehicles & Machines/Trailer_2.fbx using Guid(7264016fd950c10428da11a9d14f78ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8816842edadd3b5aa668e1c074fa5c99') in 0.023979 seconds 
+  Import took 0.028503 seconds .
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.003881 seconds.
+Registered in 0.003771 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.57 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 2.12 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.831 seconds
+- Completed reload, in  0.959 seconds
 Domain Reload Profiling:
-	ReloadAssembly (832ms)
-		BeginReloadAssembly (92ms)
+	ReloadAssembly (959ms)
+		BeginReloadAssembly (117ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (4ms)
+			DisableScriptedObjects (6ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (32ms)
-		EndReloadAssembly (686ms)
-			LoadAssemblies (71ms)
+			CreateAndSetChildDomain (45ms)
+		EndReloadAssembly (779ms)
+			LoadAssemblies (83ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (245ms)
-			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (36ms)
-			SetupLoadedEditorAssemblies (237ms)
+			SetupTypeCache (282ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (40ms)
+			SetupLoadedEditorAssemblies (247ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (4ms)
+				InitializePlatformSupportModulesInManaged (5ms)
 				SetLoadedEditorAssemblies (0ms)
 				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (70ms)
-				ProcessInitializeOnLoadAttributes (151ms)
+				BeforeProcessingInitializeOnLoad (83ms)
+				ProcessInitializeOnLoadAttributes (147ms)
 				ProcessInitializeOnLoadMethodAttributes (4ms)
 				AfterProcessingInitializeOnLoad (6ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (11ms)
+			AwakeInstancesAfterBackupRestoration (14ms)
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.56 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 1.90 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2786 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 134.5 MB.
-System memory in use after: 134.6 MB.
+Unloading 2784 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 140.8 MB.
+System memory in use after: 141.0 MB.
 
-Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 3357.
-Total: 3.468900 ms (FindLiveObjects: 0.317100 ms CreateObjectMapping: 0.064900 ms MarkObjects: 2.982900 ms  DeleteObjects: 0.102800 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.003823 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 1.72 ms, found 2 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  0.826 seconds
-Domain Reload Profiling:
-	ReloadAssembly (827ms)
-		BeginReloadAssembly (101ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (4ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (33ms)
-		EndReloadAssembly (674ms)
-			LoadAssemblies (69ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (238ms)
-			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (34ms)
-			SetupLoadedEditorAssemblies (237ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (4ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (2ms)
-				BeforeProcessingInitializeOnLoad (71ms)
-				ProcessInitializeOnLoadAttributes (151ms)
-				ProcessInitializeOnLoadMethodAttributes (3ms)
-				AfterProcessingInitializeOnLoad (6ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (10ms)
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.92 ms, found 2 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 2786 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 134.5 MB.
-System memory in use after: 134.6 MB.
-
-Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 3359.
-Total: 3.428600 ms (FindLiveObjects: 0.310000 ms CreateObjectMapping: 0.065000 ms MarkObjects: 2.958500 ms  DeleteObjects: 0.094300 ms)
+Unloading 14 unused Assets to reduce memory usage. Loaded Objects now: 3479.
+Total: 3.541500 ms (FindLiveObjects: 0.341000 ms CreateObjectMapping: 0.075600 ms MarkObjects: 3.103300 ms  DeleteObjects: 0.020600 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
