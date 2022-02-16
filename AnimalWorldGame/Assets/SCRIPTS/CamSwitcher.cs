@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Cinemachine;
 
 public class CamSwitcher : MonoBehaviour
@@ -45,6 +46,7 @@ public class CamSwitcher : MonoBehaviour
                OverworldCam.transform.position = new Vector3(51f, 51.25f, 78.6f);
                player.GetComponent<ThirdPersonMovement>().enabled = false;
                player.GetComponent<Animator>().enabled = false;
+               player.GetComponent<NavMeshAgent>().enabled = true;
                
                Cursor.visible = true;
                
@@ -53,7 +55,9 @@ public class CamSwitcher : MonoBehaviour
            else
            {
                animator.Play("ThirdPerson");
+               
                ZoomInOut();
+               player.GetComponent<NavMeshAgent>().enabled = false;
                player.GetComponent<ThirdPersonMovement>().enabled = true;
                player.GetComponent<Animator>().enabled = true;
                Cursor.visible = false;
