@@ -31,7 +31,7 @@ public class CamSwitcher : MonoBehaviour
     
     void Start()
     {
-        
+         player.GetComponent<NavMeshAgent>().enabled = false;
     }
 
     // Update is called once per frame

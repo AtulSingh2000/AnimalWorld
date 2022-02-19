@@ -8,6 +8,8 @@ TagManager:
   - NFT
   - Water
   - Ground
+  - DMOBoard
+  - Stop
   layers:
   - Default
   - TransparentFX

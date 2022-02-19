@@ -8,6 +8,8 @@ public class ObjectSelection : MonoBehaviour
     //private Renderer renderer;
     public Camera camera;
     public GameObject panel;
+    public GameObject truckPos;
+    public GameObject truck;
     Ray ray;
     RaycastHit hit;
     private Transform _selection;
@@ -59,8 +61,19 @@ public class ObjectSelection : MonoBehaviour
                     
                     panel.SetActive(true);
                 }
+                if(selection.CompareTag("DMOBoard"))
+                {
+                    Instantiate(truck, truckPos.transform.position, Quaternion.identity);
+                    StartCoroutine(TruckComeAndGo());
+                    
+                }
             }
         }
+    }
+    IEnumerator TruckComeAndGo()
+    { 
+        yield return new WaitForSeconds(7);
+        
     }
    
 }

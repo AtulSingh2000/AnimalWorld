@@ -10,6 +10,9 @@ public class AIMovement : MonoBehaviour
     public NavMeshAgent playerNavMeshAgent;
     //public CinemachineVirtualCamera playerOverworldCam;
     public Camera playerCam;
+   // public Animator playerAnim;
+   // public bool isRunning;
+
     //public Animation run;
     
     // Start is called before the first frame update
@@ -32,5 +35,17 @@ public class AIMovement : MonoBehaviour
                 
             }
         }
+
+     /*   if(playerNavMeshAgent.remainingDistance <= playerNavMeshAgent.stoppingDistance)
+        {
+            isRunning = false;
+        }
+        else
+        {
+            isRunning = true;
+        }
+
+        playerAnim.SetBool("Run Axe", isRunning);
+    }*/
     }
 }
