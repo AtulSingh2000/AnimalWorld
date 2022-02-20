@@ -10,8 +10,8 @@ public class AIMovement : MonoBehaviour
     public NavMeshAgent playerNavMeshAgent;
     //public CinemachineVirtualCamera playerOverworldCam;
     public Camera playerCam;
-   // public Animator playerAnim;
-   // public bool isRunning;
+    public Animator playerAnim;
+    //public bool isRunning;
 
     //public Animation run;
     
@@ -36,16 +36,19 @@ public class AIMovement : MonoBehaviour
             }
         }
 
-     /*   if(playerNavMeshAgent.remainingDistance <= playerNavMeshAgent.stoppingDistance)
+       if(playerNavMeshAgent.remainingDistance <= playerNavMeshAgent.stoppingDistance)
         {
-            isRunning = false;
+            //isRunning = false;
+             
+             playerAnim.SetBool("Run Axe", false);
         }
         else
         {
-            isRunning = true;
+            //isRunning = true;
+            playerAnim.SetBool("Run Axe", true);
         }
 
-        playerAnim.SetBool("Run Axe", isRunning);
-    }*/
+       // playerAnim.SetBool("Run Axe", isRunning);
+    
     }
 }
