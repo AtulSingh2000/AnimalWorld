@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Cinemachine;
+using UnityEngine.EventSystems;
 
 public class AIMovement : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class AIMovement : MonoBehaviour
     {
         if(Input.GetMouseButton(0))
         {
+            if(EventSystem.current.IsPointerOverGameObject())
+            return;
+            
             Ray myRay = playerCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit myRaycastHit;
 
