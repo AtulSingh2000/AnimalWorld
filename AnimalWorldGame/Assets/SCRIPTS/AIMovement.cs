@@ -33,6 +33,8 @@ public class AIMovement : MonoBehaviour
             Ray myRay = playerCam.ScreenPointToRay(Input.mousePosition);
             RaycastHit myRaycastHit;
 
+            
+
             if(Physics.Raycast(myRay, out myRaycastHit))
             {
                 playerNavMeshAgent.SetDestination(myRaycastHit.point);
