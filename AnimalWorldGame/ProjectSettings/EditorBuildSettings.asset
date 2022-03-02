@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/GameScene.unity
     guid: 7581787971249234c9307b3d4aff0ca3
+  - enabled: 1
+    path: Assets/NOT_Lonely/Greenwood Fantasy Village/DemoScene/DemoScene_mobile.unity
+    guid: a0827a9baed7ee94c8724afcd8e07867
   m_configObjects: {}

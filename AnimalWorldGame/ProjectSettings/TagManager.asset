@@ -14,15 +14,15 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PostProcessing
   - Water
   - UI
   - 
   - 
   - 
-  - 
-  - Highlighte
-  - 
+  - Player
+  - DeadZone
+  - BrokenPieces
   - 
   - 
   - 
