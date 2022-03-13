@@ -39,6 +39,8 @@ public class ThirdPersonMovement : MonoBehaviour
         if(direction.magnitude >= 0.1f)
         {
             animator.SetBool("Run Axe", true);
+            animator.SetBool("Running", true);
+
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothtime);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
@@ -48,6 +50,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         else{
             animator.SetBool("Run Axe", false);
+            animator.SetBool("Running", false);
         }
     }
 
