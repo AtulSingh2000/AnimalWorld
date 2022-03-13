@@ -1,0 +1,118 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7290499378579998494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7290499378579998499}
+  - component: {fileID: 7290499378579998496}
+  - component: {fileID: 7290499378579998497}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7290499378579998499
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7290499378579998494}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7290499378579998496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7290499378579998494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa00c0a3460c2b145bfaee6fdd586f7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infojson: '[   {     "id": 341592,     "description": "juicer",     "icon": "",    
+    "type": "machines",     "producer": "trees"   },   {     "id": 341593,     "description":
+    "juicer",     "icon": "",     "type": "machines",     "producer": "trees"   },  
+    {     "id": 341664,     "description": "juicer",     "icon": "",     "type":
+    "machines",     "producer": "trees"   },   {     "id": 341665,     "description":
+    "popcornmaker",     "icon": "",     "type": "machines",     "producer": "cropfields"  
+    },   {     "id": 341668,     "description": "popcornmaker",     "icon": "",    
+    "type": "machines",     "producer": "cropfields"   },   {     "id": 341669,    
+    "description": "popcornmaker",     "icon": "",     "type": "machines",     "producer":
+    "cropfields"   },   {     "id": 342437,     "description": "cropfield",     "icon":
+    "",     "type": "machines",     "producer": "cropfields"   },   {     "id": 343524,    
+    "description": "BBQ",     "icon": "",     "type": "machines",     "producer":
+    "animals"   },   {     "id": 343525,     "description": "icecreammaker",    
+    "icon": "",     "type": "machines",     "producer": "animals"   },   {     "id":
+    343526,     "description": "icecreammaker",     "icon": "",     "type": "machines",    
+    "producer": "animals"   },   {     "id": 343527,     "description": "BBQ",    
+    "icon": "",     "type": "machines",     "producer": "animals"   },   {     "id":
+    "PCORN",     "description": "Popcorn",     "icon": "",     "type": "products",    
+    "producer": "cropfields"   },   {     "id": "CPCORN",     "description": "Chilly
+    Popcorn",     "icon": "",     "type": "products",     "producer": "cropfields"  
+    },   {     "id": "YPCORN",     "description": "Cheesy Popcorn",     "icon": "",    
+    "type": "products",     "producer": "cropfields"   },   {     "id": "FPCORN",    
+    "description": "Fruity Popcorn",     "icon": "",     "type": "products",    
+    "producer": "trees"   },   {     "id": "MJUICE",     "description": "Mango Juice",    
+    "icon": "",     "type": "products",     "producer": "trees"   },   {     "id":
+    "OJUICE",     "description": "Orange Juice",     "icon": "",     "type": "products",    
+    "producer": "trees"   },   {     "id": "CJUICE",     "description": "Coconut
+    Juice",     "icon": "",     "type": "products",     "producer": "trees"   },  
+    {     "id": "FJUICE",     "description": "Fig  Juice",     "icon": "",     "type":
+    "products",     "producer": "trees"   },   {     "id": "LJUICE",     "description":
+    "Lemon Juice",     "icon": "",     "type": "products",     "producer": "trees"  
+    },   {     "id": "MFJUICE",     "description": "Mix Fruit Juice",     "icon":
+    "",     "type": "products",     "producer": "trees"   },   {     "id": "CORN",    
+    "description": "CORN",     "icon": "",     "type": "resources",     "producer":
+    "cropfields"   },   {     "id": "WHEAT",     "description": "WHEAT",     "icon":
+    "",     "type": "resources",     "producer": "cropfields"   },   {     "id":
+    "CLY",     "description": "CHILLY",     "icon": "",     "type": "resources",    
+    "producer": "cropfields"   },   {     "id": "SBEAN",     "description": "SOYABEAN",    
+    "icon": "",     "type": "resources",     "producer": "cropfields"   },   {    
+    "id": "CRT",     "description": "CARROT",     "icon": "",     "type": "resources",    
+    "producer": "cropfields"   },   {     "id": "CORNSE",     "description": "CORN
+    Seed",     "icon": "",     "type": "resources",     "producer": "cropfields"  
+    },   {     "id": "WHEATSE",     "description": "WHEAT Seed",     "icon": "",    
+    "type": "resources",     "producer": "cropfields"   },   {     "id": "CLYSE",    
+    "description": "CHILLY  Seed",     "icon": "",     "type": "resources",     "producer":
+    "cropfields"   },   {     "id": "SBEANSE",     "description": "SOYABEAN Seed",    
+    "icon": "",     "type": "resources",     "producer": "cropfields"   },   {    
+    "id": "CRTSE",     "description": "CARROT Seed",     "icon": "",     "type":
+    "resources",     "producer": "trees"   },   {     "id": "MANGO",     "description":
+    "Mango grows on mango trees and can be used to make various products",     "icon":
+    "",     "type": "resources",     "producer": "trees"   },   {     "id": "ORANGE",    
+    "description": "Orange  grows on Orange trees and can be used to make various
+    products",     "icon": "",     "type": "resources",     "producer": "trees"  
+    },   {     "id": "FIG",     "description": "Fig grows on Fig trees and can be
+    used to make various products",     "icon": "",     "type": "resources",    
+    "producer": "trees"   },   {     "id": "COCONUT",     "description": "Coconut 
+    grows on Coconut trees and can be used to make various products",     "icon":
+    "",     "type": "resources",     "producer": "trees"   },   {     "id": "LEMON",    
+    "description": "Lemon  grows on Lemon trees and can be used to make various products",    
+    "icon": "",     "type": "resources",     "producer": "trees"   } ]'
+--- !u!114 &7290499378579998497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7290499378579998494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b12c4defe31f1644ab7b3ba6c254bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

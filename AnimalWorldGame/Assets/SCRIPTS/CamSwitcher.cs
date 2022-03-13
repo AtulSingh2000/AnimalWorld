@@ -15,8 +15,7 @@ public class CamSwitcher : MonoBehaviour
   
 
    public GameObject player;
-   public GameObject playerOV;
-   public bool camState;
+   
    
     public float scrollSpeed = 10f;
 
@@ -32,8 +31,7 @@ public class CamSwitcher : MonoBehaviour
     
     void Start()
     {
-        playerOV.SetActive(false);
-        // player.GetComponent<NavMeshAgent>().enabled = false;
+        
     }
 
     // Update is called once per frame
@@ -42,18 +40,13 @@ public class CamSwitcher : MonoBehaviour
         ZoomInOut();
        if(Input.GetKeyDown(KeyCode.V))
        {
-          // Debug.Log(camState);
            if(overworldCam)
            {
-               camState = true;
                animator.Play("Overworld");
-               playerOV.gameObject.transform.position = player.gameObject.transform.position;
-               playerOV.SetActive(true);
-               player.SetActive(false);
                OverworldCam.transform.position = new Vector3(51f, 51.25f, 78.6f);
                player.GetComponent<ThirdPersonMovement>().enabled = false;
                player.GetComponent<Animator>().enabled = false;
-               //player.GetComponent<NavMeshAgent>().enabled = true;
+               player.GetComponent<NavMeshAgent>().enabled = true;
                
                Cursor.visible = true;
                
@@ -62,12 +55,9 @@ public class CamSwitcher : MonoBehaviour
            else
            {
                animator.Play("ThirdPerson");
-               camState = false;
+               
                ZoomInOut();
-               player.gameObject.transform.position = playerOV.gameObject.transform.position;
-               playerOV.SetActive(false);
-               player.SetActive(true);
-              // player.GetComponent<NavMeshAgent>().enabled = false;
+               player.GetComponent<NavMeshAgent>().enabled = false;
                player.GetComponent<ThirdPersonMovement>().enabled = true;
                player.GetComponent<Animator>().enabled = true;
                Cursor.visible = false;

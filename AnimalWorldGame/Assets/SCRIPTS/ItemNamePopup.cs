@@ -9,23 +9,14 @@ public class ItemNamePopup : MonoBehaviour
     public GameObject icecream;
     public GameObject bbq;
     public GameObject milk;
-    public GameObject house;
-    public GameObject inventory;
-    public GameObject shop;
-    public GameObject tokenexchange;
-
     // Start is called before the first frame update
     void Start()
     {
-        juicer.SetActive(false);
+         juicer.SetActive(false);
         bbq.SetActive(false);
         icecream.SetActive(false);
         milk.SetActive(false);
         feeder.SetActive(false);
-        house.SetActive(false);
-        inventory.SetActive(false);
-        shop.SetActive(false);
-        tokenexchange.SetActive(false);
 
     }
 
@@ -57,22 +48,6 @@ public class ItemNamePopup : MonoBehaviour
      {
          feeder.SetActive(true);
      }
-     if(gameObject.name == "TokenExchange")
-     {
-         tokenexchange.SetActive(true);
-     }
-     if(gameObject.name == "Shop")
-     {
-         shop.SetActive(true);
-     }
-     if(gameObject.name == "Inventory")
-     {
-         inventory.SetActive(true);
-     }
-     if(gameObject.name == "House")
-     {
-         house.SetActive(true);
-     }
     }
 
      private void OnMouseExit()
@@ -82,9 +57,5 @@ public class ItemNamePopup : MonoBehaviour
         icecream.SetActive(false);
         milk.SetActive(false);
         feeder.SetActive(false);
-        house.SetActive(false);
-        inventory.SetActive(false);
-        shop.SetActive(false);
-        tokenexchange.SetActive(false);
     }
 }

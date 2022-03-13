@@ -10,6 +10,15 @@ TagManager:
   - Ground
   - DMOBoard
   - Stop
+  - Panel
+  - machines
+  - trees
+  - shop
+  - cropfield
+  - tokenexchange
+  - land
+  - inventory
+  - menu
   layers:
   - Default
   - TransparentFX

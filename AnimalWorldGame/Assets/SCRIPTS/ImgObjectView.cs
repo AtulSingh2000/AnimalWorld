@@ -6,5 +6,6 @@ using UnityEngine.UI;
 public class ImgObjectView 
 {
     public string name;
-    public Texture img;
+    public GameObject prefab;
+    public string type;
 }

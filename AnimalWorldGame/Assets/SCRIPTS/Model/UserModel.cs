@@ -1,0 +1,18 @@
+﻿using System.Collections;
+using System;
+
+[Serializable]
+public class UserModel
+{
+    public string account;
+    public string awcBal;
+    public AssetModel[] lands;
+    public AssetModel[] trees;
+    public MachineDataModel[] machines;
+    public CropDataModel[] crops;
+    public RecipesModel[] machine_recipes;
+    public ProduceDataModel[] user_data;
+    public IngModel[] user_balance;
+    public IngModel[] land_assets;
+    public string land_id;
+}
