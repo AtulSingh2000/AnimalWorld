@@ -211,7 +211,14 @@ public class MainView : BaseView
         Level,
         Level1,
         Level2,
-        Level3
+        Level3,
+        Level4,
+        Level5,
+        Level6,
+        Level7,
+        Level8,
+        Level9,
+        Level10
     };
 
     enum crop_level
@@ -219,7 +226,9 @@ public class MainView : BaseView
         Level,
         Level1,
         Level2,
-        Level3
+        Level3,
+        Level4,
+        Level5
     };
 
     protected override void Start()
@@ -382,7 +391,6 @@ public class MainView : BaseView
             {
                 if (Physics.Raycast(ray, out RaycastHit hitInfor))
                 {
-                    current_back_status = "closeall";
                     if (hitInfor.collider.gameObject.CompareTag("trees"))
                         selectType("trees");
                     else if (hitInfor.collider.gameObject.CompareTag("machines"))
@@ -393,7 +401,7 @@ public class MainView : BaseView
                         selectType("shop");
                     else if (hitInfor.collider.gameObject.CompareTag("tokenexchange"))
                         selectType("exchange");
-                    else if (hitInfor.collider.gameObject.CompareTag("menu")) { current_back_status = "close"; main_menu_panel.SetActive(true); from_main_menu = true; }
+                    else if (hitInfor.collider.gameObject.CompareTag("menu")) { main_menu_panel.SetActive(true); from_main_menu = true; }
                     else if (hitInfor.collider.gameObject.CompareTag("inventory"))
                         selectType("inventory");
                 }
@@ -499,6 +507,8 @@ public class MainView : BaseView
                         child.register_btn.SetActive(true);
                         child.boost_btn.gameObject.SetActive(false);
                         reg_ids.Add(asset_data.asset_id);
+                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.level_text.text = asset_data.level.Substring(5,asset_data.level.Length-1);
                     }
                     else if (asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id)
                     {
@@ -520,18 +530,16 @@ public class MainView : BaseView
                         child.max_harvest = asset_data.max_harvests;
                         child.LoadingPanel = LoadingPanel;
                         child.cooldown = asset_data.cd_start;
-                        child.boost_btn.gameObject.SetActive(true);
-                        BoostPanelCall boost_child = boost_panel.gameObject.GetComponent<BoostPanelCall>();
-                        boost_child.LoadingPanel = LoadingPanel;
-                        boost_child.asset_id = asset_data.asset_id;
-                        boost_child.type = "machine";
-                        boost_child.symbol = "";
-                        child.boost_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { show_boost(); });
-                        if (asset_data.cd_start == "1" || Int64.Parse(asset_data.harvests) == Int64.Parse(asset_data.max_harvests))
-                            child.boost_btn.gameObject.SetActive(true);
                         child.details_btn.SetActive(true);
                         child.details_btn.GetComponent<Button>().onClick.AddListener(delegate { show_machines_details(child); });
+                        Debug.Log(child.details_btn.GetComponent<Button>().onClick.ToString());
+                        child.boost_btn.gameObject.SetActive(true);
+                        child.boost_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { show_boost("machine",asset_data.asset_id); });
                         dereg_ids.Add(asset_data.asset_id);
+                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.level_text.text = asset_data.level.Substring(5, asset_data.level.Length - 1);
+                        if (asset_data.cd_start == "1" || Int64.Parse(asset_data.harvests) == Int64.Parse(asset_data.max_harvests))
+                            child.maxed_harvests = true;
                     }
                 }
             }
@@ -553,6 +561,8 @@ public class MainView : BaseView
                         child.register_btn.SetActive(true);
                         child.boost_btn.gameObject.SetActive(false);
                         reg_ids.Add(asset_data.asset_id);
+                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.level_text.text = asset_data.level.Substring(5, asset_data.level.Length - 1);
                     }
 
                     else if (asset_data.level == show_rarity && asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id)
@@ -574,18 +584,16 @@ public class MainView : BaseView
                         child.max_harvest = asset_data.max_harvests;
                         child.LoadingPanel = LoadingPanel;
                         child.cooldown = asset_data.cd_start;
-                        child.boost_btn.gameObject.SetActive(true);
-                        BoostPanelCall boost_child = boost_panel.gameObject.GetComponent<BoostPanelCall>();
-                        boost_child.LoadingPanel = LoadingPanel;
-                        boost_child.asset_id = asset_data.asset_id;
-                        boost_child.type = "machine";
-                        boost_child.symbol = "";
-                        child.boost_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { show_boost(); });
-                        if (asset_data.cd_start == "1" || Int64.Parse(asset_data.harvests) == Int64.Parse(asset_data.max_harvests))
-                            child.boost_btn.gameObject.SetActive(true);
                         child.details_btn.SetActive(true);
                         child.details_btn.GetComponent<Button>().onClick.AddListener(delegate { show_machines_details(child); });
+                        Debug.Log(child.details_btn.GetComponent<Button>().onClick.ToString());
+                        child.boost_btn.gameObject.SetActive(true);
+                        child.boost_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { show_boost("machine", asset_data.asset_id); });
                         dereg_ids.Add(asset_data.asset_id);
+                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.level_text.text = asset_data.level.Substring(5, asset_data.level.Length - 1);
+                        if (asset_data.cd_start == "1" || Int64.Parse(asset_data.harvests) == Int64.Parse(asset_data.max_harvests))
+                            child.maxed_harvests = true;
                     }
                 }
             }
@@ -646,6 +654,8 @@ public class MainView : BaseView
                         child.LoadingPanel = LoadingPanel;
                         child.register_btn.SetActive(true);
                         reg_ids.Add(asset_data.asset_id);
+                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.level_text.text = asset_data.level.Substring(5, asset_data.level.Length - 1);
                     }
                     else if (asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id)
                     {
@@ -669,6 +679,8 @@ public class MainView : BaseView
                         child.details_btn.SetActive(true);
                         child.details_btn.GetComponent<Button>().onClick.AddListener(delegate { show_crops_details(child); });
                         dereg_ids.Add(asset_data.asset_id);
+                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.level_text.text = asset_data.level.Substring(5, asset_data.level.Length - 1);
                     }
                 }
             }
@@ -689,6 +701,8 @@ public class MainView : BaseView
                         child.LoadingPanel = LoadingPanel;
                         child.register_btn.SetActive(true);
                         reg_ids.Add(asset_data.asset_id);
+                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.level_text.text = asset_data.level.Substring(5, asset_data.level.Length - 1);
                     }
 
                     else if (asset_data.level == show_rarity && asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id)
@@ -713,6 +727,8 @@ public class MainView : BaseView
                         child.details_btn.SetActive(true);
                         child.details_btn.GetComponent<Button>().onClick.AddListener(delegate { show_crops_details(child); });
                         dereg_ids.Add(asset_data.asset_id);
+                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.level_text.text = asset_data.level.Substring(5, asset_data.level.Length - 1);
                     }
                 }
             }
@@ -991,6 +1007,7 @@ public class MainView : BaseView
                     child.current_harvest.text = asset_data.current_harvests;
                     reg_ids.Add(asset_data.asset_id);
                     child.start_timer = false;
+                    child.level_text.text = asset_data.level;
                 }
                 else if (asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id)
                 {
@@ -1010,17 +1027,13 @@ public class MainView : BaseView
                     child.cooldown = asset_data.cooldown;
                     child.boost_btn.gameObject.SetActive(true);
                     child.current_harvest.text = asset_data.current_harvests;
-                    BoostPanelCall boost_child = boost_panel.gameObject.GetComponent<BoostPanelCall>();
-                    boost_child.LoadingPanel = LoadingPanel;
-                    boost_child.asset_id = asset_data.asset_id;
-                    boost_child.type = "tree";
-                    boost_child.symbol = asset_data.boost;
-                    child.boost_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { show_boost(); });
+                    child.boost_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { show_boost("tree", asset_data.asset_id); });
                     if (asset_data.cooldown == "1" || Int64.Parse(asset_data.current_harvests) == Int64.Parse(asset_data.max_harvests))
                         child.maxed_harvests = true;
                     else
                         child.start_timer = true;
                     dereg_ids.Add(asset_data.asset_id);
+                    child.level_text.text = asset_data.level;
                 }
             }
         }
@@ -1037,12 +1050,13 @@ public class MainView : BaseView
 
     public void show_machines_details(MachineAssetCall child_obj)
     {
-        if(double.Parse(child_obj.harvest) >= double.Parse(child_obj.max_harvest))
+        Debug.Log("in machine details");
+        current_back_status = "on_registered_machines";
+        if (double.Parse(child_obj.harvest) >= double.Parse(child_obj.max_harvest))
         {
-            showRegisteredAssets("machines");
+            navButton("back");
             return;
         }
-        current_back_status = "on_registered_machines";
         machine_child_asset = null;
         clearChildObjs(parent_machine_current_ing);
         machine_rarity_dropdown.gameObject.SetActive(false);
@@ -1176,6 +1190,7 @@ public class MainView : BaseView
     public void show_crops_details(CropAssetCall child_obj)
     {
         Debug.Log("in");
+        Debug.Log("in crop details");
         current_back_status = "on_registered_crops";
         crop_child_asset = null;
         clearChildObjs(parent_crops_current_ing);
@@ -1520,10 +1535,14 @@ public class MainView : BaseView
         }
     }
 
-    public void show_boost()
+    public void show_boost(string type,string asset_id)
     {
-        Debug.Log("in boost");
         boost_panel.SetActive(true);
+        BoostPanelCall boost_child = boost_panel.gameObject.GetComponent<BoostPanelCall>();
+        boost_child.LoadingPanel = LoadingPanel;
+        boost_child.asset_id = asset_id;
+        boost_child.type = type;
+        boost_child.symbol = "";
     }
 
     public void Register_All(string asset_ids)
@@ -1650,7 +1669,7 @@ public class MainView : BaseView
             reg_total_trees.text = reg.ToString();
             un_total_trees.text = de_reg.ToString();
             time_to_claim.text = current_pro.ToString("0.00") + " " + type;
-            current_produce.text = MessageHandler.GetBalanceKey(type) + " " + type;
+            current_produce.text = MessageHandler.GetBalanceKey(type.ToUpper()) + " " + type;
         }
         else if (onMachines)
         {
@@ -1830,7 +1849,8 @@ public class MainView : BaseView
         }
         else if (onCrops)
         {
-            current_back_status = "close";
+            if (from_main_menu) current_back_status = "close";
+            else current_back_status = "closeall";
             if (crop_subheading_text_type_2.activeInHierarchy) crop_subheading_text_type_2.SetActive(false);
             if (!crop_subheading_text.activeInHierarchy) crop_subheading_text.SetActive(true);
             crop_subheading_text.GetComponent<TMP_Text>().text = "Crop Fields";
@@ -1840,7 +1860,8 @@ public class MainView : BaseView
         }
         else if (onLand)
         {
-            current_back_status = "close";
+            if (from_main_menu) current_back_status = "close";
+            else current_back_status = "closeall";
             if (!land_subheading_text.activeInHierarchy) land_subheading_text.SetActive(true);
             land_subheading_text.GetComponent<TMP_Text>().text = "Lands";
             clearChildObjs(parent_transform_land_reg);
@@ -1907,6 +1928,7 @@ public class MainView : BaseView
             case ("on_trees_stats_panel"):
                 parent_transform_trees_unreg.gameObject.SetActive(false);
                 tree_register_all_btn.gameObject.SetActive(false);
+                tree_deregister_all_btn.gameObject.SetActive(false);
                 tree_claim_all_btn.gameObject.SetActive(false);
                 onStackPanelOpen();
                 break;
@@ -1940,6 +1962,7 @@ public class MainView : BaseView
                 parent_transform_machine_unreg.gameObject.SetActive(false);
                 machine_rarity_dropdown.gameObject.SetActive(false);
                 machine_register_all_btn.gameObject.SetActive(false);
+                machine_deregister_all_btn.gameObject.SetActive(false);
                 can_start_machine = false;
                 onStackPanelOpen();
                 break;
@@ -1947,6 +1970,7 @@ public class MainView : BaseView
                 parent_transform_crop_unreg.gameObject.SetActive(false);
                 crop_level_dropdown.gameObject.SetActive(false);
                 crop_register_all_btn.gameObject.SetActive(false);
+                crop_deregister_all_btn.gameObject.SetActive(false);
                 onStackPanelOpen();
                 if (from_main_menu) current_back_status = "close";
                 else current_back_status = "closeall";
@@ -1962,6 +1986,8 @@ public class MainView : BaseView
                 break;
             case ("on_lands_stats_panel"):
                 parent_transform_land_unreg.gameObject.SetActive(false);
+                land_deregister_all_btn.gameObject.SetActive(false);
+                land_register_all_btn.gameObject.SetActive(false);
                 if (from_main_menu) current_back_status = "close";
                 else current_back_status = "closeall";
                 //machine_rarity_dropdown.gameObject.SetActive(false);
@@ -2003,7 +2029,6 @@ public class MainView : BaseView
                 stack_trees_type = null;
                 current_back_status = "closeall";
                 UI_opened = false;
-                from_main_menu = false;
                 break;
             default:
                 break;
@@ -2053,6 +2078,8 @@ public class MainView : BaseView
     public void selectType(string type)
     {
         UI_opened = true;
+        if (from_main_menu) current_back_status = "close";
+        else current_back_status = "closeall";
         switch (type)
         {
             case ("trees"):
@@ -2285,19 +2312,23 @@ public class MainView : BaseView
             {
                 successPanel.SetActive(true);
                 string action_name = "";
+                string item_name = "";
                 switch (MessageHandler.shopmodle.type)
                 {
                     case ("ingame"):
                         action_name = "Purchased";
+                        item_name = MessageHandler.shopmodle.resource.in_name;
                         break;
                     case ("pack"):
                         action_name = "Purchased";
+                        item_name = "pack";
                         break;
                     case ("mint"):
                         action_name = "Minted";
+                        item_name = MessageHandler.shopmodle.price.in_name;
                         break;
                 }
-                success_text.text = action_name + " 1 " + MessageHandler.shopmodle.resource.in_name + '\n' + "Wallet Debited for AWC " + MessageHandler.shopmodle.price.in_qty;
+                success_text.text = action_name + " 1 " + item_name + '\n' + "Wallet Debited for AWC " + MessageHandler.shopmodle.price.in_qty;
                 success_header_text.text = action_name + " Successfully";
                 StartCoroutine(StartTokenTimer(MessageHandler.shopmodle.price.in_qty, "withdraw"));
                 MessageHandler.shopmodle = null;

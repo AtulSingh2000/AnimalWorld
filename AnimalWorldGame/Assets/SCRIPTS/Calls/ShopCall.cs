@@ -69,6 +69,8 @@ public class ShopCall : MonoBehaviour
             price1txt.text = price.in_qty;
             min_level.text = req_level;
             string balance = MessageHandler.GetBalanceKey(price.in_name);
+            availabletxt.text = reqtxt.text;
+            buyButton.onClick.AddListener(delegate { BuyResource("1"); });
             //balance get
             /*if(double.TryParse(reqtxt.text,out double required_amt))
             {

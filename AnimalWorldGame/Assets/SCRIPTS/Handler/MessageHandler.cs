@@ -10,7 +10,7 @@ public class MessageHandler : MonoBehaviour
     private static extern void autologin();
    
     [DllImport("__Internal")]
-private static extern void getUserB();
+    private static extern void getUserB();
 
     [DllImport("__Internal")]
     private static extern void login(string type);
@@ -260,10 +260,16 @@ public static void Server_BurnNFT(string asset_id)
         LevelModel [] final_level=new LevelModel[2];
         for(int i=0;i<levelModel.Length;i++)
         {
-            if(double.Parse(xpbalance)>=double.Parse(levelModel[i].xp_amount))
+            if(double.TryParse(xpbalance,out double xp_bal))
             {
-                final_level[0]=levelModel[i];
-               final_level[1]= levelModel[i+1];
+                if(double.TryParse(levelModel[i].xp_amount,out double level_amt))
+                {
+                    if(xp_bal >= level_amt)
+                    {
+                        final_level[0] = levelModel[i];
+                        final_level[1] = levelModel[i + 1];
+                    }
+                }
             }
         }
         return final_level;

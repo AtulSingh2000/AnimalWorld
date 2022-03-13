@@ -17,6 +17,7 @@ public class CropAssetCall : MonoBehaviour
     public string harvest;
     public string max_harvest;
     public TMP_Text asset_id_text;
+    public TMP_Text level_text;
     public GameObject register_btn;
     public GameObject unregister_btn;
     public GameObject select_btn;
@@ -25,7 +26,7 @@ public class CropAssetCall : MonoBehaviour
 
     protected virtual void Start()
     {
-        if (cooldown == "1")
+        if (cooldown == "1" || double.Parse(harvest) == double.Parse(max_harvest))
         {
             Image machine_image = this.gameObject.transform.Find("NFT_Image").gameObject.GetComponent<Image>();
             UnityEngine.Color alpha = machine_image.color;

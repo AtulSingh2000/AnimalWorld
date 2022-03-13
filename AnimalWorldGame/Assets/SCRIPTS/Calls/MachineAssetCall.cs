@@ -17,6 +17,7 @@ public class MachineAssetCall : MonoBehaviour
     public string max_harvest;
     public string cooldown;
     public TMP_Text asset_id_text;
+    public TMP_Text level_text;
     public GameObject register_btn;
     public GameObject unregister_btn;
     public GameObject select_btn;
@@ -27,7 +28,7 @@ public class MachineAssetCall : MonoBehaviour
 
     protected virtual void Start()
     {
-        if(cooldown == "1" || maxed_harvests)
+        if(cooldown == "1" || double.Parse(harvest) == double.Parse(max_harvest))
         {
             Image machine_image = this.gameObject.transform.Find("NFT_Image").gameObject.GetComponent<Image>();
             UnityEngine.Color alpha = machine_image.color;
