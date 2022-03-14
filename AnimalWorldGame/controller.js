@@ -1371,6 +1371,7 @@ const start_machine = async (asset_id, recipeID,type) => {
       },
     },]);
     await delay(3000);
+    await getUserB();
     if(type == "machine"){
       await getMachineD();
       await getCallBack("machines", asset_id, "start_machine");
@@ -1547,6 +1548,7 @@ const claim_machine = async (asset_id, recipeID,type) => {
       },
     },]);
     await delay(3000);
+    await getUserB();
     switch(type){
       case ("machine"):
         await getMachineD();
@@ -1565,7 +1567,7 @@ const claim_machine = async (asset_id, recipeID,type) => {
 
 const claim_tree = async (asset_id) => {
   try {
-    const result = await wallet_transact([{
+    await wallet_transact([{
       account: contract,
       name: "claimtree",
       authorization: [{
@@ -1578,6 +1580,7 @@ const claim_tree = async (asset_id) => {
       },
     },]);
     await delay(2500);
+    await getUserB();
     await getUserD();
     treeData = await getTreeData();
     unityInstance.SendMessage(
@@ -1596,7 +1599,7 @@ const claim_tree = async (asset_id) => {
       callback_obj === undefined ? JSON.stringify({}) : JSON.stringify(callback_obj)
     );
   } catch (e) {
-    console.log(e);
+    console.log(e.message);
     unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
   }
 }
@@ -1689,6 +1692,7 @@ const use_boost = async (asset_id,type) => {
       },
     },]);
     await delay(2000);
+    await getUserB();
     let obj = [];
     switch(type){
       case ("tree"):

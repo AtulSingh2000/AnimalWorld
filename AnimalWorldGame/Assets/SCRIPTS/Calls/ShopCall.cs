@@ -44,8 +44,10 @@ public class ShopCall : MonoBehaviour
     public Button buyButton;
     public Image button_sprite;
     public GameObject LoadingPanel;
+    public TMP_InputField buyqty;
 
     public ShopView view;
+    public AbbvHelper helper;
 
     public void SetData()
     {
@@ -53,7 +55,10 @@ public class ShopCall : MonoBehaviour
         Debug.Log(user_balance);
         if (type=="ingame")
         {
-            description.text= "Buy 1 " + resource.in_name;
+            if(helper.recipes_abv.ContainsKey(resource.in_name))
+                description.text= "Buy 1 " + helper.recipes_abv[resource.in_name];
+            else
+                description.text = "Buy 1 " + resource.in_name;
             price1txt.text = price.in_qty;
             min_level.text = req_level;
             if (double.Parse(price.in_qty) <= user_balance)
@@ -71,20 +76,6 @@ public class ShopCall : MonoBehaviour
             string balance = MessageHandler.GetBalanceKey(price.in_name);
             availabletxt.text = reqtxt.text;
             buyButton.onClick.AddListener(delegate { BuyResource("1"); });
-            //balance get
-            /*if(double.TryParse(reqtxt.text,out double required_amt))
-            {
-                if (double.Parse(balance) >= required_amt)
-                {
-                    availabletxt.text = reqtxt.text;
-                    buyButton.onClick.AddListener(delegate { BuyResource(required_amt.ToString()); });
-                }
-                else if (double.Parse(balance) < required_amt)
-                {
-                    availabletxt.text = balance;
-                    buyButton.interactable = false;
-                }
-            }*/
         }
         else if(type=="pack")
         {
@@ -100,7 +91,7 @@ public class ShopCall : MonoBehaviour
         }
         else if(type=="dmo")
         {
-            description.text = products[0].in_qty + " " + products[0].in_name;
+            description.text = products[0].in_qty + " " + helper.recipes_abv[products[0].in_name];
             price1txt.text = reward.in_qty;
             price2txt.text = xp_boost.in_qty;
             reqtxt.text = products[0].in_qty.Split('.')[0];
@@ -167,19 +158,65 @@ public class ShopCall : MonoBehaviour
 
     public void BuyResource(string quantity)
     {
-        quantity="1";
-        Debug.Log("BuyResource");
         if (!string.IsNullOrEmpty(price.in_qty) && !string.IsNullOrEmpty(id)  && !string.IsNullOrEmpty(resource.in_qty))
         {
             LoadingPanel.SetActive(true);
             MessageHandler.shopmodle.id = id;
             MessageHandler.shopmodle.resource = resource;
-            MessageHandler.shopmodle.price = price;
+            MessageHandler.shopmodle.price.in_name = price.in_name;
+            MessageHandler.shopmodle.price.in_qty = (double.Parse(quantity) * double.Parse(price.in_qty)).ToString();
             MessageHandler.shopmodle.type = type;
             MessageHandler.Server_BuyShopL(id,quantity);
         }
         else
             SSTools.ShowMessage("No Order Selected", SSTools.Position.bottom, SSTools.Time.twoSecond);
+    }
+
+    public void onBuyQtyChange()
+    {
+        buyButton.onClick.RemoveAllListeners();
+        if(Int64.TryParse(buyqty.text,out long qty))
+        {
+            Debug.Log(qty);
+            if (qty != 0)
+            {
+                if(helper.recipes_abv.ContainsKey(resource.in_name))
+                    description.text = "Buy " + qty.ToString() + " " + helper.recipes_abv[resource.in_name];
+                else
+                    description.text = "Buy " + qty.ToString() + " " + resource.in_name;
+                double final_price = (double.Parse(price.in_qty) * qty);
+                price1txt.text = final_price.ToString() + ".00";
+                if (final_price <= double.Parse(MessageHandler.GetBalanceKey("AWC")))
+                { 
+                    buyButton.onClick.AddListener(delegate { BuyResource(qty.ToString()); }); 
+                    buyButton.interactable = true;
+                }
+                else
+                {
+                    SSTools.ShowMessage("Insufficient Balance !", SSTools.Position.bottom, SSTools.Time.twoSecond);
+                    buyButton.interactable = false;
+                }
+            }
+            else
+                SSTools.ShowMessage("Buy Quantity Cannot be 0", SSTools.Position.bottom, SSTools.Time.twoSecond);
+        }
+        else
+        {
+            if (helper.recipes_abv.ContainsKey(resource.in_name))
+                description.text = "Buy 1 " + helper.recipes_abv[resource.in_name];
+            else
+                description.text = "Buy 1 " + resource.in_name;
+            price1txt.text = price.in_qty;
+            if (double.Parse(price.in_qty) <= double.Parse(MessageHandler.GetBalanceKey("AWC"))) { 
+                buyButton.interactable = true;
+                buyButton.onClick.AddListener(delegate { BuyResource("1"); });
+            }
+            else
+            {
+                SSTools.ShowMessage("Insufficient Balance !", SSTools.Position.bottom, SSTools.Time.twoSecond);
+                buyButton.interactable = false;
+            }
+        }
     }
 
 }

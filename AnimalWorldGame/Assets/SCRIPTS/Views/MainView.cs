@@ -1064,10 +1064,13 @@ public class MainView : BaseView
         current_back_status = "on_registered_machines";
         if (double.Parse(child_obj.harvest) >= double.Parse(child_obj.max_harvest))
         {
+            ShowElements_Machines(stack_machines_type, level_type);
             navButton("back");
         }
         else
         {
+            machine_detail_view_img.sprite = Resources.Load<Sprite>("Sprites/"+ child_obj.asset_name);
+            machine_deregister_all_btn.gameObject.SetActive(false);
             machine_child_asset = null;
             clearChildObjs(parent_machine_current_ing);
             machine_rarity_dropdown.gameObject.SetActive(false);
@@ -1204,10 +1207,12 @@ public class MainView : BaseView
         current_back_status = "on_registered_crops";
         if (double.Parse(child_obj.harvest) >= double.Parse(child_obj.max_harvest))
         {
+            ShowElements_Crops(level_type);
             navButton("back");
         }
         else
         {
+            crop_deregister_all_btn.gameObject.SetActive(false);
             crop_child_asset = null;
             clearChildObjs(parent_crops_current_ing);
             crop_level_dropdown.gameObject.SetActive(false);
@@ -1959,6 +1964,7 @@ public class MainView : BaseView
                 onStackPanelOpen();
                 break;
             case ("on_registered_machines"):
+                machine_deregister_all_btn.gameObject.SetActive(true);
                 machine_rarity_dropdown.gameObject.SetActive(true);
                 machine_show_panel.gameObject.SetActive(true);
                 show_machine_details.gameObject.SetActive(false);
@@ -2002,6 +2008,7 @@ public class MainView : BaseView
                 else current_back_status = "closeall";
                 break;
             case ("on_registered_crops"):
+                crop_deregister_all_btn.gameObject.SetActive(true);
                 crop_level_dropdown.gameObject.SetActive(true);
                 crop_show_panel.gameObject.SetActive(true);
                 show_crop_details.gameObject.SetActive(false);

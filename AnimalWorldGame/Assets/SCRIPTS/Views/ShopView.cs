@@ -29,6 +29,8 @@ public class ShopView : BaseView
 
     public RectTransform focus;
 
+    public AbbvHelper helper;
+
     private bool pack = false;
     private bool dmo = false;
     private bool resource = false;
@@ -122,14 +124,15 @@ public class ShopView : BaseView
             ins.transform.localScale=new Vector3(1f,1f,1f);
             var child = ins.gameObject.GetComponent<ShopCall>();
             child.type="dmo";
-            child.id=dmo.id;
-            child.type=dmo.type;
-            child.products=dmo.products;
-            child.reward=dmo.reward;
-            child.xp_boost=dmo.xp_boost;
-            child.level_boost=dmo.level_boost;
-            child.xp_level=dmo.xp_level;
+            child.id = dmo.id;
+            child.type = dmo.type;
+            child.products = dmo.products;
+            child.reward = dmo.reward;
+            child.xp_boost = dmo.xp_boost;
+            child.level_boost = dmo.level_boost;
+            child.xp_level = dmo.xp_level;
             child.LoadingPanel = LoadingPanel;
+            child.helper = helper;
             child.SetData();
         }
     }
@@ -188,6 +191,7 @@ public class ShopView : BaseView
                 child.resource = listing.resource;
                 child.req_level = listing.req_level;
                 child.LoadingPanel = LoadingPanel;
+                child.helper = helper;
                 child.SetData();
             }
         }

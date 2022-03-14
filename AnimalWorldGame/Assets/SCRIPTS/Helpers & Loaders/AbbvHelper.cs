@@ -49,6 +49,10 @@ public class AbbvHelper : MonoBehaviour
         recipes.Add("CRT", "CRT");
         recipes.Add("CLY", "CLY");
         recipes.Add("SBEAN", "Soya Bean");
+
+        recipes.Add("FLZR", "Fertilizer");
+        recipes.Add("OIL", "Oil");
+
     }
 
     public Dictionary<string,string> machines_abv
