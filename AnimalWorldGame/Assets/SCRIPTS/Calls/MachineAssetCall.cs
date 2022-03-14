@@ -28,7 +28,15 @@ public class MachineAssetCall : MonoBehaviour
 
     protected virtual void Start()
     {
-        if(cooldown == "1" || double.Parse(harvest) == double.Parse(max_harvest))
+        if(cooldown == "1")
+        {
+            Image machine_image = this.gameObject.transform.Find("NFT_Image").gameObject.GetComponent<Image>();
+            UnityEngine.Color alpha = machine_image.color;
+            alpha.a = 0.5f;
+            machine_image.color = alpha;
+            details_btn.GetComponent<Button>().interactable = false;
+        }
+        else if(!string.IsNullOrEmpty(harvest) && !string.IsNullOrEmpty(max_harvest) && double.Parse(harvest) == double.Parse(max_harvest))
         {
             Image machine_image = this.gameObject.transform.Find("NFT_Image").gameObject.GetComponent<Image>();
             UnityEngine.Color alpha = machine_image.color;

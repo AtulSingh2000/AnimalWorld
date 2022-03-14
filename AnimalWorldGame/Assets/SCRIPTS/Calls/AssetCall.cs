@@ -29,7 +29,6 @@ public class AssetCall : MonoBehaviour
 
     protected virtual void Start()
     {
-        level_text.text = level;
         tree_image = this.gameObject.transform.Find("NFT_Image").gameObject.GetComponent<Image>();
         claim_btn.GetComponent<Button>().interactable = false;
         if (start_timer)

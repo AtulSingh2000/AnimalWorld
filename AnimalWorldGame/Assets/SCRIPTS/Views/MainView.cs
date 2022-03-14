@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -233,7 +234,6 @@ public class MainView : BaseView
 
     protected override void Start()
     {
-        
         base.Start();
         MessageHandler.OnCallBackData += OnCallBackData;
         SSTools.ShowMessage("Welcome Farmer " + MessageHandler.userModel.account, SSTools.Position.bottom, SSTools.Time.twoSecond);
@@ -494,7 +494,7 @@ public class MainView : BaseView
                     Debug.Log(asset_data.asset_id);
                     if (asset_data.reg == "0")
                     {
-                        Debug.Log("in");
+                        Debug.Log("in reg");
                         var ins = Instantiate(asset_prefab);
                         ins.transform.SetParent(unreg);
                         ins.transform.localScale = new Vector3(1, 1, 1);
@@ -508,11 +508,13 @@ public class MainView : BaseView
                         child.boost_btn.gameObject.SetActive(false);
                         reg_ids.Add(asset_data.asset_id);
                         child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
-                        child.level_text.text = asset_data.level.Substring(5,asset_data.level.Length-1);
+                        string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
+                        Debug.Log(nums);
+                        child.level_text.text = nums;
                     }
                     else if (asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id)
                     {
-                        Debug.Log("in");
+                        Debug.Log("in dereg");
                         var ins = Instantiate(asset_prefab);
                         ins.transform.SetParent(reg);
                         ins.transform.localScale = new Vector3(1, 1, 1);
@@ -532,14 +534,13 @@ public class MainView : BaseView
                         child.cooldown = asset_data.cd_start;
                         child.details_btn.SetActive(true);
                         child.details_btn.GetComponent<Button>().onClick.AddListener(delegate { show_machines_details(child); });
-                        Debug.Log(child.details_btn.GetComponent<Button>().onClick.ToString());
                         child.boost_btn.gameObject.SetActive(true);
                         child.boost_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { show_boost("machine",asset_data.asset_id); });
                         dereg_ids.Add(asset_data.asset_id);
                         child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
-                        child.level_text.text = asset_data.level.Substring(5, asset_data.level.Length - 1);
-                        if (asset_data.cd_start == "1" || Int64.Parse(asset_data.harvests) == Int64.Parse(asset_data.max_harvests))
-                            child.maxed_harvests = true;
+                        string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
+                        Debug.Log(nums);
+                        child.level_text.text = nums;
                     }
                 }
             }
@@ -561,8 +562,9 @@ public class MainView : BaseView
                         child.register_btn.SetActive(true);
                         child.boost_btn.gameObject.SetActive(false);
                         reg_ids.Add(asset_data.asset_id);
-                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
-                        child.level_text.text = asset_data.level.Substring(5, asset_data.level.Length - 1);
+                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true); string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
+                        Debug.Log(nums);
+                        child.level_text.text = nums;
                     }
 
                     else if (asset_data.level == show_rarity && asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id)
@@ -591,9 +593,9 @@ public class MainView : BaseView
                         child.boost_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { show_boost("machine", asset_data.asset_id); });
                         dereg_ids.Add(asset_data.asset_id);
                         child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
-                        child.level_text.text = asset_data.level.Substring(5, asset_data.level.Length - 1);
-                        if (asset_data.cd_start == "1" || Int64.Parse(asset_data.harvests) == Int64.Parse(asset_data.max_harvests))
-                            child.maxed_harvests = true;
+                        string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
+                        Debug.Log(nums);
+                        child.level_text.text = nums;
                     }
                 }
             }
@@ -601,6 +603,8 @@ public class MainView : BaseView
 
         var register_ids = string.Join(",", reg_ids.ToArray());
         var deregister_ids = string.Join(",", dereg_ids.ToArray());
+        machine_deregister_all_btn.onClick.RemoveAllListeners();
+        machine_register_all_btn.onClick.RemoveAllListeners();
         machine_register_all_btn.onClick.AddListener(delegate { Register_All(register_ids); });
         machine_deregister_all_btn.onClick.AddListener(delegate { Deregister_All(deregister_ids); });
     }
@@ -654,8 +658,9 @@ public class MainView : BaseView
                         child.LoadingPanel = LoadingPanel;
                         child.register_btn.SetActive(true);
                         reg_ids.Add(asset_data.asset_id);
-                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
-                        child.level_text.text = asset_data.level.Substring(5, asset_data.level.Length - 1);
+                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true); string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
+                        Debug.Log(nums);
+                        child.level_text.text = nums;
                     }
                     else if (asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id)
                     {
@@ -680,7 +685,9 @@ public class MainView : BaseView
                         child.details_btn.GetComponent<Button>().onClick.AddListener(delegate { show_crops_details(child); });
                         dereg_ids.Add(asset_data.asset_id);
                         child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
-                        child.level_text.text = asset_data.level.Substring(5, asset_data.level.Length - 1);
+                        string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
+                        Debug.Log(nums);
+                        child.level_text.text = nums;
                     }
                 }
             }
@@ -702,7 +709,9 @@ public class MainView : BaseView
                         child.register_btn.SetActive(true);
                         reg_ids.Add(asset_data.asset_id);
                         child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
-                        child.level_text.text = asset_data.level.Substring(5, asset_data.level.Length - 1);
+                        string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
+                        Debug.Log(nums);
+                        child.level_text.text = nums;
                     }
 
                     else if (asset_data.level == show_rarity && asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id)
@@ -728,13 +737,17 @@ public class MainView : BaseView
                         child.details_btn.GetComponent<Button>().onClick.AddListener(delegate { show_crops_details(child); });
                         dereg_ids.Add(asset_data.asset_id);
                         child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
-                        child.level_text.text = asset_data.level.Substring(5, asset_data.level.Length - 1);
+                        string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
+                        Debug.Log(nums);
+                        child.level_text.text = nums;
                     }
                 }
             }
         }
         var register_ids = string.Join(",", reg_ids.ToArray());
         var deregister_ids = string.Join(",", dereg_ids.ToArray());
+        crop_deregister_all_btn.onClick.RemoveAllListeners();
+        crop_register_all_btn.onClick.RemoveAllListeners();
         crop_register_all_btn.onClick.AddListener(delegate { Register_All(register_ids); });
         crop_deregister_all_btn.onClick.AddListener(delegate { Deregister_All(deregister_ids); });
     }
@@ -899,8 +912,8 @@ public class MainView : BaseView
 
     public void switchLand(string asset_id)
     {
-        StartCoroutine(LoadingCountdown());
         MessageHandler.userModel.land_id = asset_id;
+        StartCoroutine(LoadingCountdown());
         asset_id = "0";
         back_status = "close";
         stack_trees_type = "null";
@@ -918,11 +931,10 @@ public class MainView : BaseView
     private IEnumerator LoadingCountdown()
     {
         LoadingPanel.SetActive(true);
-        SetElements();
         Start();
         current_back_status = "close";
         navButton("back");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         LoadingPanel.SetActive(false);
     }
 
@@ -1007,7 +1019,9 @@ public class MainView : BaseView
                     child.current_harvest.text = asset_data.current_harvests;
                     reg_ids.Add(asset_data.asset_id);
                     child.start_timer = false;
-                    child.level_text.text = asset_data.level;
+                    child.level = asset_data.level;
+                    string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
+                    child.level_text.text = nums;
                 }
                 else if (asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id)
                 {
@@ -1033,12 +1047,16 @@ public class MainView : BaseView
                     else
                         child.start_timer = true;
                     dereg_ids.Add(asset_data.asset_id);
-                    child.level_text.text = asset_data.level;
+                    child.level = asset_data.level;
+                    string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
+                    child.level_text.text = nums;
                 }
             }
         }
         var register_ids = string.Join(",", reg_ids.ToArray());
         var deregister_ids = string.Join(",", dereg_ids.ToArray());
+        tree_register_all_btn.onClick.RemoveAllListeners();
+        tree_deregister_all_btn.onClick.RemoveAllListeners();
         tree_register_all_btn.onClick.AddListener(delegate { Register_All(register_ids); });
         tree_deregister_all_btn.onClick.AddListener(delegate { Deregister_All(deregister_ids); });
     }
@@ -1050,110 +1068,111 @@ public class MainView : BaseView
 
     public void show_machines_details(MachineAssetCall child_obj)
     {
-        Debug.Log("in machine details");
         current_back_status = "on_registered_machines";
         if (double.Parse(child_obj.harvest) >= double.Parse(child_obj.max_harvest))
         {
             navButton("back");
-            return;
         }
-        machine_child_asset = null;
-        clearChildObjs(parent_machine_current_ing);
-        machine_rarity_dropdown.gameObject.SetActive(false);
-        if (machine_show_panel.gameObject.activeInHierarchy) machine_show_panel.gameObject.SetActive(false);
-        if (!show_machine_details.gameObject.activeInHierarchy) show_machine_details.gameObject.SetActive(true);
-        machine_subheading_text.GetComponent<TMP_Text>().text = " #" + child_obj.asset_id + " Details";
-        foreach (ImgObjectView data in img)
+        else
         {
-            if (data.type == "machine" && data.name.ToUpper() == child_obj.name.ToUpper())
+            machine_child_asset = null;
+            clearChildObjs(parent_machine_current_ing);
+            machine_rarity_dropdown.gameObject.SetActive(false);
+            if (machine_show_panel.gameObject.activeInHierarchy) machine_show_panel.gameObject.SetActive(false);
+            if (!show_machine_details.gameObject.activeInHierarchy) show_machine_details.gameObject.SetActive(true);
+            machine_subheading_text.GetComponent<TMP_Text>().text = " #" + child_obj.asset_id + " Details";
+            foreach (ImgObjectView data in img)
             {
-                Debug.Log("found");
-                //var ins = data.prefab.transform.Find("NFT_Image");
-                break;
-            }
-        }
-        machine_unregister_btn.gameObject.SetActive(true);
-        machine_unregister_btn.onClick.RemoveAllListeners();
-        machine_unregister_btn.onClick.AddListener(delegate { child_obj.DeRegisterAsset(); });
-        float current_filled_slots = child_obj.on_recip.Length;
-        float slots_max = float.Parse(child_obj.slot_size);
-        slots_in_use_detailView.text = current_filled_slots + "/" + slots_max;
-        harvests_detailView.text = child_obj.harvest + "/" + child_obj.max_harvest;
-        float current_harvest = float.Parse(child_obj.harvest);
-        float max_harvest = float.Parse(child_obj.max_harvest);
-
-        if (current_filled_slots >= 0 && current_filled_slots <= (slots_max * 0.25))
-        {
-            slots_in_use_detailView.color = new Color32(110, 195, 111, 255); //green
-        }
-        else if (current_filled_slots > (slots_max * 0.25) && current_filled_slots <= (slots_max * 0.5))
-        {
-            slots_in_use_detailView.color = new Color32(255, 203, 0, 255); //yellow
-        }
-        else if (current_filled_slots > (slots_max * 0.5) && current_filled_slots <= (slots_max * 0.75))
-        {
-            slots_in_use_detailView.color = new Color32(255, 107, 0, 255); //orange
-        }
-        else if (current_filled_slots > (slots_max * 0.75) && current_filled_slots <= (slots_max))
-        {
-            slots_in_use_detailView.color = new Color32(255, 0, 0, 255); //red
-        }
-
-        if (current_harvest >= 0 && current_harvest <= (max_harvest * 0.25))
-        {
-            harvests_detailView.color = new Color32(110, 195, 111, 255); //green
-        }
-        else if (current_harvest > (max_harvest * 0.25) && current_harvest <= (max_harvest * 0.5))
-        {
-            harvests_detailView.color = new Color32(255, 203, 0, 255); //yellow
-        }
-        else if (current_harvest > (max_harvest * 0.5) && current_harvest <= (max_harvest * 0.75))
-        {
-            harvests_detailView.color = new Color32(255, 107, 0, 255); //orange
-        }
-        else if (current_harvest > (max_harvest * 0.75) && current_harvest <= (max_harvest))
-        {
-            harvests_detailView.color = new Color32(255, 0, 0, 255); //red
-        }
-
-        if (current_filled_slots != 0)
-        {
-            foreach (On_RecipeDataModel assets in child_obj.on_recip)
-            {
-                var gb = Instantiate(ing_prefab);
-                gb.transform.SetParent(parent_machine_current_ing);
-                gb.transform.localScale = new Vector3(1, 1, 1);
-                var child = gb.gameObject.GetComponent<MachineRecipeCall>();
-                foreach (RecipesModel recipes in MessageHandler.userModel.machine_recipes)
+                if (data.type == "machine" && data.name.ToUpper() == child_obj.name.ToUpper())
                 {
-                    if (recipes.id == assets.recipeID)
+                    Debug.Log("found");
+                    //var ins = data.prefab.transform.Find("NFT_Image");
+                    break;
+                }
+            }
+            machine_unregister_btn.gameObject.SetActive(true);
+            machine_unregister_btn.onClick.RemoveAllListeners();
+            machine_unregister_btn.onClick.AddListener(delegate { child_obj.DeRegisterAsset(); });
+            float current_filled_slots = child_obj.on_recip.Length;
+            float slots_max = float.Parse(child_obj.slot_size);
+            slots_in_use_detailView.text = current_filled_slots + "/" + slots_max;
+            harvests_detailView.text = child_obj.harvest + "/" + child_obj.max_harvest;
+            float current_harvest = float.Parse(child_obj.harvest);
+            float max_harvest = float.Parse(child_obj.max_harvest);
+
+            if (current_filled_slots >= 0 && current_filled_slots <= (slots_max * 0.25))
+            {
+                slots_in_use_detailView.color = new Color32(110, 195, 111, 255); //green
+            }
+            else if (current_filled_slots > (slots_max * 0.25) && current_filled_slots <= (slots_max * 0.5))
+            {
+                slots_in_use_detailView.color = new Color32(255, 203, 0, 255); //yellow
+            }
+            else if (current_filled_slots > (slots_max * 0.5) && current_filled_slots <= (slots_max * 0.75))
+            {
+                slots_in_use_detailView.color = new Color32(255, 107, 0, 255); //orange
+            }
+            else if (current_filled_slots > (slots_max * 0.75) && current_filled_slots <= (slots_max))
+            {
+                slots_in_use_detailView.color = new Color32(255, 0, 0, 255); //red
+            }
+
+            if (current_harvest >= 0 && current_harvest <= (max_harvest * 0.25))
+            {
+                harvests_detailView.color = new Color32(110, 195, 111, 255); //green
+            }
+            else if (current_harvest > (max_harvest * 0.25) && current_harvest <= (max_harvest * 0.5))
+            {
+                harvests_detailView.color = new Color32(255, 203, 0, 255); //yellow
+            }
+            else if (current_harvest > (max_harvest * 0.5) && current_harvest <= (max_harvest * 0.75))
+            {
+                harvests_detailView.color = new Color32(255, 107, 0, 255); //orange
+            }
+            else if (current_harvest > (max_harvest * 0.75) && current_harvest <= (max_harvest))
+            {
+                harvests_detailView.color = new Color32(255, 0, 0, 255); //red
+            }
+
+            if (current_filled_slots != 0)
+            {
+                foreach (On_RecipeDataModel assets in child_obj.on_recip)
+                {
+                    var gb = Instantiate(ing_prefab);
+                    gb.transform.SetParent(parent_machine_current_ing);
+                    gb.transform.localScale = new Vector3(1, 1, 1);
+                    var child = gb.gameObject.GetComponent<MachineRecipeCall>();
+                    foreach (RecipesModel recipes in MessageHandler.userModel.machine_recipes)
                     {
-                        Debug.Log("in if show current");
-                        child.machine_asset_id = child_obj.asset_id;
-                        child.machine_name = child_obj.asset_name;
-                        child.recipe_name = recipes.out_name;
-                        child.recipe_name_text.text = helper.recipes_abv[recipes.out_name];
-                        child.recipe_id = assets.recipeID;
-                        child.order_id = assets.orderID;
-                        child.type = "machine";
-                        child.LoadingPanel = LoadingPanel;
-                        child.Start_Timer(assets.start, assets.delay);
-                        break;
+                        if (recipes.id == assets.recipeID)
+                        {
+                            Debug.Log("in if show current");
+                            child.machine_asset_id = child_obj.asset_id;
+                            child.machine_name = child_obj.asset_name;
+                            child.recipe_name = recipes.out_name;
+                            child.recipe_name_text.text = helper.recipes_abv[recipes.out_name];
+                            child.recipe_id = assets.recipeID;
+                            child.order_id = assets.orderID;
+                            child.type = "machine";
+                            child.LoadingPanel = LoadingPanel;
+                            child.Start_Timer(assets.start, assets.delay);
+                            break;
+                        }
                     }
                 }
             }
+            if (current_filled_slots == 0 || current_filled_slots < Int64.Parse(child_obj.slot_size))
+            {
+                var ins = Instantiate(add_ing_prefab);
+                ins.transform.SetParent(parent_machine_current_ing);
+                ins.transform.localScale = new Vector3(1, 1, 1);
+                ins.gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                if (child_obj.cooldown == "1")
+                    ins.gameObject.GetComponent<Button>().interactable = false;
+                ins.gameObject.GetComponent<Button>().onClick.AddListener(delegate { Open_Add_New_Machine_Ing(child_obj); });
+            }
+            machine_child_asset = child_obj;
         }
-        if (current_filled_slots == 0 || current_filled_slots < Int64.Parse(child_obj.slot_size))
-        {
-            var ins = Instantiate(add_ing_prefab);
-            ins.transform.SetParent(parent_machine_current_ing);
-            ins.transform.localScale = new Vector3(1, 1, 1);
-            ins.gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
-            if (child_obj.cooldown == "1")
-                ins.gameObject.GetComponent<Button>().interactable = false;
-            ins.gameObject.GetComponent<Button>().onClick.AddListener(delegate { Open_Add_New_Machine_Ing(child_obj); });
-        }
-        machine_child_asset = child_obj;
         
     }
     private void Open_Add_New_Machine_Ing(MachineAssetCall machine)
@@ -1189,103 +1208,108 @@ public class MainView : BaseView
 
     public void show_crops_details(CropAssetCall child_obj)
     {
-        Debug.Log("in");
-        Debug.Log("in crop details");
         current_back_status = "on_registered_crops";
-        crop_child_asset = null;
-        clearChildObjs(parent_crops_current_ing);
-        crop_level_dropdown.gameObject.SetActive(false);
-        if (crop_show_panel.gameObject.activeInHierarchy) crop_show_panel.gameObject.SetActive(false);
-        if (!show_crop_details.gameObject.activeInHierarchy) show_crop_details.gameObject.SetActive(true);
-        crop_subheading_text.GetComponent<TMP_Text>().text = " #" + child_obj.asset_id + " Details";
-        foreach (ImgObjectView data in img)
+        if (double.Parse(child_obj.harvest) >= double.Parse(child_obj.max_harvest))
         {
-            if (data.type == "crop" && data.name.ToUpper() == child_obj.name.ToUpper())
-            {
-                Debug.Log("found");
-                //var ins = data.prefab.transform.Find("NFT_Image");
-                break;
-            }
+            navButton("back");
         }
-        int current_filled_slots = child_obj.on_recip.Length;
-        if (current_filled_slots != 0)
+        else
         {
-            foreach (On_RecipeDataModel assets in child_obj.on_recip)
+            crop_child_asset = null;
+            clearChildObjs(parent_crops_current_ing);
+            crop_level_dropdown.gameObject.SetActive(false);
+            if (crop_show_panel.gameObject.activeInHierarchy) crop_show_panel.gameObject.SetActive(false);
+            if (!show_crop_details.gameObject.activeInHierarchy) show_crop_details.gameObject.SetActive(true);
+            crop_subheading_text.GetComponent<TMP_Text>().text = " #" + child_obj.asset_id + " Details";
+            foreach (ImgObjectView data in img)
             {
-                var gb = Instantiate(ing_prefab);
-                gb.transform.SetParent(parent_crops_current_ing);
-                gb.transform.localScale = new Vector3(1, 1, 1);
-                var child = gb.gameObject.GetComponent<MachineRecipeCall>();
-                foreach (RecipesModel recipes in MessageHandler.userModel.machine_recipes)
+                if (data.type == "crop" && data.name.ToUpper() == child_obj.name.ToUpper())
                 {
-                    if (recipes.id == assets.recipeID)
+                    Debug.Log("found");
+                    //var ins = data.prefab.transform.Find("NFT_Image");
+                    break;
+                }
+            }
+            int current_filled_slots = child_obj.on_recip.Length;
+            if (current_filled_slots != 0)
+            {
+                foreach (On_RecipeDataModel assets in child_obj.on_recip)
+                {
+                    var gb = Instantiate(ing_prefab);
+                    gb.transform.SetParent(parent_crops_current_ing);
+                    gb.transform.localScale = new Vector3(1, 1, 1);
+                    var child = gb.gameObject.GetComponent<MachineRecipeCall>();
+                    foreach (RecipesModel recipes in MessageHandler.userModel.machine_recipes)
                     {
-                        child.machine_asset_id = child_obj.asset_id;
-                        child.machine_name = child_obj.asset_name;
-                        child.recipe_name = recipes.out_name;
-                        child.recipe_name_text.text = helper.recipes_abv[recipes.out_name];
-                        child.recipe_id = assets.recipeID;
-                        child.order_id = assets.orderID;
-                        child.type = "crop";
-                        child.LoadingPanel = LoadingPanel;
-                        child.Start_Timer(assets.start, assets.delay);
-                        break;
+                        if (recipes.id == assets.recipeID)
+                        {
+                            child.machine_asset_id = child_obj.asset_id;
+                            child.machine_name = child_obj.asset_name;
+                            child.recipe_name = recipes.out_name;
+                            child.recipe_name_text.text = helper.recipes_abv[recipes.out_name];
+                            child.recipe_id = assets.recipeID;
+                            child.order_id = assets.orderID;
+                            child.type = "crop";
+                            child.LoadingPanel = LoadingPanel;
+                            child.Start_Timer(assets.start, assets.delay);
+                            break;
+                        }
                     }
                 }
             }
-        }
-        crop_unregister_btn.gameObject.SetActive(true);
-        crop_unregister_btn.onClick.RemoveAllListeners();
-        crop_unregister_btn.onClick.AddListener(delegate { child_obj.DeRegisterAsset(); });
-        float current__slots = child_obj.on_recip.Length;
-        float slots_max = float.Parse(child_obj.slot_size);
-        slots_in_use_crops_detailView.text = current__slots + "/" + slots_max;
-        harvests_crops_detailView.text = child_obj.harvest + "/" + child_obj.max_harvest;
-        float current_harvest = float.Parse(child_obj.harvest);
-        float max_harvest = float.Parse(child_obj.max_harvest);
+            crop_unregister_btn.gameObject.SetActive(true);
+            crop_unregister_btn.onClick.RemoveAllListeners();
+            crop_unregister_btn.onClick.AddListener(delegate { child_obj.DeRegisterAsset(); });
+            float current__slots = child_obj.on_recip.Length;
+            float slots_max = float.Parse(child_obj.slot_size);
+            slots_in_use_crops_detailView.text = current__slots + "/" + slots_max;
+            harvests_crops_detailView.text = child_obj.harvest + "/" + child_obj.max_harvest;
+            float current_harvest = float.Parse(child_obj.harvest);
+            float max_harvest = float.Parse(child_obj.max_harvest);
 
-        if (current__slots >= 0 && current__slots <= (slots_max * 0.25))
-        {
-            slots_in_use_crops_detailView.color = new Color32(110, 195, 111, 255); //green
-        }
-        else if (current__slots > (slots_max * 0.25) && current__slots <= (slots_max * 0.5))
-        {
-            slots_in_use_crops_detailView.color = new Color32(255, 203, 0, 255); //yellow
-        }
-        else if (current__slots > (slots_max * 0.5) && current__slots <= (slots_max * 0.75))
-        {
-            slots_in_use_crops_detailView.color = new Color32(255, 107, 0, 255); //orange
-        }
-        else if (current__slots > (slots_max * 0.75) && current__slots <= (slots_max))
-        {
-            slots_in_use_crops_detailView.color = new Color32(255, 0, 0, 255); //red
-        }
+            if (current__slots >= 0 && current__slots <= (slots_max * 0.25))
+            {
+                slots_in_use_crops_detailView.color = new Color32(110, 195, 111, 255); //green
+            }
+            else if (current__slots > (slots_max * 0.25) && current__slots <= (slots_max * 0.5))
+            {
+                slots_in_use_crops_detailView.color = new Color32(255, 203, 0, 255); //yellow
+            }
+            else if (current__slots > (slots_max * 0.5) && current__slots <= (slots_max * 0.75))
+            {
+                slots_in_use_crops_detailView.color = new Color32(255, 107, 0, 255); //orange
+            }
+            else if (current__slots > (slots_max * 0.75) && current__slots <= (slots_max))
+            {
+                slots_in_use_crops_detailView.color = new Color32(255, 0, 0, 255); //red
+            }
 
-        if (current_harvest >= 0 && current_harvest <= (max_harvest * 0.25))
-        {
-            harvests_crops_detailView.color = new Color32(110, 195, 111, 255); //green
+            if (current_harvest >= 0 && current_harvest <= (max_harvest * 0.25))
+            {
+                harvests_crops_detailView.color = new Color32(110, 195, 111, 255); //green
+            }
+            else if (current_harvest > (max_harvest * 0.25) && current_harvest <= (max_harvest * 0.5))
+            {
+                harvests_crops_detailView.color = new Color32(255, 203, 0, 255); //yellow
+            }
+            else if (current_harvest > (max_harvest * 0.5) && current_harvest <= (max_harvest * 0.75))
+            {
+                harvests_crops_detailView.color = new Color32(255, 107, 0, 255); //orange
+            }
+            else if (current_harvest > (max_harvest * 0.75) && current_harvest <= (max_harvest))
+            {
+                harvests_crops_detailView.color = new Color32(255, 0, 0, 255); //red
+            }
+            if (current_filled_slots == 0 || current_filled_slots < Int64.Parse(child_obj.slot_size))
+            {
+                var ins = Instantiate(add_ing_prefab);
+                ins.transform.SetParent(parent_crops_current_ing);
+                ins.transform.localScale = new Vector3(1, 1, 1);
+                ins.gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
+                ins.gameObject.GetComponent<Button>().onClick.AddListener(delegate { Open_Add_New_Crop_Ing(child_obj); });
+            }
+            crop_child_asset = child_obj;
         }
-        else if (current_harvest > (max_harvest * 0.25) && current_harvest <= (max_harvest * 0.5))
-        {
-            harvests_crops_detailView.color = new Color32(255, 203, 0, 255); //yellow
-        }
-        else if (current_harvest > (max_harvest * 0.5) && current_harvest <= (max_harvest * 0.75))
-        {
-            harvests_crops_detailView.color = new Color32(255, 107, 0, 255); //orange
-        }
-        else if (current_harvest > (max_harvest * 0.75) && current_harvest <= (max_harvest))
-        {
-            harvests_crops_detailView.color = new Color32(255, 0, 0, 255); //red
-        }
-        if (current_filled_slots == 0 || current_filled_slots < Int64.Parse(child_obj.slot_size))
-        {
-            var ins = Instantiate(add_ing_prefab);
-            ins.transform.SetParent(parent_crops_current_ing);
-            ins.transform.localScale = new Vector3(1, 1, 1);
-            ins.gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
-            ins.gameObject.GetComponent<Button>().onClick.AddListener(delegate { Open_Add_New_Crop_Ing(child_obj); });
-        }
-        crop_child_asset = child_obj;
     }
 
     private void Open_Add_New_Crop_Ing(CropAssetCall machine)
@@ -1547,6 +1571,7 @@ public class MainView : BaseView
 
     public void Register_All(string asset_ids)
     {
+        Debug.Log(asset_ids);
         LoadingPanel.SetActive(true);
         string type = "";
         string name_type = "empty_name";
@@ -1569,6 +1594,7 @@ public class MainView : BaseView
 
     public void Deregister_All(string asset_ids)
     {
+        Debug.Log(asset_ids);
         LoadingPanel.SetActive(true);
         string type = "";
         string name_type = "empty_name";
