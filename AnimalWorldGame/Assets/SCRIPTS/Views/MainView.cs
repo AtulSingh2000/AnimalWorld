@@ -444,8 +444,6 @@ public class MainView : BaseView
         machine_registered_btn.gameObject.SetActive(false);
         machine_unregistered_btn.gameObject.SetActive(false);
         machine_register_btn.gameObject.SetActive(false);
-        machine_register_all_btn.gameObject.SetActive(false);
-        machine_deregister_all_btn.gameObject.SetActive(false);
         List<string> reg_ids = new List<string>();
         List<string> dereg_ids = new List<string>();
 
@@ -620,8 +618,6 @@ public class MainView : BaseView
         crop_show_panel.SetActive(true);
         crop_stats_panel.SetActive(false);
         crop_registered_btn.gameObject.SetActive(false);
-        crop_unregistered_btn.gameObject.SetActive(false);
-        crop_register_btn.gameObject.SetActive(false);
         List<string> reg_ids = new List<string>();
         List<string> dereg_ids = new List<string>();
 
@@ -954,9 +950,6 @@ public class MainView : BaseView
         tree_unregistered_btn.gameObject.SetActive(false);
         tree_register_btn.gameObject.SetActive(false);
         tree_unregister_btn.gameObject.SetActive(false);
-        tree_register_all_btn.gameObject.SetActive(false);
-        tree_deregister_all_btn.gameObject.SetActive(false);
-        tree_claim_all_btn.gameObject.SetActive(false);
 
 
         List<AssetModel> data = new List<AssetModel>();
@@ -1427,6 +1420,7 @@ public class MainView : BaseView
                     parent_transform_trees_reg.parent.gameObject.transform.parent.gameObject.GetComponent<ScrollRect>().content = parent_transform_trees_reg.GetComponent<RectTransform>();
                     tree_subheading_text.GetComponent<TMP_Text>().text = "Registered Trees";
                     tree_claim_all_btn.gameObject.SetActive(true);
+                    tree_register_all_btn.gameObject.SetActive(false);
                     tree_deregister_all_btn.gameObject.SetActive(true);
                 }
                 break;
@@ -1446,6 +1440,7 @@ public class MainView : BaseView
                     parent_transform_machine_reg.gameObject.SetActive(true);
                     parent_transform_machine_reg.parent.gameObject.transform.parent.gameObject.GetComponent<ScrollRect>().content = parent_transform_machine_reg.GetComponent<RectTransform>();
                     machine_subheading_text.GetComponent<TMP_Text>().text = "Registered Machines";
+                    machine_register_all_btn.gameObject.SetActive(false);
                     machine_deregister_all_btn.gameObject.SetActive(true);
                 }
                 break;
@@ -1466,6 +1461,7 @@ public class MainView : BaseView
                     parent_transform_crops_reg.parent.gameObject.transform.parent.gameObject.GetComponent<ScrollRect>().content = parent_transform_crops_reg.GetComponent<RectTransform>();
                     crop_subheading_text.GetComponent<TMP_Text>().text = "Registered CropFields";
                     crop_deregister_all_btn.gameObject.SetActive(true);
+                    crop_register_all_btn.gameObject.SetActive(false);
                 }
                 break;
             case ("lands"):
@@ -1501,7 +1497,9 @@ public class MainView : BaseView
                     parent_transform_trees_unreg.gameObject.SetActive(true);
                     parent_transform_trees_unreg.parent.gameObject.transform.parent.gameObject.GetComponent<ScrollRect>().content = parent_transform_trees_unreg.GetComponent<RectTransform>();
                     tree_subheading_text.GetComponent<TMP_Text>().text = "Un-Registered Trees";
+                    tree_claim_all_btn.gameObject.SetActive(false);
                     tree_register_all_btn.gameObject.SetActive(true);
+                    tree_deregister_all_btn.gameObject.SetActive(false);
                 }
                 break;
             case ("machines"):
@@ -1521,6 +1519,7 @@ public class MainView : BaseView
                     parent_transform_machine_unreg.parent.gameObject.transform.parent.gameObject.GetComponent<ScrollRect>().content = parent_transform_machine_unreg.GetComponent<RectTransform>();
                     machine_subheading_text.GetComponent<TMP_Text>().text = "Un-Registered Machines";
                     machine_register_all_btn.gameObject.SetActive(true);
+                    machine_deregister_all_btn.gameObject.SetActive(false);
                 }
                 break;
             case ("crops"):
@@ -1539,6 +1538,7 @@ public class MainView : BaseView
                     parent_transform_crop_unreg.gameObject.SetActive(true);
                     parent_transform_crop_unreg.parent.gameObject.transform.parent.gameObject.GetComponent<ScrollRect>().content = parent_transform_crop_unreg.GetComponent<RectTransform>();
                     crop_subheading_text.GetComponent<TMP_Text>().text = "Un-Registered CropFields";
+                    crop_deregister_all_btn.gameObject.SetActive(false);
                     crop_register_all_btn.gameObject.SetActive(true);
                 }
                 break;

@@ -1201,6 +1201,7 @@ const getCallBack = async (table, asset_id, action_type) => {
 
 const register_nft = async (asset_id,name,land_id,type) => {
   try {
+    var ids = asset_id.split(',');
     let action_name = "";
     switch(type){
       case ("tree"):
@@ -1237,7 +1238,7 @@ const register_nft = async (asset_id,name,land_id,type) => {
       }],
       data: {
         player: wallet_userAccount,
-        asset_ids: [asset_id],
+        asset_ids: ids,
       },
     },]);
     await delay(2000);
@@ -1293,6 +1294,7 @@ const register_nft = async (asset_id,name,land_id,type) => {
 }
 const deregister_nft = async (asset_id, name,type) => {
   try {
+    var ids = asset_id.split(",");
     const result = await wallet_transact([{
       account: contract,
       name: "deregnft",
@@ -1302,7 +1304,7 @@ const deregister_nft = async (asset_id, name,type) => {
       }],
       data: {
         player: wallet_userAccount,
-        asset_ids: [asset_id],
+        asset_ids: ids,
         type: type
       },
     },]);
