@@ -10,6 +10,9 @@ using UnityEngine.UI;
 
 public class MainView : BaseView
 {
+
+    public CamSwitcher UIOpen;
+
     [Space]
     [Header("GameObjects")]
     [Space]
@@ -242,6 +245,8 @@ public class MainView : BaseView
         SetData();
         SetElements();
         SetLevel();
+
+        //set isUIOpen in cam switcher to true when panel is opened, go below in update function
     }
 
     protected override void OnDestroy()
@@ -389,8 +394,10 @@ public class MainView : BaseView
 
             if (!UI_opened)
             {
+                
                 if (Physics.Raycast(ray, out RaycastHit hitInfor))
                 {
+
                     if (hitInfor.collider.gameObject.CompareTag("trees"))
                         selectType("trees");
                     else if (hitInfor.collider.gameObject.CompareTag("machines"))

@@ -17,6 +17,7 @@ public class CamSwitcher : MonoBehaviour
    public GameObject player;
    public GameObject playerOV;
    public bool camState;
+   public bool isUIOpen = false;
    
     public float scrollSpeed = 10f;
 
@@ -39,7 +40,11 @@ public class CamSwitcher : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ZoomInOut();
+        if(!isUIOpen)
+        {
+            ZoomInOut();
+        }
+        
        if(Input.GetKeyDown(KeyCode.V))
        {
           // Debug.Log(camState);
@@ -63,7 +68,7 @@ public class CamSwitcher : MonoBehaviour
            {
                animator.Play("ThirdPerson");
                camState = false;
-               ZoomInOut();
+               
                player.gameObject.transform.position = playerOV.gameObject.transform.position;
                playerOV.SetActive(false);
                player.SetActive(true);
@@ -71,6 +76,11 @@ public class CamSwitcher : MonoBehaviour
                player.GetComponent<ThirdPersonMovement>().enabled = true;
                player.GetComponent<Animator>().enabled = true;
                Cursor.visible = false;
+              
+               if(!isUIOpen)
+               {
+                   ZoomInOut();
+               }
 
            }
            overworldCam = !overworldCam;
