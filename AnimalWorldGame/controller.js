@@ -616,7 +616,8 @@ const getMachineConfig = async () => {
       for(const data of Object.values(body.rows)){
         obj.push({
           template_id: data.template_id,
-          max_harvests: data.cd_harvests
+          max_harvests: data.cd_harvests,
+          cost_level: data.cost_level
         })
       }
     }
@@ -640,16 +641,18 @@ const getTreeData = async () => {
       if (typeof check_data !== 'undefined') {
         const check_ids = check_data[0];
         for (const asset of arr) {
-          let harvest,boost,level_boost = "";
+          let harvest,boost,level_boost,cost_level = "";
           if (check_ids.includes(asset.asset_id)) {
             const check_body_data = check_data[1];
             for (const bodyData of check_body_data) {
               if (bodyData.id == asset.asset_id) {
                 for(const c_data of config){
+
                   if(asset.template_id == c_data.template_id){
                     harvest = c_data.max_harvests;
                     boost = c_data.boost;
-                    level_boost = c_data.level_boost
+                    level_boost = c_data.level_boost;
+                    //cost_level = c_data.cost_level;
                     break;
                   }
                 }
@@ -668,7 +671,8 @@ const getTreeData = async () => {
                   current_harvests: asset.harvests,
                   boost: boost,
                   level_boost: level_boost,
-                  reg: "1"
+                  reg: "1",
+                  //cost_level: cost_level
                 });
               }
             }
@@ -744,9 +748,16 @@ const getMachineData = async () => {
             const check_body_data = check_data[1];
             for (const bodyData of check_body_data) {
               let harvest = "";
+              let cost_level = [];
                 for(const c_data of config){
                   if(asset.template_id == c_data.template_id){
                     harvest = c_data.max_harvests;
+                    for(const cost_data of c_data.cost_level){
+                      cost_level.push({
+                        in_name: "Level"+cost_data.level,
+                        in_qty: cost_data.count
+                      });
+                    }
                     break;
                   }
                 }
@@ -763,7 +774,8 @@ const getMachineData = async () => {
                   on_recipe: bodyData.on_recipe,
                   rarity: asset.rarity,
                   reg: "1",
-                  max_harvests: harvest
+                  max_harvests: harvest,
+                  cost_level: cost_level
                 });
               }
             }
@@ -898,10 +910,17 @@ const getCropsData = async () => {
             const check_body_data = check_data[1];
             for (const bodyData of check_body_data) {
               if (bodyData.id == asset.asset_id) {
-                let harvest = "";
+                let harvest= "";
+                let cost_level = [];
                 for(const c_data of config){
                   if(asset.template_id == c_data.template_id){
                     harvest = c_data.max_harvests;
+                    for(const cost_data of c_data.cost_level){
+                      cost_level.push({
+                        in_name: "Level"+cost_data.level,
+                        in_count: cost_data.count
+                      });
+                    }
                     break;
                   }
                 }
@@ -917,7 +936,8 @@ const getCropsData = async () => {
                   prod_sec: bodyData.prod_sec,
                   on_recipe: bodyData.on_recipe,
                   reg: "1",
-                  max_harvests: harvest
+                  max_harvests: harvest,
+                  cost_level: cost_level
                 });
               }
             }
