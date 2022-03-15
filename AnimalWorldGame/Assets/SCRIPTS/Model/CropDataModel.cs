@@ -15,4 +15,5 @@ public class CropDataModel
     public string prod_sec;
     public On_RecipeDataModel[] on_recipe;
     public string reg;
+    public IngModel[] cost_level;
 }

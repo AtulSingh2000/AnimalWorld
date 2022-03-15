@@ -169,6 +169,11 @@ public class MainView : BaseView
     public TMP_Text success_header_text;
     public TMP_Text success_text;
     public Image final_product_successPanel;
+    [Header("Level Upgrade Panel")]
+    public GameObject levelPanel;
+    public TMP_Text fees_text;
+    public TMP_Text message_text;
+    public Button level_up_btn;
     //Private Variables
     private string asset_id = "0";
     private string back_status = "close";
@@ -451,6 +456,7 @@ public class MainView : BaseView
         machine_registered_btn.gameObject.SetActive(false);
         machine_unregistered_btn.gameObject.SetActive(false);
         machine_register_btn.gameObject.SetActive(false);
+
         List<string> reg_ids = new List<string>();
         List<string> dereg_ids = new List<string>();
 
@@ -542,10 +548,22 @@ public class MainView : BaseView
                         child.boost_btn.gameObject.SetActive(true);
                         child.boost_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { show_boost("machine",asset_data.asset_id); });
                         dereg_ids.Add(asset_data.asset_id);
-                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        var child_level_gb = child.level_text.gameObject.transform.parent.gameObject;
+                        child_level_gb.SetActive(true);
                         string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
-                        Debug.Log(nums);
                         child.level_text.text = nums;
+                        for(int i = 0; i < asset_data.cost_level.Length; i++)
+                        {
+                            if(asset_data.cost_level[i].in_name == asset_data.level)
+                            {
+                                string fees = asset_data.cost_level[i++].in_qty;
+                                string level = asset_data.cost_level[i++].in_name;
+                                string a_id = asset_data.asset_id;
+                                child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id,fees, nums); });
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -597,19 +615,31 @@ public class MainView : BaseView
                         child.boost_btn.gameObject.SetActive(true);
                         child.boost_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { show_boost("machine", asset_data.asset_id); });
                         dereg_ids.Add(asset_data.asset_id);
-                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        var child_level_gb = child.level_text.gameObject.transform.parent.gameObject;
+                        child_level_gb.SetActive(true);
                         string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
-                        Debug.Log(nums);
                         child.level_text.text = nums;
+                        for (int i = 0; i < asset_data.cost_level.Length; i++)
+                        {
+                            if (asset_data.cost_level[i].in_name == asset_data.level)
+                            {
+                                string fees = asset_data.cost_level[i++].in_qty;
+                                string level = asset_data.cost_level[i++].in_name;
+                                string a_id = asset_data.asset_id;
+                                child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums); });
+                                break;
+                            }
+                        }
                     }
                 }
             }
         }
 
-        var register_ids = string.Join(",", reg_ids.ToArray());
-        var deregister_ids = string.Join(",", dereg_ids.ToArray());
         machine_deregister_all_btn.onClick.RemoveAllListeners();
         machine_register_all_btn.onClick.RemoveAllListeners();
+        var register_ids = string.Join(",", reg_ids.ToArray());
+        var deregister_ids = string.Join(",", dereg_ids.ToArray());
         machine_register_all_btn.onClick.AddListener(delegate { Register_All(register_ids); });
         machine_deregister_all_btn.onClick.AddListener(delegate { Deregister_All(deregister_ids); });
     }
@@ -687,10 +717,22 @@ public class MainView : BaseView
                         child.details_btn.SetActive(true);
                         child.details_btn.GetComponent<Button>().onClick.AddListener(delegate { show_crops_details(child); });
                         dereg_ids.Add(asset_data.asset_id);
-                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        var child_level_gb = child.level_text.gameObject.transform.parent.gameObject;
+                        child_level_gb.SetActive(true);
                         string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
-                        Debug.Log(nums);
                         child.level_text.text = nums;
+                        for (int i = 0; i < asset_data.cost_level.Length; i++)
+                        {
+                            if (asset_data.cost_level[i].in_name == asset_data.level)
+                            {
+                                string fees = asset_data.cost_level[i++].in_qty;
+                                string level = asset_data.cost_level[i++].in_name;
+                                string a_id = asset_data.asset_id;
+                                child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums); });
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -739,10 +781,22 @@ public class MainView : BaseView
                         child.details_btn.SetActive(true);
                         child.details_btn.GetComponent<Button>().onClick.AddListener(delegate { show_crops_details(child); });
                         dereg_ids.Add(asset_data.asset_id);
-                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        var child_level_gb = child.level_text.gameObject.transform.parent.gameObject;
+                        child_level_gb.SetActive(true);
                         string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
-                        Debug.Log(nums);
                         child.level_text.text = nums;
+                        for (int i = 0; i < asset_data.cost_level.Length; i++)
+                        {
+                            if (asset_data.cost_level[i].in_name == asset_data.level)
+                            {
+                                string fees = asset_data.cost_level[i++].in_qty;
+                                string level = asset_data.cost_level[i++].in_name;
+                                string a_id = asset_data.asset_id;
+                                child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums); });
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -753,6 +807,26 @@ public class MainView : BaseView
         crop_register_all_btn.onClick.RemoveAllListeners();
         crop_register_all_btn.onClick.AddListener(delegate { Register_All(register_ids); });
         crop_deregister_all_btn.onClick.AddListener(delegate { Deregister_All(deregister_ids); });
+    }
+
+    public void Levelup(string asset_id,string fees,string level)
+    {
+        levelPanel.SetActive(true);
+        fees_text.text = "Level Up Fees : " + fees + " AWC";
+        message_text.text = "Sure ? You want to upgrade this NFT to Level " + level + " .";
+        level_up_btn.onClick.RemoveAllListeners();
+        level_up_btn.onClick.AddListener(delegate { LevelUpTRX(asset_id,fees); });
+    }
+
+    public void LevelUpTRX(string asset_id,string fees)
+    {
+        if (double.Parse(MessageHandler.GetBalanceKey("AWC")) > double.Parse(fees))
+            SSTools.ShowMessage("Insufficient Balance", SSTools.Position.bottom, SSTools.Time.twoSecond);
+        else
+        {
+            LoadingPanel.SetActive(true);
+            //
+        }
     }
 
     private void ShowElements_Lands(string show_level)
@@ -1053,12 +1127,27 @@ public class MainView : BaseView
                 }
             }
         }
+
+        List<string> claim_id = new List<string>();
+        claim_id.Clear();
+        foreach(Transform child in parent_transform_trees_reg)
+        {
+            var child_obj = child.gameObject.GetComponent<AssetCall>();
+            if (child_obj.time_to_claim.text == "Claim Now !" || child_obj.claim_btn.GetComponent<Button>().interactable)
+            {
+                claim_id.Add(child_obj.asset_id);
+            }
+        }
+
         var register_ids = string.Join(",", reg_ids.ToArray());
         var deregister_ids = string.Join(",", dereg_ids.ToArray());
+        var claim_all_ids = string.Join(",", claim_id.ToArray());
         tree_register_all_btn.onClick.RemoveAllListeners();
         tree_deregister_all_btn.onClick.RemoveAllListeners();
+        tree_claim_all_btn.onClick.RemoveAllListeners();
         tree_register_all_btn.onClick.AddListener(delegate { Register_All(register_ids); });
         tree_deregister_all_btn.onClick.AddListener(delegate { Deregister_All(deregister_ids); });
+        tree_claim_all_btn.onClick.AddListener(delegate { Claim_All_Tree_Produce(claim_all_ids); });
     }
     public void Claim_All_Tree_Produce(string asset_id)
     {
@@ -1512,6 +1601,7 @@ public class MainView : BaseView
                     tree_claim_all_btn.gameObject.SetActive(false);
                     tree_register_all_btn.gameObject.SetActive(true);
                     tree_deregister_all_btn.gameObject.SetActive(false);
+                    tree_register_all_btn.onClick.RemoveAllListeners();
                 }
                 break;
             case ("machines"):
@@ -2168,6 +2258,7 @@ public class MainView : BaseView
         successPanel.SetActive(false);
         boost_panel.SetActive(false);
         main_menu_panel.SetActive(false);
+        levelPanel.SetActive(false);
     }
 
     public void OnCallBackData(CallBackDataModel[] callback)

@@ -14,5 +14,6 @@ public class UserModel
     public ProduceDataModel[] user_data;
     public IngModel[] user_balance;
     public IngModel[] land_assets;
+    public IngModel[] cost_level;
     public string land_id;
 }

@@ -17,4 +17,5 @@ public class MachineDataModel
     public string reg;
     public string rarity;
     public string img;
+    public IngModel[] cost_level;
 }
