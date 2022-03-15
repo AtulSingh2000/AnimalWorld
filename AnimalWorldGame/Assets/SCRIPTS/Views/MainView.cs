@@ -1142,6 +1142,7 @@ public class MainView : BaseView
         var register_ids = string.Join(",", reg_ids.ToArray());
         var deregister_ids = string.Join(",", dereg_ids.ToArray());
         var claim_all_ids = string.Join(",", claim_id.ToArray());
+        Debug.Log(claim_all_ids);
         tree_register_all_btn.onClick.RemoveAllListeners();
         tree_deregister_all_btn.onClick.RemoveAllListeners();
         tree_claim_all_btn.onClick.RemoveAllListeners();
