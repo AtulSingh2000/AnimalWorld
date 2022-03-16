@@ -29,7 +29,8 @@ public class BaseView : MonoBehaviour
 
     private void OnErrorData(string errorData)
     {
-        ErrorText.text = errorData;
+        //ErrorText.text = errorData;
+        SSTools.ShowMessage(errorData, SSTools.Position.bottom, SSTools.Time.twoSecond);
         LoadingPanel.SetActive(false);
     }
 

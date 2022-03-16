@@ -26,7 +26,6 @@ public class MachineRecipeCall : MonoBehaviour
     }
     private IEnumerator StartCountdown(string time, string delayValue)
     {
-        Debug.Log("in machine timer");
         DateTime epochStart = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         double delay_seconds = Convert.ToDouble(delayValue);
         double final_epoch_time = Convert.ToDouble(time) + delay_seconds;

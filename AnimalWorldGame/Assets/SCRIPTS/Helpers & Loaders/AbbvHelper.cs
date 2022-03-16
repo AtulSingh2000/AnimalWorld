@@ -13,11 +13,11 @@ public class AbbvHelper : MonoBehaviour
         machines.Add("Popcorn Maker", "popcornmaker");
         machines.Add("Crop Field", "cropfield");
         machines.Add("Dairy", "dairy");
-        machines.Add("Ice Cream Maker","icecream");
+        machines.Add("Ice Cream Maker", "icecream");
 
         //Popcorn Maker
         recipes.Add("CPOPCORN", "Cheese Popcorn");
-        recipes.Add("SPCORN", "Spicy Popcorn");
+        recipes.Add("SPCORN", "Salted Popcorn");
         recipes.Add("CORN", "Corn");
         recipes.Add("CHILLY", "Chilly");
         recipes.Add("CHEESE", "Cheese");
@@ -33,9 +33,9 @@ public class AbbvHelper : MonoBehaviour
 
         //Juicer
         recipes.Add("MFJUICE", "Mixed Fruit Juice");
-        recipes.Add("LJUICE", "Lime Juice");
+        recipes.Add("LJUICE", "Lemon Juice");
         recipes.Add("FJUICE", "Fig Juice");
-        recipes.Add("CJUICE", "Coconut");
+        recipes.Add("CJUICE", "Coconut Juice");
         recipes.Add("OJUICE", "Orange Juice");
         recipes.Add("MJUICE", "Mango Juice");
 
@@ -55,12 +55,12 @@ public class AbbvHelper : MonoBehaviour
 
     }
 
-    public Dictionary<string,string> machines_abv
+    public Dictionary<string, string> machines_abv
     {
         get { return machines; }
     }
 
-    public Dictionary<string,string> recipes_abv
+    public Dictionary<string, string> recipes_abv
     {
         get { return recipes; }
     }

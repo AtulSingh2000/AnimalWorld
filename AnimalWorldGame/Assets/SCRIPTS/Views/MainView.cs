@@ -10,9 +10,6 @@ using UnityEngine.UI;
 
 public class MainView : BaseView
 {
-
-    public CamSwitcher UIOpen;
-
     [Space]
     [Header("GameObjects")]
     [Space]
@@ -128,7 +125,7 @@ public class MainView : BaseView
     public Button machine_unregister_btn;
     public Button machine_register_all_btn;
     public Button machine_deregister_all_btn;
-    public Button machine_claim_btn;
+    public Button machine_claim_all_btn;
     [Header("Recipes")]
     public Button start_machine;
     [Header("Crops")]
@@ -139,7 +136,7 @@ public class MainView : BaseView
     public Button crop_unregister_btn;
     public Button crop_register_all_btn;
     public Button crop_deregister_all_btn;
-    public Button crop_claim_btn;
+    public Button crop_claim_all_btn;
     [Header("Land")]
     public Button land_registered_btn;
     public Button land_unregistered_btn;
@@ -213,6 +210,7 @@ public class MainView : BaseView
     //Usable Scripts
     private MachineAssetCall machine_child_asset = new MachineAssetCall();
     private CropAssetCall crop_child_asset = new CropAssetCall();
+    public CamSwitcher cam_switch;
 
     //Enums
     enum machine_rarities
@@ -396,13 +394,10 @@ public class MainView : BaseView
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-
             if (!UI_opened)
             {
-                
                 if (Physics.Raycast(ray, out RaycastHit hitInfor))
                 {
-
                     if (hitInfor.collider.gameObject.CompareTag("trees"))
                         selectType("trees");
                     else if (hitInfor.collider.gameObject.CompareTag("machines"))
@@ -413,7 +408,12 @@ public class MainView : BaseView
                         selectType("shop");
                     else if (hitInfor.collider.gameObject.CompareTag("tokenexchange"))
                         selectType("exchange");
-                    else if (hitInfor.collider.gameObject.CompareTag("menu")) { main_menu_panel.SetActive(true); from_main_menu = true; }
+                    else if (hitInfor.collider.gameObject.CompareTag("menu"))
+                    {
+                        main_menu_panel.SetActive(true);
+                        from_main_menu = true;
+                        cam_switch.isUIOpen = true;
+                    }
                     else if (hitInfor.collider.gameObject.CompareTag("inventory"))
                         selectType("inventory");
                 }
@@ -546,21 +546,21 @@ public class MainView : BaseView
                         child.details_btn.SetActive(true);
                         child.details_btn.GetComponent<Button>().onClick.AddListener(delegate { show_machines_details(child); });
                         child.boost_btn.gameObject.SetActive(true);
-                        child.boost_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { show_boost("machine",asset_data.asset_id); });
+                        child.boost_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { show_boost("machine", asset_data.asset_id); });
                         dereg_ids.Add(asset_data.asset_id);
                         var child_level_gb = child.level_text.gameObject.transform.parent.gameObject;
                         child_level_gb.SetActive(true);
                         string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
                         child.level_text.text = nums;
-                        for(int i = 0; i < asset_data.cost_level.Length; i++)
+                        for (int i = 0; i < asset_data.cost_level.Length; i++)
                         {
-                            if(asset_data.cost_level[i].in_name == asset_data.level)
+                            if (asset_data.cost_level[i].in_name == asset_data.level)
                             {
-                                string fees = asset_data.cost_level[i++].in_qty;
-                                string level = asset_data.cost_level[i++].in_name;
+                                string fees = asset_data.cost_level[++i].in_qty;
+                                string level = asset_data.cost_level[++i].in_name;
                                 string a_id = asset_data.asset_id;
                                 child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
-                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id,fees, nums); });
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums); });
                                 break;
                             }
                         }
@@ -725,8 +725,8 @@ public class MainView : BaseView
                         {
                             if (asset_data.cost_level[i].in_name == asset_data.level)
                             {
-                                string fees = asset_data.cost_level[i++].in_qty;
-                                string level = asset_data.cost_level[i++].in_name;
+                                string fees = asset_data.cost_level[++i].in_qty;
+                                string level = asset_data.cost_level[++i].in_name;
                                 string a_id = asset_data.asset_id;
                                 child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
                                 child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums); });
@@ -809,16 +809,16 @@ public class MainView : BaseView
         crop_deregister_all_btn.onClick.AddListener(delegate { Deregister_All(deregister_ids); });
     }
 
-    public void Levelup(string asset_id,string fees,string level)
+    public void Levelup(string asset_id, string fees, string level)
     {
         levelPanel.SetActive(true);
         fees_text.text = "Level Up Fees : " + fees + " AWC";
-        message_text.text = "Sure ? You want to upgrade this NFT to Level " + level + " .";
+        message_text.text = "Sure ? You want to upgrade this NFT to Level " + level;
         level_up_btn.onClick.RemoveAllListeners();
-        level_up_btn.onClick.AddListener(delegate { LevelUpTRX(asset_id,fees); });
+        level_up_btn.onClick.AddListener(delegate { LevelUpTRX(asset_id, fees); });
     }
 
-    public void LevelUpTRX(string asset_id,string fees)
+    public void LevelUpTRX(string asset_id, string fees)
     {
         if (double.Parse(MessageHandler.GetBalanceKey("AWC")) > double.Parse(fees))
             SSTools.ShowMessage("Insufficient Balance", SSTools.Position.bottom, SSTools.Time.twoSecond);
@@ -898,17 +898,17 @@ public class MainView : BaseView
                             child.select_btn.GetComponent<Button>().interactable = true;
                         int total_assets = 0;
                         child.registered_assets_text.gameObject.SetActive(true);
-                        foreach(AssetModel trees in MessageHandler.userModel.trees)
+                        foreach (AssetModel trees in MessageHandler.userModel.trees)
                         {
                             if (trees.land_id == child.asset_id)
                                 total_assets++;
                         }
-                        foreach(CropDataModel crops in MessageHandler.userModel.crops)
+                        foreach (CropDataModel crops in MessageHandler.userModel.crops)
                         {
                             if (crops.land_id == child.asset_id)
                                 total_assets++;
                         }
-                        foreach(MachineDataModel machines in MessageHandler.userModel.machines)
+                        foreach (MachineDataModel machines in MessageHandler.userModel.machines)
                         {
                             if (machines.land_id == child.asset_id)
                                 total_assets++;
@@ -961,7 +961,7 @@ public class MainView : BaseView
         child_obj.asset_id_text.text = "Community Land";
         child_obj.LoadingPanel = LoadingPanel;
         child_obj.select_btn.SetActive(true);
-        if(MessageHandler.userModel.land_id == child_obj.asset_id)
+        if (MessageHandler.userModel.land_id == child_obj.asset_id)
             child_obj.select_btn.GetComponent<Button>().interactable = false;
         else
             child_obj.select_btn.GetComponent<Button>().interactable = true;
@@ -1130,7 +1130,7 @@ public class MainView : BaseView
 
         List<string> claim_id = new List<string>();
         claim_id.Clear();
-        foreach(Transform child in parent_transform_trees_reg)
+        foreach (Transform child in parent_transform_trees_reg)
         {
             var child_obj = child.gameObject.GetComponent<AssetCall>();
             if (child_obj.time_to_claim.text == "Claim Now !" || child_obj.claim_btn.GetComponent<Button>().interactable)
@@ -1142,7 +1142,6 @@ public class MainView : BaseView
         var register_ids = string.Join(",", reg_ids.ToArray());
         var deregister_ids = string.Join(",", dereg_ids.ToArray());
         var claim_all_ids = string.Join(",", claim_id.ToArray());
-        Debug.Log(claim_all_ids);
         tree_register_all_btn.onClick.RemoveAllListeners();
         tree_deregister_all_btn.onClick.RemoveAllListeners();
         tree_claim_all_btn.onClick.RemoveAllListeners();
@@ -1166,7 +1165,8 @@ public class MainView : BaseView
         }
         else
         {
-            machine_detail_view_img.sprite = Resources.Load<Sprite>("Sprites/"+ child_obj.asset_name);
+            List<string> ids = new List<string>();
+            machine_detail_view_img.sprite = Resources.Load<Sprite>("Sprites/" + child_obj.asset_name);
             machine_deregister_all_btn.gameObject.SetActive(false);
             machine_child_asset = null;
             clearChildObjs(parent_machine_current_ing);
@@ -1174,15 +1174,6 @@ public class MainView : BaseView
             if (machine_show_panel.gameObject.activeInHierarchy) machine_show_panel.gameObject.SetActive(false);
             if (!show_machine_details.gameObject.activeInHierarchy) show_machine_details.gameObject.SetActive(true);
             machine_subheading_text.GetComponent<TMP_Text>().text = " #" + child_obj.asset_id + " Details";
-            foreach (ImgObjectView data in img)
-            {
-                if (data.type == "machine" && data.name.ToUpper() == child_obj.name.ToUpper())
-                {
-                    Debug.Log("found");
-                    //var ins = data.prefab.transform.Find("NFT_Image");
-                    break;
-                }
-            }
             machine_unregister_btn.gameObject.SetActive(true);
             machine_unregister_btn.onClick.RemoveAllListeners();
             machine_unregister_btn.onClick.AddListener(delegate { child_obj.DeRegisterAsset(); });
@@ -1249,14 +1240,19 @@ public class MainView : BaseView
                             child.type = "machine";
                             child.LoadingPanel = LoadingPanel;
                             child.Start_Timer(assets.start, assets.delay);
+                            var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[recipes.out_name]);
+                            if (sprite_img)
+                                child.gameObject.transform.Find("NFT_Image").GetComponent<Image>().sprite = sprite_img;
                             break;
                         }
                     }
                 }
             }
+
             if (current_filled_slots == 0 || current_filled_slots < Int64.Parse(child_obj.slot_size))
             {
                 var ins = Instantiate(add_ing_prefab);
+                ins.gameObject.name = "Add Button";
                 ins.transform.SetParent(parent_machine_current_ing);
                 ins.transform.localScale = new Vector3(1, 1, 1);
                 ins.gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -1264,9 +1260,24 @@ public class MainView : BaseView
                     ins.gameObject.GetComponent<Button>().interactable = false;
                 ins.gameObject.GetComponent<Button>().onClick.AddListener(delegate { Open_Add_New_Machine_Ing(child_obj); });
             }
+
+            ids.Clear();
+            foreach (Transform child in parent_machine_current_ing)
+            {
+                if (child.gameObject.name != "Add Button")
+                {
+                    var child_script = child.gameObject.GetComponent<MachineRecipeCall>();
+                    if (child_script.check_btn.activeInHierarchy)
+                        ids.Add(child_script.order_id);
+                }
+            }
+
             machine_child_asset = child_obj;
+            machine_claim_all_btn.onClick.RemoveAllListeners();
+            string order_ids = string.Join(",", ids.ToArray());
+            machine_claim_all_btn.onClick.AddListener(delegate { recipes_claim_all(order_ids, child_obj.asset_id, "machine"); });
         }
-        
+
     }
     private void Open_Add_New_Machine_Ing(MachineAssetCall machine)
     {
@@ -1281,19 +1292,18 @@ public class MainView : BaseView
         {
             if (recipes.machine.ToUpper() == machine.asset_name.ToUpper() || recipes.machine == helper.machines_abv[machine.asset_name])
             {
-                Debug.Log("in recipe loop");
                 var ins = Instantiate(new_ing_prefab);
-                Debug.Log("instantiated");
                 ins.transform.SetParent(child_machine_show_recipes);
-                Debug.Log("parent_set");
                 ins.transform.localScale = new Vector3(1, 1, 1);
                 var child = ins.gameObject.GetComponent<Machine_AddIngCall>();
-                Debug.Log("set child");
                 child.recipe_id = recipes.id;
                 child.machine_asset_id = machine.asset_id;
                 child.machine_asset_name = machine.asset_name;
                 child.recipe_name = recipes.out_name;
                 child.recipe_name_text.text = helper.recipes_abv[recipes.out_name];
+                var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[recipes.out_name]);
+                if (sprite_img)
+                    child.gameObject.transform.Find("NFT_Image").GetComponent<Image>().sprite = sprite_img;
                 child.show_btn.onClick.AddListener(delegate { Show_Recipe_Ing_OnClick(child); });
             }
         }
@@ -1309,6 +1319,7 @@ public class MainView : BaseView
         }
         else
         {
+            List<string> ids = new List<string>();
             crop_deregister_all_btn.gameObject.SetActive(false);
             crop_child_asset = null;
             clearChildObjs(parent_crops_current_ing);
@@ -1316,15 +1327,6 @@ public class MainView : BaseView
             if (crop_show_panel.gameObject.activeInHierarchy) crop_show_panel.gameObject.SetActive(false);
             if (!show_crop_details.gameObject.activeInHierarchy) show_crop_details.gameObject.SetActive(true);
             crop_subheading_text.GetComponent<TMP_Text>().text = " #" + child_obj.asset_id + " Details";
-            foreach (ImgObjectView data in img)
-            {
-                if (data.type == "crop" && data.name.ToUpper() == child_obj.name.ToUpper())
-                {
-                    Debug.Log("found");
-                    //var ins = data.prefab.transform.Find("NFT_Image");
-                    break;
-                }
-            }
             int current_filled_slots = child_obj.on_recip.Length;
             if (current_filled_slots != 0)
             {
@@ -1347,6 +1349,9 @@ public class MainView : BaseView
                             child.type = "crop";
                             child.LoadingPanel = LoadingPanel;
                             child.Start_Timer(assets.start, assets.delay);
+                            var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[recipes.out_name]);
+                            if (sprite_img)
+                                child.gameObject.transform.Find("NFT_Image").GetComponent<Image>().sprite = sprite_img;
                             break;
                         }
                     }
@@ -1395,15 +1400,33 @@ public class MainView : BaseView
             {
                 harvests_crops_detailView.color = new Color32(255, 0, 0, 255); //red
             }
+
             if (current_filled_slots == 0 || current_filled_slots < Int64.Parse(child_obj.slot_size))
             {
                 var ins = Instantiate(add_ing_prefab);
+                ins.gameObject.name = "Add Button";
                 ins.transform.SetParent(parent_crops_current_ing);
                 ins.transform.localScale = new Vector3(1, 1, 1);
                 ins.gameObject.GetComponent<Button>().onClick.RemoveAllListeners();
                 ins.gameObject.GetComponent<Button>().onClick.AddListener(delegate { Open_Add_New_Crop_Ing(child_obj); });
             }
+
+            ids.Clear();
+            foreach (Transform child in parent_crops_current_ing)
+            {
+                if (child.gameObject.name != "Add Button")
+                {
+                    var child_script = child.gameObject.GetComponent<MachineRecipeCall>();
+                    if (child_script.check_btn.activeInHierarchy)
+                        ids.Add(child_script.order_id);
+                }
+            }
+
             crop_child_asset = child_obj;
+            machine_claim_all_btn.onClick.RemoveAllListeners();
+            string order_ids = string.Join(",", ids.ToArray());
+            machine_claim_all_btn.onClick.AddListener(delegate { recipes_claim_all(order_ids, child_obj.asset_id, "crop"); });
+
         }
     }
 
@@ -1433,32 +1456,42 @@ public class MainView : BaseView
                 child.machine_asset_name = machine.asset_name;
                 child.recipe_name = recipes.out_name;
                 child.recipe_name_text.text = helper.recipes_abv[recipes.out_name];
+                var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[recipes.out_name]);
+                if (sprite_img)
+                    child.gameObject.transform.Find("NFT_Image").GetComponent<Image>().sprite = sprite_img;
                 child.show_btn.onClick.AddListener(delegate { Show_Recipe_Ing_OnClick(child); });
             }
         }
     }
 
+    public void recipes_claim_all(string order_ids, string asset_id, string type)
+    {
+        Debug.Log(order_ids);
+        LoadingPanel.SetActive(true);
+        MessageHandler.Server_ClaimMachine(asset_id, order_ids, type);
+    }
+
     private void Show_Recipe_Ing_OnClick(Machine_AddIngCall recipe_obj)
     {
         clearChildObjs(child_machine_recipe_ing);
-        Debug.Log("in show recipe");
         if (!choose_Panel_scrollView.gameObject.activeInHierarchy) choose_Panel_scrollView.gameObject.SetActive(true);
         foreach (RecipesModel recipes in MessageHandler.userModel.machine_recipes)
         {
-            Debug.Log("in for loop");
             if (recipes.id == recipe_obj.recipe_id)
             {
-                Debug.Log("found recipe id");
                 can_start_machine = true;
                 foreach (IngModel ings in recipes.products)
                 {
-                    Debug.Log("in for each loop");
                     var ins = Instantiate(ing_prefab_2);
                     ins.transform.SetParent(child_machine_recipe_ing);
                     ins.transform.localScale = new Vector3(1, 1, 1);
                     var child = ins.gameObject.GetComponent<Show_ingCall>();
-                    child.raw_name_text.text = ings.in_name;
+                    child.raw_name_text.text = helper.recipes_abv[ings.in_name];
+                    var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[ings.in_name]);
+                    if (sprite_img)
+                        child.recipe_img.sprite = sprite_img;
                     bool found = false;
+
                     foreach (IngModel balance in MessageHandler.userModel.user_balance)
                     {
                         if (balance.in_name == ings.in_name)
@@ -1483,9 +1516,14 @@ public class MainView : BaseView
                         child.qty_text.color = new Color32(212, 27, 29, 255);
                         can_start_machine = false;
                     }
-                }//Max Machines,Max Trees,Max Crops
+
+                }
+
                 start_machine.interactable = can_start_machine;
                 final_product_text.text = recipes.out_qty + " " + helper.recipes_abv[recipes.out_name];
+                var final_sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[recipes.out_name]);
+                if (final_sprite_img)
+                   final_product_img.sprite = final_sprite_img;
                 start_machine.onClick.RemoveAllListeners();
                 Debug.Log(recipe_obj.machine_asset_id);
                 string machine_id = recipe_obj.machine_asset_id;
@@ -1662,7 +1700,7 @@ public class MainView : BaseView
         }
     }
 
-    public void show_boost(string type,string asset_id)
+    public void show_boost(string type, string asset_id)
     {
         boost_panel.SetActive(true);
         BoostPanelCall boost_child = boost_panel.gameObject.GetComponent<BoostPanelCall>();
@@ -2002,6 +2040,7 @@ public class MainView : BaseView
     public void SetTreeType()
     {
         UI_opened = true;
+        cam_switch.isUIOpen = true;
         if (onTrees)
         {
             stack_trees_type = EventSystem.current.currentSelectedGameObject.transform.parent.name;
@@ -2140,7 +2179,6 @@ public class MainView : BaseView
                 stack_machines_type = null;
                 stack_trees_type = null;
                 current_back_status = "close";
-                UI_opened = false;
                 from_main_menu = false;
                 break;
             case ("closeall"):
@@ -2160,6 +2198,7 @@ public class MainView : BaseView
                 stack_trees_type = null;
                 current_back_status = "closeall";
                 UI_opened = false;
+                cam_switch.isUIOpen = false;
                 break;
             default:
                 break;
@@ -2260,6 +2299,8 @@ public class MainView : BaseView
         boost_panel.SetActive(false);
         main_menu_panel.SetActive(false);
         levelPanel.SetActive(false);
+        UI_opened = false;
+        cam_switch.isUIOpen = false;
     }
 
     public void OnCallBackData(CallBackDataModel[] callback)
@@ -2382,7 +2423,9 @@ public class MainView : BaseView
                             success_text.text = "SuccessFully Prepared " + helper.recipes_abv[recipes.out_name];
                             success_header_text.text = "Great Success !";
                             set_helper_var = "";
-                            //final_product_successPanel Images 
+                            var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[recipes.out_name]);
+                            if (sprite_img)
+                                final_product_successPanel.sprite = sprite_img;
                             break;
                         }
                     }
@@ -2434,7 +2477,7 @@ public class MainView : BaseView
             else if (callBack.type == "order fill")
             {
                 successPanel.SetActive(true);
-                success_text.text = "Wallet Credited for AWC " + MessageHandler.marketmodel.reward.in_qty + '\n' + "Earned AWXP " + MessageHandler.marketmodel.xp_boost.in_qty; 
+                success_text.text = "Wallet Credited for AWC " + MessageHandler.marketmodel.reward.in_qty + '\n' + "Earned AWXP " + MessageHandler.marketmodel.xp_boost.in_qty;
                 success_header_text.text = "Order Filled Successfully";
                 StartCoroutine(StartTokenTimer(MessageHandler.marketmodel.reward.in_qty, "deposit"));
                 MessageHandler.marketmodel = null;
@@ -2468,7 +2511,7 @@ public class MainView : BaseView
         }
     }
 
-    private IEnumerator StartTokenTimer(string amount,string type)
+    private IEnumerator StartTokenTimer(string amount, string type)
     {
         Debug.Log("In ienum");
         string[] bal = userbalance_text.text.Split(' ');
@@ -2478,7 +2521,7 @@ public class MainView : BaseView
         double iter = double.Parse(amount) / 50;
         Debug.Log(iter);
         int temp = 0;
-        if(type == "deposit")
+        if (type == "deposit")
         {
             final_amount = ingameBal + double.Parse(amount); ;
             while (temp != 50)

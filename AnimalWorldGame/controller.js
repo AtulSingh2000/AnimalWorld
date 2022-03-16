@@ -902,34 +902,33 @@ const getCropsData = async () => {
     const arr = Object.values(assetData);
     if (arr.length != 0) {
       const check_data = await checkAssetIds("cropfields");
-      console.log(check_data);
       if (typeof check_data !== 'undefined') {
         const check_ids = check_data[0];
         for (const asset of arr) {
           if (check_ids.includes(asset.asset_id)) {
             const check_body_data = check_data[1];
             for (const bodyData of check_body_data) {
-              if (bodyData.id == asset.asset_id) {
-                let harvest= "";
-                let cost_level = [];
+              let harvest = "";
+              let cost_level = [];
                 for(const c_data of config){
                   if(asset.template_id == c_data.template_id){
                     harvest = c_data.max_harvests;
                     for(const cost_data of c_data.cost_level){
                       cost_level.push({
                         in_name: "Level"+cost_data.level,
-                        in_count: cost_data.count
+                        in_qty: cost_data.count
                       });
                     }
                     break;
                   }
                 }
+              if (bodyData.id == asset.asset_id) {
                 crop_data.push({
                   name: asset.name,
                   asset_id: asset.asset_id,
                   template_id: asset.template_id,
                   slots: bodyData.slots,
-                  cd_start: bodyData.cooldown,
+                  cd_start: bodyData.cd_start,
                   harvests: bodyData.harvests,
                   land_id: bodyData.land_id,
                   level: "Level"+asset.level,
@@ -1124,7 +1123,7 @@ const checkAssetIds = async (table) => {
             id: data.asset_id,
             slots: data.slots,
             cd_start: data.cooldown,
-            harvests: data.harvests,
+            harvests: "0",//data.harvests,
             land_id: data.land_id,
             level: data.level,
             prod_sec: data.prod_sec,
@@ -1183,7 +1182,7 @@ const getCallBack = async (table, asset_id, action_type) => {
           callback_obj.push({
             on_recip: recipe_obj,
             cooldown: arr[0].cooldown,
-            harvest: arr[0].harvests,
+            harvest: table == "cropfields" ? "0" : arr[0].harvests,
             type: "start_machine"
           });
           break;
@@ -1200,7 +1199,7 @@ const getCallBack = async (table, asset_id, action_type) => {
             callback_obj.push({
               on_recip: r_obj,
               cooldown: arr[0].cooldown,
-              harvest: arr[0].harvests,
+              harvest: table == "cropfields" ? "0" : arr[0].harvests,
               type: "recipe_claim"
             });
             break;
@@ -1544,6 +1543,7 @@ const withdrawawc = async (amount) => {
 }
 const claim_machine = async (asset_id, recipeID,type) => {
   try {
+    var ids = recipeID.split(",");
     let action_name = "";
     console.log(recipeID);
     switch(type){
@@ -1564,7 +1564,7 @@ const claim_machine = async (asset_id, recipeID,type) => {
       data: {
         player: wallet_userAccount,
         asset_id: asset_id,
-        orderID: recipeID
+        orderIDs: ids
       },
     },]);
     await delay(3000);
@@ -1587,6 +1587,8 @@ const claim_machine = async (asset_id, recipeID,type) => {
 
 const claim_tree = async (asset_id) => {
   try {
+    var ids = asset_id.split(",");
+    console.log(ids);
     await wallet_transact([{
       account: contract,
       name: "claimtree",
@@ -1596,7 +1598,7 @@ const claim_tree = async (asset_id) => {
       }],
       data: {
         player: wallet_userAccount,
-        asset_id: asset_id,
+        asset_ids: ids
       },
     },]);
     await delay(2500);
