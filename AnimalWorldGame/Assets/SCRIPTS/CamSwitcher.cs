@@ -47,10 +47,11 @@ public class CamSwitcher : MonoBehaviour
             ZoomInOut();
         }
         
+        
        if(Input.GetKeyDown(KeyCode.V))
        {
           // Debug.Log(camState);
-           if(overworldCam)
+           if(overworldCam || isUIOpen)
            {
                camState = true;
                animator.Play("Overworld");
