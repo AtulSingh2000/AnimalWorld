@@ -8,7 +8,7 @@ public class CamSwitcher : MonoBehaviour
 {
    
    private Animator animator;
-   private bool overworldCam = true;
+   public bool overworldCam = true;
    //private bool thirdPersonCam = true;
    
    public CinemachineVirtualCamera OverworldCam;
@@ -34,6 +34,8 @@ public class CamSwitcher : MonoBehaviour
     void Start()
     {
         playerOV.SetActive(false);
+        Cursor.visible = false;
+               Cursor.lockState = CursorLockMode.Locked;
         // player.GetComponent<NavMeshAgent>().enabled = false;
     }
 
@@ -61,6 +63,7 @@ public class CamSwitcher : MonoBehaviour
                //player.GetComponent<NavMeshAgent>().enabled = true;
                
                Cursor.visible = true;
+               Cursor.lockState = CursorLockMode.None;
                
            }
            
@@ -76,6 +79,7 @@ public class CamSwitcher : MonoBehaviour
                player.GetComponent<ThirdPersonMovement>().enabled = true;
                player.GetComponent<Animator>().enabled = true;
                Cursor.visible = false;
+               Cursor.lockState = CursorLockMode.Locked;
               
                if(!isUIOpen)
                {

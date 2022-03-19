@@ -17,6 +17,7 @@ public class CameraMovement : MonoBehaviour
     private Vector3 dragOrigin;
 
     private Camera zoomCamera;
+    public CamSwitcher cam_switch;
 
 private void Awake()
 {
@@ -38,13 +39,10 @@ private void Awake()
     // Update is called once per frame
     void Update()
     {
-
-        PanCamera();
-
-  
-       // ZoomInOut();
-
-       Vector3 pos = transform.position;
+        if(!cam_switch.isUIOpen)
+        {
+            PanCamera();
+             Vector3 pos = transform.position;
        
        if(Input.GetKey("w"))
        {  
@@ -74,6 +72,15 @@ private void Awake()
         pos.x = Mathf.Clamp(pos.x, -70f, 120f);
         pos.z = Mathf.Clamp(pos.z, 30f, 180f);
         transform.position = pos; 
+        
+        }
+
+        
+
+  
+       // ZoomInOut();
+
+      
     
     }
 

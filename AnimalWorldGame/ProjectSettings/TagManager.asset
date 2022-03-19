@@ -19,6 +19,8 @@ TagManager:
   - land
   - inventory
   - menu
+  - CamSwitcher
+  - Cam
   layers:
   - Default
   - TransparentFX

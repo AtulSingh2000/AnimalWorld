@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class Hover : MonoBehaviour
 {
+
+   
   
     // Start is called before the first frame update
     void Start()
@@ -23,11 +25,14 @@ public class Hover : MonoBehaviour
     private void OnMouseEnter()
     {
      
-       
-       // gameObject.layer = LayerMask.NameToLayer("Highlighte");
+     
+         // gameObject.layer = LayerMask.NameToLayer("Highlighte");
         foreach (Transform child in gameObject.transform) {
             child.gameObject.layer = LayerMask.NameToLayer("Highlighte");
         }
+     
+       
+       
     }
     private void OnMouseExit()
     {

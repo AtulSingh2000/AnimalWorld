@@ -14,6 +14,12 @@ public class ItemNamePopup : MonoBehaviour
     public GameObject inventory;
     public GameObject shop;
     public GameObject tokenexchange;
+    public GameObject coconutTrees;
+    public GameObject mangoTrees;
+    public GameObject orangeTrees;
+    public GameObject figTrees;
+    public GameObject lemonTrees;
+
     
     // Start is called before the first frame update
     void Start()
@@ -28,6 +34,11 @@ public class ItemNamePopup : MonoBehaviour
         inventory.SetActive(false);
         shop.SetActive(false);
         tokenexchange.SetActive(false);
+        coconutTrees.SetActive(false);
+        mangoTrees.SetActive(false);
+        orangeTrees.SetActive(false);
+        figTrees.SetActive(false);
+        lemonTrees.SetActive(false);
         
 
     }
@@ -81,6 +92,26 @@ public class ItemNamePopup : MonoBehaviour
      {
          tokenexchange.SetActive(true);
      }
+     if(gameObject.name == "CoconutTrees")
+     {
+         coconutTrees.SetActive(true);
+     }
+      if(gameObject.name == "MangoTrees")
+     {
+         mangoTrees.SetActive(true);
+     }
+      if(gameObject.name == "OrangeTrees")
+     {
+         orangeTrees.SetActive(true);
+     }
+      if(gameObject.name == "FigTrees")
+     {
+         figTrees.SetActive(true);
+     }
+      if(gameObject.name == "LemonTrees")
+     {
+         lemonTrees.SetActive(true);
+     }
      
     }
 
@@ -96,5 +127,10 @@ public class ItemNamePopup : MonoBehaviour
         inventory.SetActive(false);
         shop.SetActive(false);
         tokenexchange.SetActive(false);
+        coconutTrees.SetActive(false);
+        mangoTrees.SetActive(false);
+        orangeTrees.SetActive(false);
+        figTrees.SetActive(false);
+        lemonTrees.SetActive(false);
     }
 }
