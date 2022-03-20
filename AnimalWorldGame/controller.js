@@ -1314,18 +1314,35 @@ const register_nft = async (asset_id,name,land_id,type) => {
 const deregister_nft = async (asset_id, name,type) => {
   try {
     var ids = asset_id.split(",");
+    var name="";
+    var data={};
+    if(type=="land")
+    {
+      name="deregland";
+      data=
+      {
+        player: wallet_userAccount,
+        asset_ids: ids
+      };
+    }
+    else
+    {
+      name="deregnft";
+      data=
+      {
+        player: wallet_userAccount,
+        asset_ids: ids,
+        type: type
+      }; 
+    }
     const result = await wallet_transact([{
       account: contract,
-      name: "deregnft",
+      name: name,
       authorization: [{
         actor: wallet_userAccount,
         permission: anchorAuth
       }],
-      data: {
-        player: wallet_userAccount,
-        asset_ids: ids,
-        type: type
-      },
+      data:data,
     },]);
     await delay(2000);
     let obj = [];
@@ -1476,7 +1493,7 @@ const depositawc = async (amount) => {
   try {
     var final = parseFloat(amount).toFixed(4);
     const result = await wallet_transact([{
-      account: wallet_userAccount,
+      account: "anmworldtokn",
       name: "transfer",
       authorization: [{
         actor: wallet_userAccount,
@@ -1709,7 +1726,7 @@ const use_boost = async (asset_id,type) => {
       }],
       data: {
         player: wallet_userAccount,
-        asset_id: asset_id,
+        asset_ids: [asset_id],
         type : type
       },
     },]);
