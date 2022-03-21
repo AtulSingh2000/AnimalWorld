@@ -157,13 +157,13 @@ const sendUserData = async () => {
     let obj = {
       account: userAccount.toString(),
       awcBal: balance,
-      trees: [],//treeData,
-      lands: [],//landData,
-      machines: [],//machineData,
-      machine_recipes: [],//recipeData,
-      user_balance: [],//userBalanceData,
-      crops: [],//cropfieldData,
-      user_data: [],//userData,
+      trees: treeData,
+      lands: landData,
+      machines: machineData,
+      machine_recipes: recipeData,
+      user_balance: userBalanceData,
+      crops: cropfieldData,
+      user_data: userData,
     }
     console.log(obj);
     unityInstance.SendMessage(
