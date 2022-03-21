@@ -22,28 +22,30 @@ public class InventoryCall : MonoBehaviour
     public TMP_Text nametxt;
     public TMP_Text dsctxt;
     public GameObject detail_view_panel;
-    public Image icon;
     public string[] burn_ids=new string[0];
+    public AbbvHelper helper;
 
     public GameObject DetailButton;
 
     public void SetData()
     {
         counttxt.text= count;
-        nametxt.text= item_name;
-        //icon= item_image;
+        nametxt.text= helper.recipes_abv[item_name];
+        var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[item_name]);
+        if (sprite_img)
+            item_image.sprite = sprite_img;
     }
 
     public void OpenPopup()
     {
-                IPopupCall popup= detail_view_panel.GetComponent<IPopupCall>();
+        IPopupCall popup= detail_view_panel.GetComponent<IPopupCall>();
         popup.name=item_name;
         popup.count=count;
         popup.type=type;
         popup.producer=producer;
-        popup.description=description;
+        popup.description = description;
         popup.burn_ids=burn_ids;
-        //popup.image=icon;
+        popup.item_image.sprite = item_image.sprite;
         popup.SetData();
         detail_view_panel.SetActive(true);
     }

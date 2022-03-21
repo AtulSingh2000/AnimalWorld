@@ -18,7 +18,8 @@ public class MainView : BaseView
     public GameObject shop_parent_panel;
     public GameObject inv_parent_panel;
     public GameObject exchange_parent_panel;
-    [Header("Trees")]
+    public GameObject setting_panel;
+   [Header("Trees")]
     public GameObject tree_parent_panel;
     public GameObject tree_subheading_text;
     public GameObject tree_subheading_text_type_2;
@@ -211,6 +212,10 @@ public class MainView : BaseView
     private MachineAssetCall machine_child_asset = new MachineAssetCall();
     private CropAssetCall crop_child_asset = new CropAssetCall();
     public CamSwitcher cam_switch;
+
+    private List<string> tree_claim_id = new List<string>();
+    private List<string> reg_ids = new List<string>();
+    private List<string> dereg_ids = new List<string>();
 
     //Enums
     enum machine_rarities
@@ -456,9 +461,8 @@ public class MainView : BaseView
         machine_registered_btn.gameObject.SetActive(false);
         machine_unregistered_btn.gameObject.SetActive(false);
         machine_register_btn.gameObject.SetActive(false);
-
-        List<string> reg_ids = new List<string>();
-        List<string> dereg_ids = new List<string>();
+        reg_ids.Clear();
+        dereg_ids.Clear();
 
         List<MachineDataModel> data = new List<MachineDataModel>();
         GameObject asset_prefab = new GameObject();
@@ -636,12 +640,6 @@ public class MainView : BaseView
             }
         }
 
-        machine_deregister_all_btn.onClick.RemoveAllListeners();
-        machine_register_all_btn.onClick.RemoveAllListeners();
-        var register_ids = string.Join(",", reg_ids.ToArray());
-        var deregister_ids = string.Join(",", dereg_ids.ToArray());
-        machine_register_all_btn.onClick.AddListener(delegate { Register_All(register_ids); });
-        machine_deregister_all_btn.onClick.AddListener(delegate { Deregister_All(deregister_ids); });
     }
 
     private void ShowElements_Crops(string show_rarity)
@@ -655,8 +653,11 @@ public class MainView : BaseView
         crop_show_panel.SetActive(true);
         crop_stats_panel.SetActive(false);
         crop_registered_btn.gameObject.SetActive(false);
-        List<string> reg_ids = new List<string>();
-        List<string> dereg_ids = new List<string>();
+        machine_registered_btn.gameObject.SetActive(false);
+        crop_unregistered_btn.gameObject.SetActive(false);
+        crop_register_btn.gameObject.SetActive(false);
+        reg_ids.Clear();
+        dereg_ids.Clear();
 
         GameObject asset_prefab = new GameObject();
         CropDataModel[] data = MessageHandler.userModel.crops;
@@ -801,12 +802,7 @@ public class MainView : BaseView
                 }
             }
         }
-        var register_ids = string.Join(",", reg_ids.ToArray());
-        var deregister_ids = string.Join(",", dereg_ids.ToArray());
-        crop_deregister_all_btn.onClick.RemoveAllListeners();
-        crop_register_all_btn.onClick.RemoveAllListeners();
-        crop_register_all_btn.onClick.AddListener(delegate { Register_All(register_ids); });
-        crop_deregister_all_btn.onClick.AddListener(delegate { Deregister_All(deregister_ids); });
+
     }
 
     public void Levelup(string asset_id, string fees, string level)
@@ -843,6 +839,8 @@ public class MainView : BaseView
         land_unregistered_btn.gameObject.SetActive(false);
         land_register_all_btn.gameObject.SetActive(false);
         land_deregister_all_btn.gameObject.SetActive(false);
+        reg_ids.Clear();
+        dereg_ids.Clear();
 
         AssetModel[] data = MessageHandler.userModel.lands;
         GameObject asset_prefab = new GameObject();
@@ -1020,9 +1018,6 @@ public class MainView : BaseView
         var reg = parent_transform_trees_reg;
         var unreg = parent_transform_trees_unreg;
         string type = "";
-
-        List<string> reg_ids = new List<string>();
-        List<string> dereg_ids = new List<string>();
         clearChildObjs(parent_transform_trees_reg);
         clearChildObjs(parent_transform_trees_unreg);
         tree_show_panel.SetActive(true);
@@ -1031,6 +1026,8 @@ public class MainView : BaseView
         tree_unregistered_btn.gameObject.SetActive(false);
         tree_register_btn.gameObject.SetActive(false);
         tree_unregister_btn.gameObject.SetActive(false);
+        reg_ids.Clear();
+        dereg_ids.Clear();
 
 
         List<AssetModel> data = new List<AssetModel>();
@@ -1038,30 +1035,26 @@ public class MainView : BaseView
         switch (tree_name)
         {
             case ("Fig"):
-                Debug.Log("found prefab");
                 data = fig;
                 break;
             case ("Mango"):
-                Debug.Log("found prefab");
                 data = mango;
                 break;
             case ("Lemon"):
-                Debug.Log("found prefab");
                 data = lemon;
                 break;
             case ("Orange"):
-                Debug.Log("found prefab");
                 data = orange;
                 break;
             case ("Coconut"):
                 data = coconut;
                 break;
         }
+
         foreach (ImgObjectView prefabs in img)
         {
             if (prefabs.name == tree_name)
             {
-                Debug.Log("found");
                 asset_prefab = prefabs.prefab;
                 type = prefabs.type;
                 break;
@@ -1075,7 +1068,6 @@ public class MainView : BaseView
                 Debug.Log(asset_data.asset_id);
                 if (asset_data.reg == "0")
                 {
-                    Debug.Log("in");
                     var ins = Instantiate(asset_prefab);
                     ins.transform.SetParent(unreg);
                     ins.transform.localScale = new Vector3(1, 1, 1);
@@ -1099,7 +1091,6 @@ public class MainView : BaseView
                 }
                 else if (asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id)
                 {
-                    Debug.Log("in reg");
                     var ins = Instantiate(asset_prefab);
                     ins.transform.SetParent(reg);
                     ins.transform.localScale = new Vector3(1, 1, 1);
@@ -1128,31 +1119,26 @@ public class MainView : BaseView
             }
         }
 
-        List<string> claim_id = new List<string>();
-        claim_id.Clear();
-        foreach (Transform child in parent_transform_trees_reg)
+        tree_claim_id.Clear();
+        foreach (Transform child in reg)
         {
             var child_obj = child.gameObject.GetComponent<AssetCall>();
-            if (child_obj.time_to_claim.text == "Claim Now !" || child_obj.claim_btn.GetComponent<Button>().interactable)
+            if (child_obj.claim_btn.GetComponent<Button>().interactable)
             {
-                claim_id.Add(child_obj.asset_id);
+                tree_claim_id.Add(child_obj.asset_id);
             }
         }
 
-        var register_ids = string.Join(",", reg_ids.ToArray());
-        var deregister_ids = string.Join(",", dereg_ids.ToArray());
-        var claim_all_ids = string.Join(",", claim_id.ToArray());
-        tree_register_all_btn.onClick.RemoveAllListeners();
-        tree_deregister_all_btn.onClick.RemoveAllListeners();
-        tree_claim_all_btn.onClick.RemoveAllListeners();
-        tree_register_all_btn.onClick.AddListener(delegate { Register_All(register_ids); });
-        tree_deregister_all_btn.onClick.AddListener(delegate { Deregister_All(deregister_ids); });
-        tree_claim_all_btn.onClick.AddListener(delegate { Claim_All_Tree_Produce(claim_all_ids); });
+        if (tree_claim_id.Count > 0)
+            tree_claim_all_btn.interactable = true;
+        else
+            tree_claim_all_btn.interactable = false;
     }
-    public void Claim_All_Tree_Produce(string asset_id)
+    public void Claim_All_Tree_Produce()
     {
         LoadingPanel.SetActive(true);
-        MessageHandler.Server_ClaimTree(asset_id);
+        var claim_all_ids = string.Join(",", tree_claim_id.ToArray());
+        MessageHandler.Server_ClaimTree(claim_all_ids);
     }
 
     public void show_machines_details(MachineAssetCall child_obj)
@@ -1271,6 +1257,10 @@ public class MainView : BaseView
                         ids.Add(child_script.order_id);
                 }
             }
+            if (ids.Count == 0)
+                machine_claim_all_btn.interactable = false;
+            else
+                machine_claim_all_btn.interactable = true;
 
             machine_child_asset = child_obj;
             machine_claim_all_btn.onClick.RemoveAllListeners();
@@ -1421,11 +1411,16 @@ public class MainView : BaseView
                         ids.Add(child_script.order_id);
                 }
             }
+            
+            if (ids.Count == 0)
+                crop_claim_all_btn.interactable = false;
+            else
+                crop_claim_all_btn.interactable = true;
 
             crop_child_asset = child_obj;
-            machine_claim_all_btn.onClick.RemoveAllListeners();
+            crop_claim_all_btn.onClick.RemoveAllListeners();
             string order_ids = string.Join(",", ids.ToArray());
-            machine_claim_all_btn.onClick.AddListener(delegate { recipes_claim_all(order_ids, child_obj.asset_id, "crop"); });
+            crop_claim_all_btn.onClick.AddListener(delegate { recipes_claim_all(order_ids, child_obj.asset_id, "crop"); });
 
         }
     }
@@ -1565,6 +1560,8 @@ public class MainView : BaseView
                 }
                 break;
             case ("machines"):
+                var listAvailableStrings = machine_rarity_dropdown.options.Select(option => option.text).ToList();
+                machine_rarity_dropdown.value = listAvailableStrings.IndexOf("Level");
                 current_back_status = "on_machine_stats_panel";
                 if (!populated_machine_rarity)
                 {
@@ -1585,6 +1582,8 @@ public class MainView : BaseView
                 }
                 break;
             case ("crops"):
+                var listAvailableStrings_crops = crop_level_dropdown.options.Select(option => option.text).ToList();
+                crop_level_dropdown.value = listAvailableStrings_crops.IndexOf("Level");
                 if (!populated_crop_level)
                 {
                     PopulateCropLevel();
@@ -1707,11 +1706,20 @@ public class MainView : BaseView
         boost_child.LoadingPanel = LoadingPanel;
         boost_child.asset_id = asset_id;
         boost_child.type = type;
+        boost_child.fertilizer_obj.SetActive(false);
+        boost_child.oil_obj.SetActive(false);
+
+        if (type == "tree")
+            boost_child.fertilizer_obj.SetActive(true);
+        else
+            boost_child.oil_obj.SetActive(true);
+
         boost_child.symbol = "";
     }
 
-    public void Register_All(string asset_ids)
+    public void Register_All()
     {
+        var asset_ids = string.Join(",", reg_ids.ToArray());
         Debug.Log(asset_ids);
         LoadingPanel.SetActive(true);
         string type = "";
@@ -1733,8 +1741,9 @@ public class MainView : BaseView
         MessageHandler.Server_RegisterAsset(asset_ids, name_type, MessageHandler.userModel.land_id, type);
     }
 
-    public void Deregister_All(string asset_ids)
+    public void Deregister_All()
     {
+        var asset_ids = string.Join(",", dereg_ids.ToArray());
         Debug.Log(asset_ids);
         LoadingPanel.SetActive(true);
         string type = "";
@@ -1812,7 +1821,7 @@ public class MainView : BaseView
                     {
                         de_reg += 1;
                     }
-                    else if (treeData.reg == "1")
+                    else if (treeData.reg == "1" && treeData.land_id == MessageHandler.userModel.land_id)
                     {
                         reg += 1;
                         if (double.TryParse(treeData.prod_pwer, out double prod))
@@ -1837,6 +1846,14 @@ public class MainView : BaseView
             un_total_trees.text = de_reg.ToString();
             time_to_claim.text = current_pro.ToString("0.00") + " " + type;
             current_produce.text = MessageHandler.GetBalanceKey(type.ToUpper()) + " " + type;
+            if (reg == 0)
+                tree_registered_btn.interactable = false;
+            else
+                tree_registered_btn.interactable = true;
+            if (de_reg == 0)
+                tree_unregistered_btn.interactable = false;
+            else
+                tree_unregistered_btn.interactable = true;
         }
         else if (onMachines)
         {
@@ -1850,7 +1867,7 @@ public class MainView : BaseView
                     {
                         de_reg += 1;
                     }
-                    else if (machineData.reg == "1")
+                    else if (machineData.reg == "1" && machineData.land_id == MessageHandler.userModel.land_id)
                     {
                         reg += 1;
                         if (machineData.cd_start == "1")
@@ -1874,6 +1891,14 @@ public class MainView : BaseView
             reg_total_machines.text = reg.ToString();
             un_total_machines.text = de_reg.ToString();
             current_produce.text = in_cooldown.ToString();
+            if (reg == 0)
+                machine_registered_btn.interactable = false;
+            else
+                machine_registered_btn.interactable = true;
+            if (de_reg == 0)
+                machine_unregistered_btn.interactable = false;
+            else
+                machine_unregistered_btn.interactable = true;
         }
         else if (onCrops && type == "Crop Fields")
         {
@@ -1885,7 +1910,7 @@ public class MainView : BaseView
                     {
                         de_reg += 1;
                     }
-                    else if (crop.reg == "1")
+                    else if (crop.reg == "1" && crop.land_id == MessageHandler.userModel.land_id)
                     {
                         reg += 1;
                     }
@@ -1903,6 +1928,14 @@ public class MainView : BaseView
             total_crops.text = MessageHandler.userModel.crops.Length.ToString();
             reg_total_crops.text = reg.ToString();
             un_total_crops.text = de_reg.ToString();
+            if (reg == 0)
+                crop_registered_btn.interactable = false;
+            else
+                crop_registered_btn.interactable = true;
+            if (de_reg == 0)
+                crop_unregistered_btn.interactable = false;
+            else
+                crop_unregistered_btn.interactable = true;
         }
         else if (onLand && type == "Lands")
         {
@@ -1932,6 +1965,14 @@ public class MainView : BaseView
             total_land.text = MessageHandler.userModel.lands.Length.ToString();
             reg_total_land.text = reg.ToString();
             un_total_land.text = de_reg.ToString();
+            if (reg == 0)
+                land_registered_btn.interactable = false;
+            else
+                land_registered_btn.interactable = true;
+            if (de_reg == 0)
+                land_unregistered_btn.interactable = false;
+            else
+                land_unregistered_btn.interactable = true;
         }
     }
 
@@ -2172,6 +2213,7 @@ public class MainView : BaseView
                 shop_parent_panel.SetActive(false);
                 exchange_parent_panel.SetActive(false);
                 inv_parent_panel.SetActive(false);
+                setting_panel.SetActive(false);
                 onTrees = false;
                 onMachines = false;
                 onCrops = false;
@@ -2179,7 +2221,6 @@ public class MainView : BaseView
                 stack_machines_type = null;
                 stack_trees_type = null;
                 current_back_status = "close";
-                from_main_menu = false;
                 break;
             case ("closeall"):
                 tree_parent_panel.SetActive(false);
@@ -2199,6 +2240,7 @@ public class MainView : BaseView
                 current_back_status = "closeall";
                 UI_opened = false;
                 cam_switch.isUIOpen = false;
+                from_main_menu = false;
                 break;
             default:
                 break;
@@ -2248,6 +2290,7 @@ public class MainView : BaseView
     public void selectType(string type)
     {
         UI_opened = true;
+        cam_switch.isUIOpen = UI_opened;
         if (from_main_menu) current_back_status = "close";
         else current_back_status = "closeall";
         switch (type)
@@ -2287,6 +2330,11 @@ public class MainView : BaseView
                 main_menu_panel.SetActive(false);
                 inv_parent_panel.SetActive(true);
                 break;
+            case ("settings"):
+                main_menu_panel.SetActive(false);
+                setting_panel.SetActive(true);
+                current_back_status = "close";
+                break;
             default:
                 break;
         }
@@ -2297,10 +2345,15 @@ public class MainView : BaseView
         choose_ing_panel.SetActive(false);
         successPanel.SetActive(false);
         boost_panel.SetActive(false);
-        main_menu_panel.SetActive(false);
         levelPanel.SetActive(false);
+    }
+
+    public void CloseMenu()
+    {
+        main_menu_panel.SetActive(false);
+        from_main_menu = false;
         UI_opened = false;
-        cam_switch.isUIOpen = false;
+        cam_switch.isUIOpen = UI_opened;
     }
 
     public void OnCallBackData(CallBackDataModel[] callback)
@@ -2315,7 +2368,8 @@ public class MainView : BaseView
                 SetData();
                 if (onTrees && !string.IsNullOrEmpty(callBack.tree_name))
                 {
-                    ShowElements_Trees(callBack.tree_name);
+                    stack_trees_type = callBack.tree_name;
+                    showRegisteredAssets("trees");
                 }
                 else if (onMachines && !string.IsNullOrEmpty(callBack.machine_name))
                 {
@@ -2476,15 +2530,21 @@ public class MainView : BaseView
             }
             else if (callBack.type == "order fill")
             {
+                SetLevel();
+                SetElements();
                 successPanel.SetActive(true);
                 success_text.text = "Wallet Credited for AWC " + MessageHandler.marketmodel.reward.in_qty + '\n' + "Earned AWXP " + MessageHandler.marketmodel.xp_boost.in_qty;
                 success_header_text.text = "Order Filled Successfully";
                 StartCoroutine(StartTokenTimer(MessageHandler.marketmodel.reward.in_qty, "deposit"));
                 MessageHandler.marketmodel = null;
-                //Img
+                var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[MessageHandler.marketmodel.products[0].in_name]);
+                if (sprite_img)
+                    final_product_successPanel.sprite = sprite_img;
             }
             else if (callBack.type == "buy")
             {
+                SetLevel();
+                SetElements();
                 successPanel.SetActive(true);
                 string action_name = "";
                 string item_name = "";
@@ -2507,6 +2567,9 @@ public class MainView : BaseView
                 success_header_text.text = action_name + " Successfully";
                 StartCoroutine(StartTokenTimer(MessageHandler.shopmodle.price.in_qty, "withdraw"));
                 MessageHandler.shopmodle = null;
+                var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[item_name]);
+                if (sprite_img)
+                    final_product_successPanel.sprite = sprite_img;
             }
         }
     }

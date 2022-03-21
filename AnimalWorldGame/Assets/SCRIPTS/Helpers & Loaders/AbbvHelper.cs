@@ -21,7 +21,8 @@ public class AbbvHelper : MonoBehaviour
         recipes.Add("CORN", "Corn");
         recipes.Add("CHILLY", "Chilly");
         recipes.Add("CHEESE", "Cheese");
-        recipes.Add("CPCORN", "Cheese Popcorn");
+        recipes.Add("CPCORN", "Chilly Popcorn");
+        recipes.Add("YPCORN", "Cheese Popcorn");
         recipes.Add("MANGO", "Mango");
         recipes.Add("ORANGE", "Orange");
         recipes.Add("COCUNUT", "Coconut");
@@ -40,15 +41,15 @@ public class AbbvHelper : MonoBehaviour
         recipes.Add("MJUICE", "Mango Juice");
 
         //Crop Field
-        recipes.Add("WHEATSE", "WHEATSE");
-        recipes.Add("CLYSE", "CLYSE");
-        recipes.Add("SBEANE", "SBEANE");
-        recipes.Add("CORNSE", "CORNSE");
-        recipes.Add("CRTSE", "CRTSE");
+        recipes.Add("WHEATSE", "Wheat Seeds");
+        recipes.Add("CLYSE", "Chilly Seeds");
+        recipes.Add("SBEANE", "Soybean Seeds");
+        recipes.Add("CORNSE", "Corn Seeds");
+        recipes.Add("CRTSE", "Carrot Seeds");
         recipes.Add("WHEAT", "Wheat");
-        recipes.Add("CRT", "CRT");
-        recipes.Add("CLY", "CLY");
-        recipes.Add("SBEAN", "Soya Bean");
+        recipes.Add("CRT", "Carrot");
+        recipes.Add("CLY", "Chilly");
+        recipes.Add("SBEAN", "Soybean");
 
         recipes.Add("FLZR", "Fertilizer");
         recipes.Add("OIL", "Oil");

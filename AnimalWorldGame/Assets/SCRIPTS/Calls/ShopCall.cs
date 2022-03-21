@@ -59,6 +59,9 @@ public class ShopCall : MonoBehaviour
                 description.text= "Buy 1 " + helper.recipes_abv[resource.in_name];
             else
                 description.text = "Buy 1 " + resource.in_name;
+            var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[resource.in_name]);
+            if (sprite_img)
+                template_image.sprite = sprite_img;
             price1txt.text = price.in_qty;
             min_level.text = req_level;
             if (double.Parse(price.in_qty) <= user_balance)
@@ -70,7 +73,10 @@ public class ShopCall : MonoBehaviour
         }
         else if(type=="mint")
         {
-            description.text = "Mint 1 " + price.in_name + " NFT";
+            description.text = "Mint 1 " + helper.recipes_abv[price.in_name] + " NFT";
+            var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[price.in_name]);
+            if (sprite_img)
+                template_image.sprite = sprite_img;
             price1txt.text = price.in_qty;
             min_level.text = req_level;
             string balance = MessageHandler.GetBalanceKey(price.in_name);
@@ -92,6 +98,9 @@ public class ShopCall : MonoBehaviour
         else if(type=="dmo")
         {
             description.text = products[0].in_qty + " " + helper.recipes_abv[products[0].in_name];
+            var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[products[0].in_name]);
+            if (sprite_img)
+                template_image.sprite = sprite_img;
             price1txt.text = reward.in_qty;
             price2txt.text = xp_boost.in_qty;
             reqtxt.text = products[0].in_qty.Split('.')[0];

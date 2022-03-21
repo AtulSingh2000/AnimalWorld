@@ -11,7 +11,7 @@ public class InventoryView : BaseView
 {
 
     public Transform inventoryParent;
-        [Header("Left Panel")]
+    [Header("Left Panel")]
     [Space]
     public Transform a1;
     public Transform b1;
@@ -19,7 +19,7 @@ public class InventoryView : BaseView
     public Transform d1;
     public Transform focus1;
 
-        [Header("Top Panel")]
+    [Header("Top Panel")]
     [Space]
     public Transform a;
     public Transform b;
@@ -49,12 +49,12 @@ public class InventoryView : BaseView
     public List<InfoDataModel> infos = new List<InfoDataModel>();
     public  string infojson;
 
-             protected override void Start()
+    protected override void Start()
     {
         base.Start();
-                        string jsonData = JsonHelper.fixJson(infojson);
+        string jsonData = JsonHelper.fixJson(infojson);
         infos.AddRange(JsonHelper.FromJson<InfoDataModel>(jsonData));
-            Debug.Log(infos[1]);
+        Debug.Log(infos[1]);
         current_producer="all";
         current_type="all";
         Populate();
@@ -105,7 +105,7 @@ public class InventoryView : BaseView
     public void switchproducer(string type)
     {
         current_producer = type;
-                a1.GetComponent<TMP_Text>().color = new Color32(74, 172, 247, 255);
+        a1.GetComponent<TMP_Text>().color = new Color32(74, 172, 247, 255);
         b1.GetComponent<TMP_Text>().color = new Color32(74, 172, 247, 255);
         c1.GetComponent<TMP_Text>().color = new Color32(74, 172, 247, 255);
         d1.GetComponent<TMP_Text>().color = new Color32(74, 172, 247, 255);
@@ -200,6 +200,7 @@ public class InventoryView : BaseView
                 child.description=description;
                 child.detail_view_panel=detail_view_panel;
                 child.burn_ids=filterids(balance.in_name);
+                child.helper = helper;
                 child.SetData();
             }
         }

@@ -258,7 +258,7 @@ public static void Server_BurnNFT(string asset_id)
     {
         string xpbalance= GetBalanceKey("AWXP");
         LevelModel[] final_level = new LevelModel[2];
-        for(int i=0;i<levelModel.Length;i++)
+        for(int i=0;i < levelModel.Length;i++)
         {
             if(double.TryParse(xpbalance,out double xp_bal))
             {

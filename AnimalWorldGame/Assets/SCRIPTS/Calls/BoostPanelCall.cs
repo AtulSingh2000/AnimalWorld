@@ -12,13 +12,6 @@ public class BoostPanelCall : MonoBehaviour
     public string type;
     public string symbol;
 
-    protected virtual void Start()
-    {
-        if (type == "tree" || type == "crop")
-            fertilizer_obj.SetActive(true);
-        else
-            oil_obj.SetActive(true);
-    }
 
     public void use_boost()
     {
