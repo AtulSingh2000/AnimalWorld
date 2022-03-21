@@ -169,14 +169,13 @@ public class ShopCall : MonoBehaviour
     {
         if (!string.IsNullOrEmpty(price.in_qty) && !string.IsNullOrEmpty(id)  && !string.IsNullOrEmpty(resource.in_qty))
         {
-            /*To be fixed
             LoadingPanel.SetActive(true);
             MessageHandler.shopmodle.id = id;
             MessageHandler.shopmodle.resource = resource;
             MessageHandler.shopmodle.price.in_name = price.in_name;
             MessageHandler.shopmodle.price.in_qty = (double.Parse(quantity) * double.Parse(price.in_qty)).ToString();
             MessageHandler.shopmodle.type = type;
-            MessageHandler.Server_BuyShopL(id,quantity);*/
+            MessageHandler.Server_BuyShopL(id,quantity);
         }
         else
             SSTools.ShowMessage("No Order Selected", SSTools.Position.bottom, SSTools.Time.twoSecond);

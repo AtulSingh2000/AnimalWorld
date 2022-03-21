@@ -262,7 +262,8 @@ public static void Server_BurnNFT(string asset_id)
         {
             if(double.TryParse(xpbalance,out double xp_bal))
             {
-                if(double.TryParse(levelModel[i].xp_amount,out double level_amt))
+                string xp_amount = levelModel[i].xp_amount.Split(' ')[0];
+                if (double.TryParse(xp_amount,out double level_amt))
                 {
                     if(xp_bal >= level_amt)
                     {

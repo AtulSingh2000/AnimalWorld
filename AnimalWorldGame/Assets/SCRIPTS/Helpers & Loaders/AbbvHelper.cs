@@ -17,19 +17,17 @@ public class AbbvHelper : MonoBehaviour
 
         //Popcorn Maker
         recipes.Add("CPOPCORN", "Cheese Popcorn");
-        recipes.Add("SPCORN", "Salted Popcorn");
+        recipes.Add("SPCORN", "Spicy Popcorn");
         recipes.Add("CORN", "Corn");
         recipes.Add("CHILLY", "Chilly");
         recipes.Add("CHEESE", "Cheese");
-        recipes.Add("CPCORN", "Chilly Popcorn");
-        recipes.Add("YPCORN", "Cheese Popcorn");
+        recipes.Add("CPCORN", "Cheesy Popcorn");
         recipes.Add("MANGO", "Mango");
         recipes.Add("ORANGE", "Orange");
-        recipes.Add("COCUNUT", "Coconut");
         recipes.Add("COCONUT", "Coconut");
         recipes.Add("FIG", "Fig");
         recipes.Add("LEMON", "Lemon");
-        recipes.Add("FPCORN", "Fruit Popcorn");
+        recipes.Add("FPCORN", "Fruity Popcorn");
         recipes.Add("PCORN", "Popcorn");
 
         //Juicer

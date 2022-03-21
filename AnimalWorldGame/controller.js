@@ -157,13 +157,13 @@ const sendUserData = async () => {
     let obj = {
       account: userAccount.toString(),
       awcBal: balance,
-      trees: treeData,
-      lands: landData,
-      machines: machineData,
-      machine_recipes: recipeData,
-      user_balance: userBalanceData,
-      crops: cropfieldData,
-      user_data: userData,
+      trees: [],//treeData,
+      lands: [],//landData,
+      machines: [],//machineData,
+      machine_recipes: [],//recipeData,
+      user_balance: [],//userBalanceData,
+      crops: [],//cropfieldData,
+      user_data: [],//userData,
     }
     console.log(obj);
     unityInstance.SendMessage(
@@ -252,12 +252,12 @@ const getLevelData = async () => {
         });
       }
     }
+    console.log(obj);
     unityInstance.SendMessage(
       "GameController",
       "Client_SetLevelData",
       obj === undefined ? JSON.stringify({}) : JSON.stringify(obj)
     );
-
   } catch (e) {
     unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
   }
@@ -1425,7 +1425,7 @@ const start_machine = async (asset_id, recipeID,type) => {
 
 const filldmo = async (id,amount) => {
   try {
-    await wallet_transact([{
+    let result = await wallet_transact([{
       account: contract,
       name: "filldmo",
       authorization: [{

@@ -26,6 +26,7 @@ public class AssetCall : MonoBehaviour
     public bool start_timer;
     public bool maxed_harvests;
     private Image tree_image;
+    public bool can_claim = false;
 
     protected virtual void Start()
     {
@@ -96,7 +97,6 @@ public class AssetCall : MonoBehaviour
             {
                 TimeSpan Ntime = TimeSpan.FromSeconds(diff);
                 time_to_claim.text = Ntime.ToString();
-                Debug.Log(Ntime.ToString());
                 yield return new WaitForSeconds(1f);
                 diff -= 1;
                 if (diff == 0) temp = 1;
@@ -104,6 +104,7 @@ public class AssetCall : MonoBehaviour
         }
         time_to_claim.text = "Claim Now !";
         claim_btn.GetComponent<Button>().interactable = true;
+        can_claim = true;
         claim_btn.GetComponent<Button>().onClick.AddListener(delegate { Claim_Tree_Produce(); });
     }
 

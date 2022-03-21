@@ -213,7 +213,7 @@ public class MainView : BaseView
     private CropAssetCall crop_child_asset = new CropAssetCall();
     public CamSwitcher cam_switch;
 
-    private List<string> tree_claim_id = new List<string>();
+    private List<string> claim_ids = new List<string>();
     private List<string> reg_ids = new List<string>();
     private List<string> dereg_ids = new List<string>();
 
@@ -433,7 +433,9 @@ public class MainView : BaseView
         LevelModel current = temp[0];
         LevelModel next = temp[1];
         user_level.text = current.level;
-        user_level_count.text = awxpbal + " / " + next.xp_amount;
+        user_level_count.text = awxpbal.Split('.')[0] + " / " + next.xp_amount.Split(' ')[0].Split('.')[0] + " AWXP";
+        double slider_value = double.Parse(awxpbal) / double.Parse(next.xp_amount.Split(' ')[0]);
+        user_level_count.gameObject.transform.parent.transform.parent.GetComponent<Slider>().value = (float)slider_value;
     }
 
 
@@ -1015,6 +1017,7 @@ public class MainView : BaseView
 
     private void ShowElements_Trees(string tree_name)
     {
+        Debug.Log("Count of claim list " + claim_ids.Count);
         var reg = parent_transform_trees_reg;
         var unreg = parent_transform_trees_unreg;
         string type = "";
@@ -1026,6 +1029,7 @@ public class MainView : BaseView
         tree_unregistered_btn.gameObject.SetActive(false);
         tree_register_btn.gameObject.SetActive(false);
         tree_unregister_btn.gameObject.SetActive(false);
+        claim_ids.Clear();
         reg_ids.Clear();
         dereg_ids.Clear();
 
@@ -1100,6 +1104,7 @@ public class MainView : BaseView
                     child.asset_id_text.fontSize = 14;
                     child.asset_name = tree_name;
                     child.LoadingPanel = LoadingPanel;
+                    child.can_claim = false;
                     child.unregister_btn.SetActive(true);
                     child.time = asset_data.last_claim;
                     child.delayValue = asset_data.delay;
@@ -1119,26 +1124,27 @@ public class MainView : BaseView
             }
         }
 
-        tree_claim_id.Clear();
-        foreach (Transform child in reg)
-        {
-            var child_obj = child.gameObject.GetComponent<AssetCall>();
-            if (child_obj.claim_btn.GetComponent<Button>().interactable)
-            {
-                tree_claim_id.Add(child_obj.asset_id);
-            }
-        }
-
-        if (tree_claim_id.Count > 0)
-            tree_claim_all_btn.interactable = true;
-        else
-            tree_claim_all_btn.interactable = false;
     }
     public void Claim_All_Tree_Produce()
     {
-        LoadingPanel.SetActive(true);
-        var claim_all_ids = string.Join(",", tree_claim_id.ToArray());
-        MessageHandler.Server_ClaimTree(claim_all_ids);
+        foreach (Transform child in parent_transform_trees_reg)
+        {
+            var child_obj = child.gameObject.GetComponent<AssetCall>();
+            if (child_obj.can_claim && !child_obj.maxed_harvests)
+            {
+                claim_ids.Add(child_obj.asset_id);
+            }
+        }
+
+        if (claim_ids.Count > 0)
+        {
+            tree_claim_all_btn.interactable = true;
+            LoadingPanel.SetActive(true);
+            var claim_all_ids = string.Join(",", claim_ids.ToArray());
+            MessageHandler.Server_ClaimTree(claim_all_ids);
+        }
+        else
+            tree_claim_all_btn.interactable = false;
     }
 
     public void show_machines_details(MachineAssetCall child_obj)
@@ -1151,7 +1157,7 @@ public class MainView : BaseView
         }
         else
         {
-            List<string> ids = new List<string>();
+            Debug.Log("Count of claim list " + claim_ids.Count);
             machine_detail_view_img.sprite = Resources.Load<Sprite>("Sprites/" + child_obj.asset_name);
             machine_deregister_all_btn.gameObject.SetActive(false);
             machine_child_asset = null;
@@ -1247,25 +1253,27 @@ public class MainView : BaseView
                 ins.gameObject.GetComponent<Button>().onClick.AddListener(delegate { Open_Add_New_Machine_Ing(child_obj); });
             }
 
-            ids.Clear();
+            claim_ids.Clear();
             foreach (Transform child in parent_machine_current_ing)
             {
                 if (child.gameObject.name != "Add Button")
                 {
                     var child_script = child.gameObject.GetComponent<MachineRecipeCall>();
                     if (child_script.check_btn.activeInHierarchy)
-                        ids.Add(child_script.order_id);
+                        claim_ids.Add(child_script.order_id);
                 }
             }
-            if (ids.Count == 0)
+
+            if (claim_ids.Count == 0)
                 machine_claim_all_btn.interactable = false;
             else
                 machine_claim_all_btn.interactable = true;
 
             machine_child_asset = child_obj;
             machine_claim_all_btn.onClick.RemoveAllListeners();
-            string order_ids = string.Join(",", ids.ToArray());
+            string order_ids = string.Join(",", claim_ids.ToArray());
             machine_claim_all_btn.onClick.AddListener(delegate { recipes_claim_all(order_ids, child_obj.asset_id, "machine"); });
+            Debug.Log("Count of claim list " + claim_ids.Count);
         }
 
     }
@@ -1309,7 +1317,6 @@ public class MainView : BaseView
         }
         else
         {
-            List<string> ids = new List<string>();
             crop_deregister_all_btn.gameObject.SetActive(false);
             crop_child_asset = null;
             clearChildObjs(parent_crops_current_ing);
@@ -1401,25 +1408,25 @@ public class MainView : BaseView
                 ins.gameObject.GetComponent<Button>().onClick.AddListener(delegate { Open_Add_New_Crop_Ing(child_obj); });
             }
 
-            ids.Clear();
+            claim_ids.Clear();
             foreach (Transform child in parent_crops_current_ing)
             {
                 if (child.gameObject.name != "Add Button")
                 {
                     var child_script = child.gameObject.GetComponent<MachineRecipeCall>();
                     if (child_script.check_btn.activeInHierarchy)
-                        ids.Add(child_script.order_id);
+                        claim_ids.Add(child_script.order_id);
                 }
             }
             
-            if (ids.Count == 0)
+            if (claim_ids.Count == 0)
                 crop_claim_all_btn.interactable = false;
             else
                 crop_claim_all_btn.interactable = true;
 
             crop_child_asset = child_obj;
             crop_claim_all_btn.onClick.RemoveAllListeners();
-            string order_ids = string.Join(",", ids.ToArray());
+            string order_ids = string.Join(",", claim_ids.ToArray());
             crop_claim_all_btn.onClick.AddListener(delegate { recipes_claim_all(order_ids, child_obj.asset_id, "crop"); });
 
         }
@@ -2365,6 +2372,8 @@ public class MainView : BaseView
         {
             if (callBack.type == "reg")
             {
+                dereg_ids.Clear();
+                reg_ids.Clear();
                 SetData();
                 if (onTrees && !string.IsNullOrEmpty(callBack.tree_name))
                 {
@@ -2387,6 +2396,8 @@ public class MainView : BaseView
             }
             else if (callBack.type == "dereg")
             {
+                dereg_ids.Clear();
+                reg_ids.Clear();
                 SetData();
                 if (onTrees && !string.IsNullOrEmpty(callBack.tree_name))
                 {
@@ -2438,8 +2449,11 @@ public class MainView : BaseView
             }
             else if (callBack.type == "tree_claim")
             {
+                Debug.Log(claim_ids.Count);
+                claim_ids.Clear();
+                Debug.Log(claim_ids.Count);
                 SetData();
-                showRegisteredAssets("trees");
+                ShowElements_Trees(stack_trees_type);
                 SSTools.ShowMessage("Claim Successfull !", SSTools.Position.bottom, SSTools.Time.twoSecond);
             }
             else if (callBack.type == "boost")
@@ -2465,6 +2479,7 @@ public class MainView : BaseView
             }
             else if (callBack.type == "recipe_claim")
             {
+                claim_ids.Clear();
                 SetData();
                 if (!string.IsNullOrEmpty(set_helper_var))
                 {
