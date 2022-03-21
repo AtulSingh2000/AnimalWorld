@@ -1136,6 +1136,7 @@ const checkAssetIds = async (table) => {
           });
         }
       }
+      else break;
     }
     }
     return [ids, table_data];
