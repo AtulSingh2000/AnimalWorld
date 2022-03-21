@@ -51,67 +51,71 @@ public class ItemNamePopup : MonoBehaviour
 
      private void OnMouseEnter()
     {
-     if(gameObject.name == "Juicer")
-     {
-         juicer.SetActive(true);
-     }
-     if(gameObject.name == "BBQ")
-     {
-         bbq.SetActive(true);
-     }
-     if(gameObject.name == "IceCream")
-     {
-         icecream.SetActive(true);
-     }
-     if(gameObject.name == "MilkFactory")
-     {
-         milk.SetActive(true);
-     }
-     if(gameObject.name == "Feeder")
-     {
-         feeder.SetActive(true);
-     }
-     if(gameObject.name == "PopcornMaker")
-     {
-         popcorn.SetActive(true);
-     }
-     if(gameObject.name == "House")
-     {
-         house.SetActive(true);
-     }
-     if(gameObject.name == "Inventory")
-     {
-         inventory.SetActive(true);
-     }
-     
-     if(gameObject.name == "Shop")
-     {
-         shop.SetActive(true);
-     }
-     if(gameObject.name == "TokenExchange")
-     {
-         tokenexchange.SetActive(true);
-     }
-     if(gameObject.name == "CoconutTrees")
-     {
-         coconutTrees.SetActive(true);
-     }
-      if(gameObject.name == "MangoTrees")
-     {
-         mangoTrees.SetActive(true);
-     }
-      if(gameObject.name == "OrangeTrees")
-     {
-         orangeTrees.SetActive(true);
-     }
-      if(gameObject.name == "FigTrees")
-     {
-         figTrees.SetActive(true);
-     }
-      if(gameObject.name == "LemonTrees")
-     {
-         lemonTrees.SetActive(true);
-     }
+        if(CamSwitcher.thirdPersonCam == false && CamSwitcher.shoulHighlight == true)
+        {
+            if(gameObject.name == "Juicer")
+            {
+                juicer.SetActive(true);
+            }
+            if(gameObject.name == "BBQ")
+            {
+                bbq.SetActive(true);
+            }
+            if(gameObject.name == "IceCream")
+            {
+                icecream.SetActive(true);
+            }
+            if(gameObject.name == "MilkFactory")
+            {
+                milk.SetActive(true);
+            }
+            if(gameObject.name == "Feeder")
+            {
+                feeder.SetActive(true);
+            }
+            if(gameObject.name == "PopcornMaker")
+            {
+                popcorn.SetActive(true);
+            }
+            if(gameObject.name == "House")
+            {
+                house.SetActive(true);
+            }
+            if(gameObject.name == "Inventory")
+            {
+                inventory.SetActive(true);
+            }
+            
+            if(gameObject.name == "Shop")
+            {
+                shop.SetActive(true);
+            }
+            if(gameObject.name == "TokenExchange")
+            {
+                tokenexchange.SetActive(true);
+            }
+            if(gameObject.name == "CoconutTrees")
+            {
+                coconutTrees.SetActive(true);
+            }
+            if(gameObject.name == "MangoTrees")
+            {
+                mangoTrees.SetActive(true);
+            }
+            if(gameObject.name == "OrangeTrees")
+            {
+                orangeTrees.SetActive(true);
+            }
+            if(gameObject.name == "FigTrees")
+            {
+                figTrees.SetActive(true);
+            }
+            if(gameObject.name == "LemonTrees")
+            {
+                lemonTrees.SetActive(true);
+            }
+        }
+            
      
     }
 
