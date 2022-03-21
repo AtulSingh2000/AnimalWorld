@@ -725,23 +725,23 @@ MonoBehaviour:
     "PCORN",     "description": "Popcorn",     "icon": "",     "type": "products",    
     "producer": "cropfields"   },   {     "id": "CPCORN",     "description": "Chilly
     Popcorn",     "icon": "",     "type": "products",     "producer": "cropfields"  
-    },   {     "id": "YPCORN",     "description": "Cheesy Popcorn",     "icon": "",    
+    },   {     "id": "CPCORN",     "description": "Cheesy Popcorn",     "icon": "",    
     "type": "products",     "producer": "cropfields"   },   {     "id": "FPCORN",    
     "description": "Fruity Popcorn",     "icon": "",     "type": "products",    
-    "producer": "trees"   },   {     "id": "MJUICE",     "description": "Mango Juice",    
-    "icon": "",     "type": "products",     "producer": "trees"   },   {     "id":
-    "OJUICE",     "description": "Orange Juice",     "icon": "",     "type": "products",    
-    "producer": "trees"   },   {     "id": "CJUICE",     "description": "Coconut
+    "producer": "cropfields"   },   {     "id": "MJUICE",     "description": "Mango
     Juice",     "icon": "",     "type": "products",     "producer": "trees"   },  
-    {     "id": "FJUICE",     "description": "Fig  Juice",     "icon": "",     "type":
-    "products",     "producer": "trees"   },   {     "id": "LJUICE",     "description":
-    "Lemon Juice",     "icon": "",     "type": "products",     "producer": "trees"  
-    },   {     "id": "MFJUICE",     "description": "Mix Fruit Juice",     "icon":
-    "",     "type": "products",     "producer": "trees"   },   {     "id": "CORN",    
-    "description": "CORN",     "icon": "",     "type": "resources",     "producer":
-    "cropfields"   },   {     "id": "WHEAT",     "description": "WHEAT",     "icon":
-    "",     "type": "resources",     "producer": "cropfields"   },   {     "id":
-    "CLY",     "description": "CHILLY",     "icon": "",     "type": "resources",    
+    {     "id": "OJUICE",     "description": "Orange Juice",     "icon": "",    
+    "type": "products",     "producer": "trees"   },   {     "id": "CJUICE",    
+    "description": "Coconut Juice",     "icon": "",     "type": "products",     "producer":
+    "trees"   },   {     "id": "FJUICE",     "description": "Fig  Juice",     "icon":
+    "",     "type": "products",     "producer": "trees"   },   {     "id": "LJUICE",    
+    "description": "Lemon Juice",     "icon": "",     "type": "products",     "producer":
+    "trees"   },   {     "id": "MFJUICE",     "description": "Mix Fruit Juice",    
+    "icon": "",     "type": "products",     "producer": "trees"   },   {     "id":
+    "CORN",     "description": "CORN",     "icon": "",     "type": "resources",    
+    "producer": "cropfields"   },   {     "id": "WHEAT",     "description": "WHEAT",    
+    "icon": "",     "type": "resources",     "producer": "cropfields"   },   {    
+    "id": "CLY",     "description": "CHILLY",     "icon": "",     "type": "resources",    
     "producer": "cropfields"   },   {     "id": "SBEAN",     "description": "SOYABEAN",    
     "icon": "",     "type": "resources",     "producer": "cropfields"   },   {    
     "id": "CRT",     "description": "CARROT",     "icon": "",     "type": "resources",    
@@ -753,7 +753,7 @@ MonoBehaviour:
     "cropfields"   },   {     "id": "SBEANSE",     "description": "SOYABEAN Seed",    
     "icon": "",     "type": "resources",     "producer": "cropfields"   },   {    
     "id": "CRTSE",     "description": "CARROT Seed",     "icon": "",     "type":
-    "resources",     "producer": "trees"   },   {     "id": "MANGO",     "description":
+    "resources",     "producer": "cropfields"   },   {     "id": "MANGO",     "description":
     "Mango grows on mango trees and can be used to make various products",     "icon":
     "",     "type": "resources",     "producer": "trees"   },   {     "id": "ORANGE",    
     "description": "Orange  grows on Orange trees and can be used to make various
@@ -764,7 +764,12 @@ MonoBehaviour:
     grows on Coconut trees and can be used to make various products",     "icon":
     "",     "type": "resources",     "producer": "trees"   },   {     "id": "LEMON",    
     "description": "Lemon  grows on Lemon trees and can be used to make various products",    
-    "icon": "",     "type": "resources",     "producer": "trees"   } ]'
+    "icon": "",     "type": "resources",     "producer": "trees"   },   {     "id":
+    "OIL",     "description": "Use this OIL booster to restore your machine harvests
+    to 0.",     "icon": "",     "type": "boosters",     "producer": "trees"   },  
+    {     "id": "FLZR",     "description": "Use this FERTILIZER  booster to restore
+    your TREE harvests to 0.",     "icon": "",     "type": "boosters",     "producer":
+    "trees"   } ]'
 --- !u!4 &332848034
 Transform:
   m_ObjectHideFlags: 0

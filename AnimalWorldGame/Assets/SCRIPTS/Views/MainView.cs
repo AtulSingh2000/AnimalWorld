@@ -2325,6 +2325,8 @@ public class MainView : BaseView
                 SetTreeType();
                 break;
             case ("shop"):
+                MessageHandler.Server_GetShopdata();
+                MessageHandler.Server_GetDMOdata();
                 main_menu_panel.SetActive(false);
                 shop_parent_panel.SetActive(true);
                 current_back_status = "close";
@@ -2575,10 +2577,12 @@ public class MainView : BaseView
                         break;
                     case ("mint"):
                         action_name = "Minted";
-                        item_name = MessageHandler.shopmodle.price.in_name;
+                        item_name = MessageHandler.shopmodle.price.in_name +"resource pack";
                         break;
                 }
-                success_text.text = action_name + " 1 " + item_name + '\n' + "Wallet Debited for AWC " + MessageHandler.shopmodle.price.in_qty;
+                var tkntxt=MessageHandler.shopmodle.price.in_qty+ MessageHandler.shopmodle.price.in_name;
+                var gg= action_name=="Minted"?"+ 10 AWC":"";
+                success_text.text = action_name + " 1 " + item_name + '\n' + "Wallet Debited for "+tkntxt+gg;
                 success_header_text.text = action_name + " Successfully";
                 StartCoroutine(StartTokenTimer(MessageHandler.shopmodle.price.in_qty, "withdraw"));
                 MessageHandler.shopmodle = null;

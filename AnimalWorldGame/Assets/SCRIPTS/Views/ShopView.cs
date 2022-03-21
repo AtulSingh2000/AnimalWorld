@@ -60,7 +60,7 @@ public class ShopView : BaseView
      public void OnShopData(ShopModel[] data)
      {
         listings=data;
-        //PopulateShop();
+        PopulateShop("dmo");
      }
     public void OnDMOData(MarketOrderModel[] data)
     {
