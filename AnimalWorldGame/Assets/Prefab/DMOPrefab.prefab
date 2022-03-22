@@ -2275,7 +2275,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8111302331793504749
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2470,6 +2470,7 @@ MonoBehaviour:
   LoadingPanel: {fileID: 0}
   buyqty: {fileID: 0}
   view: {fileID: 0}
+  helper: {fileID: 0}
 --- !u!114 &7751245417513874429
 MonoBehaviour:
   m_ObjectHideFlags: 0
