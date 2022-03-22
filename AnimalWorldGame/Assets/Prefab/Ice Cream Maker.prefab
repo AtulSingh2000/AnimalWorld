@@ -759,7 +759,7 @@ GameObject:
   - component: {fileID: 194037668772074611}
   - component: {fileID: 3371979635510471137}
   m_Layer: 5
-  m_Name: Icecream Maker
+  m_Name: Ice Cream Maker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
