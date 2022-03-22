@@ -29,8 +29,11 @@ public class InventoryCall : MonoBehaviour
 
     public void SetData()
     {
-        counttxt.text= count;
-        nametxt.text= helper.recipes_abv[item_name];
+        counttxt.text = count;
+        if(helper.recipes_abv.ContainsKey(item_name))
+            nametxt.text = helper.recipes_abv[item_name];
+        else
+            nametxt.text = item_name;
         var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[item_name]);
         if (sprite_img)
             item_image.sprite = sprite_img;
