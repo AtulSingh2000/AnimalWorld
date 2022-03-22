@@ -18,6 +18,7 @@ public class MachineRecipeCall : MonoBehaviour
     public TMP_Text timer_text;
     public TMP_Text recipe_name_text;
     public GameObject LoadingPanel;
+    public Button claim_all;
 
     public void Start_Timer(string last_search, string delayValue)
     {
@@ -46,6 +47,7 @@ public class MachineRecipeCall : MonoBehaviour
             }
         }
         if(timer_btn.activeInHierarchy)timer_btn.SetActive(false);
+        claim_all.interactable = true;
         check_btn.SetActive(true);
         check_btn.GetComponent<Button>().onClick.RemoveAllListeners();
         check_btn.GetComponent<Button>().onClick.AddListener(delegate { Claim_Machine(); });

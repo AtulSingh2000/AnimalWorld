@@ -24,12 +24,12 @@ public class NFTCounter : MonoBehaviour
     public GameObject[] Tree4;
     public GameObject[] Tree5;
 
-    public int Tree1Count;
-    public int Tree2Count;
-    public int Tree3Count;
-    public int Tree4Count;
-    public int Tree5Count;
-    public int CropFieldCount;
+    public int LemonTreeCount = 0;
+    public int FigTreeCount = 0;
+    public int OrangeTreeCount = 0;
+    public int MangoTreeCount = 0;
+    public int CoconutTreeCount = 0;
+    public int CropFieldCount = 0;
     public GameObject[] CropField;
 
     
@@ -54,36 +54,25 @@ public class NFTCounter : MonoBehaviour
        BBQMachine.SetActive(false);
        IceCreamMaker.SetActive(false);
        FeederMachine.SetActive(false);
-
        Juicer.SetActive(false);
-
        MilkFactory.SetActive(false);
 
     }
     
-     void Start()
+     public void Start()
     {
        CheckTree1Count();
        CheckTree2Count();
        CheckTree3Count();
        CheckTree4Count();
        CheckTree5Count();
-
        CheckCropField();
-
        CheckMachines();
-    }
-
-    // Update is called once per frame
-     void Update()
-    {
-         
-      
     }
 
     public void CheckTree1Count()
     {
-        for (int i = 1; i <= Tree1Count; i++)
+        for (int i = 1; i <= LemonTreeCount; i++)
         {
             
             Tree1[i-1].SetActive(true);
@@ -92,7 +81,7 @@ public class NFTCounter : MonoBehaviour
     }
     public void CheckTree2Count()
     {
-         for (int i = 1; i <= Tree2Count; i++)
+         for (int i = 1; i <= FigTreeCount; i++)
         {
             
             Tree2[i-1].SetActive(true);
@@ -101,7 +90,7 @@ public class NFTCounter : MonoBehaviour
     }
     public void CheckTree3Count()
     {
-         for (int i = 1; i <= Tree3Count; i++)
+         for (int i = 1; i <= OrangeTreeCount; i++)
         {
            
             Tree3[i-1].SetActive(true);
@@ -110,7 +99,7 @@ public class NFTCounter : MonoBehaviour
     }
     public void CheckTree4Count()
     {
-         for (int i = 1; i <= Tree4Count; i++)
+         for (int i = 1; i <= MangoTreeCount; i++)
         {
           
             Tree4[i-1].SetActive(true);
@@ -119,7 +108,7 @@ public class NFTCounter : MonoBehaviour
     }
     public void CheckTree5Count()
     {
-         for (int i = 1; i <= Tree5Count; i++)
+         for (int i = 1; i <= CoconutTreeCount; i++)
         {
             
             Tree5[i-1].SetActive(true);

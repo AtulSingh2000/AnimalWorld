@@ -19,7 +19,7 @@ public class Hover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(highlite);
+
     }
 
     private void OnMouseEnter()
