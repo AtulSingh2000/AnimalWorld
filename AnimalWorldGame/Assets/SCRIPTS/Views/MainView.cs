@@ -250,7 +250,7 @@ public class MainView : BaseView
     protected override void Start()
     {
         base.Start();
-        nft_counter = GameObject.Find("NFTCounter").GetComponent<NFTCounter>();
+        //nft_counter = GameObject.Find("NFTCounter").GetComponent<NFTCounter>();
         MessageHandler.OnCallBackData += OnCallBackData;
         SSTools.ShowMessage("Welcome Farmer " + MessageHandler.userModel.account, SSTools.Position.bottom, SSTools.Time.twoSecond);
         machine_rarity_dropdown.onValueChanged.AddListener(delegate { changeValue(machine_rarity_dropdown); });
@@ -362,7 +362,7 @@ public class MainView : BaseView
                 case ("Popcorn Maker"):
                     if (assets.land_id == MessageHandler.userModel.land_id)
                     {
-                       // nft_counter.isPopcornMaker= true;
+                       //nft_counter.isPopcornMaker= true;
                         machines++;
                     }
                     popcorn.Add(assets);
@@ -370,7 +370,7 @@ public class MainView : BaseView
                 case ("Feeder"):
                     if (assets.land_id == MessageHandler.userModel.land_id)
                     {
-                       // nft_counter.isFeederMachine = true;
+                        //nft_counter.isFeederMachine = true;
                         machines++;
                     }
                     feeder.Add(assets);
@@ -428,7 +428,7 @@ public class MainView : BaseView
             if (asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id)
             {
                 crops++;
-                nft_counter.CropFieldCount = nft_counter.CropFieldCount < 3 ? nft_counter.CropFieldCount + 1 : 5;
+                //nft_counter.CropFieldCount = nft_counter.CropFieldCount < 3 ? nft_counter.CropFieldCount + 1 : 3;
             }
         }
 
