@@ -33,6 +33,24 @@ public class AudioPlayer : MonoBehaviour
         }
     }
 
+    public void MuteD(bool state)
+    {
+        if(state)
+    {
+    Track1.mute= true;
+    Track2.mute= true;
+    Track3.mute= true;
+    }
+    else
+    {
+        Track1.mute= false;
+        Track2.mute= false;
+        Track3.mute= false;
+    }
+
+    }
+
+
     // Update is called once per frame
     void Update()
     {

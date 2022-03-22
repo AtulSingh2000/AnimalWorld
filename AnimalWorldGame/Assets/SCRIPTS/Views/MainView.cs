@@ -17,6 +17,7 @@ public class MainView : BaseView
     public GameObject main_menu_panel;
     public GameObject mutebtn;
     public GameObject unmutebtn;
+    public AudioPlayer a_player;
 
     public GameObject audiolistener;
 
@@ -1066,6 +1067,7 @@ public class MainView : BaseView
     mutebtn.SetActive(true);
     unmutebtn.SetActive(false);
     }
+    a_player.MuteD(state);
     }
 
     public void switchLand(string asset_id)
