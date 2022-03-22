@@ -1795,7 +1795,7 @@ public class MainView : BaseView
                     parent_transform_land_unreg.gameObject.SetActive(true);
                     parent_transform_land_unreg.parent.gameObject.transform.parent.gameObject.GetComponent<ScrollRect>().content = parent_transform_land_unreg.GetComponent<RectTransform>();
                     land_subheading_text.GetComponent<TMP_Text>().text = "Un-Registered Lands";
-                    land_register_all_btn.gameObject.SetActive(true);
+                    land_register_all_btn.gameObject.SetActive(false);
                 }
                 break;
         }
