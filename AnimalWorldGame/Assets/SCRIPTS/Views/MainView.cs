@@ -934,6 +934,7 @@ public class MainView : BaseView
                         child.asset_name = name;
                         child.LoadingPanel = LoadingPanel;
                         child.register_btn.SetActive(true);
+                        child.registered_assets_text.gameObject.SetActive(false);
                     }
                     else if (asset_data.reg == "1")
                     {
@@ -2681,11 +2682,13 @@ public class MainView : BaseView
                 successPanel.SetActive(true);
                 string action_name = "";
                 string item_name = "";
+                string qty = " 1 ";
                 switch (MessageHandler.shopmodle.type)
                 {
                     case ("ingame"):
                         action_name = "Purchased";
                         item_name = MessageHandler.shopmodle.resource.in_name;
+                        qty = MessageHandler.shopmodle.price.in_qty.Split(' ')[1];
                         break;
                     case ("pack"):
                         action_name = "Purchased";
@@ -2698,7 +2701,7 @@ public class MainView : BaseView
                 }
                 var tkntxt=MessageHandler.shopmodle.price.in_qty+ MessageHandler.shopmodle.price.in_name;
                 var gg= action_name=="Minted"?"+ 10 AWC":"";
-                success_text.text = action_name + " 1 " + item_name + '\n' + "Wallet Debited for "+tkntxt+gg;
+                success_text.text = action_name + qty + item_name + '\n' + "Wallet Debited for "+tkntxt+gg;
                 success_header_text.text = action_name + " Successfully";
                 StartCoroutine(StartTokenTimer(MessageHandler.shopmodle.price.in_qty, "withdraw"));
                 MessageHandler.shopmodle = null;

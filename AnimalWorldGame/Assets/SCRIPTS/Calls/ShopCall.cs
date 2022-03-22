@@ -174,7 +174,7 @@ public class ShopCall : MonoBehaviour
             MessageHandler.shopmodle.id = id;
             MessageHandler.shopmodle.resource = resource;
             MessageHandler.shopmodle.price.in_name = price.in_name;
-            MessageHandler.shopmodle.price.in_qty = (double.Parse(quantity) * double.Parse(price.in_qty)).ToString();
+            MessageHandler.shopmodle.price.in_qty = (double.Parse(quantity) * double.Parse(price.in_qty)).ToString()+" "+quantity;
             MessageHandler.shopmodle.type = type;
             MessageHandler.Server_BuyShopL(id,quantity);
         }
