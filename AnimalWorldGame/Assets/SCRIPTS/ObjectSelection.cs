@@ -48,7 +48,7 @@ public class ObjectSelection : MonoBehaviour
             
          }
         
-        if(Input.GetMouseButtonDown(0))
+       /* if(Input.GetMouseButtonDown(0))
         {
             Ray ray = camera.ScreenPointToRay(Input.mousePosition);
 
@@ -59,17 +59,23 @@ public class ObjectSelection : MonoBehaviour
               
                 if(selection.CompareTag("DMOBoard"))
                 {
-                    Instantiate(truck, truckPos.transform.position, Quaternion.identity);
-                    StartCoroutine(TruckComeAndGo());
+                //    Instantiate(truck, truckPos.transform.position, Quaternion.identity);
+                 //   StartCoroutine(TruckComeAndGo());
                     
                 }
             }
-        }
+        }*/
     }
     IEnumerator TruckComeAndGo()
     { 
         yield return new WaitForSeconds(7);
         
+    }
+
+    public void TruckAnim()
+    {
+        Instantiate(truck, truckPos.transform.position, Quaternion.identity);
+                    StartCoroutine(TruckComeAndGo());
     }
    
 }
