@@ -250,7 +250,7 @@ public class MainView : BaseView
     protected override void Start()
     {
         base.Start();
-        //nft_counter = GameObject.Find("NFTCounter").GetComponent<NFTCounter>();
+        nft_counter = GameObject.Find("NFTCounter").GetComponent<NFTCounter>();
         MessageHandler.OnCallBackData += OnCallBackData;
         SSTools.ShowMessage("Welcome Farmer " + MessageHandler.userModel.account, SSTools.Position.bottom, SSTools.Time.twoSecond);
         machine_rarity_dropdown.onValueChanged.AddListener(delegate { changeValue(machine_rarity_dropdown); });
@@ -306,14 +306,14 @@ public class MainView : BaseView
                     if (assets.land_id == MessageHandler.userModel.land_id)
                     {
                         trees++;
-                        //nft_counter.MangoTreeCount = nft_counter.MangoTreeCount < 5 ? nft_counter.MangoTreeCount + 1 : 5;
+                        nft_counter.MangoTreeCount = nft_counter.MangoTreeCount < 5 ? nft_counter.MangoTreeCount + 1 : 5;
                     }
                     break;
                 case ("Coconut Tree"):
                     if (assets.land_id == MessageHandler.userModel.land_id)
                     {
                         trees++;
-                        //nft_counter.CoconutTreeCount = nft_counter.CoconutTreeCount < 5 ? nft_counter.CoconutTreeCount + 1 : 5;
+                        nft_counter.CoconutTreeCount = nft_counter.CoconutTreeCount < 5 ? nft_counter.CoconutTreeCount + 1 : 5;
                     }
                     coconut.Add(assets);
                     break;
@@ -321,7 +321,7 @@ public class MainView : BaseView
                     if (assets.land_id == MessageHandler.userModel.land_id)
                     {
                         trees++;
-                        //nft_counter.FigTreeCount = nft_counter.FigTreeCount < 5 ? nft_counter.FigTreeCount + 1 : 5;
+                        nft_counter.FigTreeCount = nft_counter.FigTreeCount < 5 ? nft_counter.FigTreeCount + 1 : 5;
                     }
                     fig.Add(assets);
                     break;
@@ -329,7 +329,7 @@ public class MainView : BaseView
                     if (assets.land_id == MessageHandler.userModel.land_id)
                     {
                         trees++;
-                        //nft_counter.LemonTreeCount = nft_counter.LemonTreeCount < 5 ? nft_counter.LemonTreeCount + 1 : 5;
+                        nft_counter.LemonTreeCount = nft_counter.LemonTreeCount < 5 ? nft_counter.LemonTreeCount + 1 : 5;
                     }
                     lemon.Add(assets);
                     break;
@@ -337,7 +337,7 @@ public class MainView : BaseView
                     if (assets.land_id == MessageHandler.userModel.land_id)
                     {
                         trees++;
-                        //nft_counter.OrangeTreeCount = nft_counter.OrangeTreeCount < 5 ? nft_counter.OrangeTreeCount + 1 : 5;
+                        nft_counter.OrangeTreeCount = nft_counter.OrangeTreeCount < 5 ? nft_counter.OrangeTreeCount + 1 : 5;
                     }
                     orange.Add(assets);
                     break;
@@ -354,7 +354,7 @@ public class MainView : BaseView
                 case ("Juicer"):
                     if (assets.land_id == MessageHandler.userModel.land_id) 
                     {
-                        //nft_counter.isJuicer = true;
+                        nft_counter.isJuicer = true;
                         machines++; 
                     }
                     juicer.Add(assets);
@@ -362,7 +362,7 @@ public class MainView : BaseView
                 case ("Popcorn Maker"):
                     if (assets.land_id == MessageHandler.userModel.land_id)
                     {
-                       //nft_counter.isPopcornMaker= true;
+                       nft_counter.isPopcornMaker= true;
                         machines++;
                     }
                     popcorn.Add(assets);
@@ -370,7 +370,7 @@ public class MainView : BaseView
                 case ("Feeder"):
                     if (assets.land_id == MessageHandler.userModel.land_id)
                     {
-                        //nft_counter.isFeederMachine = true;
+                        nft_counter.isFeederMachine = true;
                         machines++;
                     }
                     feeder.Add(assets);
@@ -378,7 +378,7 @@ public class MainView : BaseView
                 case ("BBQ"):
                     if (assets.land_id == MessageHandler.userModel.land_id)
                     {
-                        //nft_counter.isBBQMachine = true;
+                        nft_counter.isBBQMachine = true;
                         machines++;
                     }
                     bbq.Add(assets);
@@ -386,7 +386,7 @@ public class MainView : BaseView
                 case ("Ice Cream Maker"):
                     if (assets.land_id == MessageHandler.userModel.land_id)
                     {
-                        //nft_counter.isIceCreamMaker = true;
+                        nft_counter.isIceCreamMaker = true;
                         machines++;
                     }
                     icecream.Add(assets);
@@ -394,7 +394,7 @@ public class MainView : BaseView
                 case ("Dairy"):
                     if (assets.land_id == MessageHandler.userModel.land_id)
                     {
-                        //nft_counter.isMilkFactory = true;
+                        nft_counter.isMilkFactory = true;
                         machines++;
                     }
                     dairy.Add(assets);
@@ -428,11 +428,11 @@ public class MainView : BaseView
             if (asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id)
             {
                 crops++;
-                //nft_counter.CropFieldCount = nft_counter.CropFieldCount < 3 ? nft_counter.CropFieldCount + 1 : 3;
+                nft_counter.CropFieldCount = nft_counter.CropFieldCount < 3 ? nft_counter.CropFieldCount + 1 : 3;
             }
         }
 
-        //nft_counter.Start();
+        nft_counter.Start();
         reg_trees.text = trees.ToString();
         reg_machines.text = machines.ToString();
         reg_crops.text = crops.ToString();

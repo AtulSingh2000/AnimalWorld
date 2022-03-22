@@ -723,7 +723,7 @@ MonoBehaviour:
     "producer": "animals"   },   {     "id": 343527,     "description": "BBQ",    
     "icon": "",     "type": "machines",     "producer": "animals"   },   {     "id":
     "PCORN",     "description": "Popcorn",     "icon": "",     "type": "products",    
-    "producer": "cropfields"   },   {     "id": "CPCORN",     "description": "Chilly
+    "producer": "cropfields"   },   {     "id": "SPCORN",     "description": "Spicy
     Popcorn",     "icon": "",     "type": "products",     "producer": "cropfields"  
     },   {     "id": "CPCORN",     "description": "Cheesy Popcorn",     "icon": "",    
     "type": "products",     "producer": "cropfields"   },   {     "id": "FPCORN",    
