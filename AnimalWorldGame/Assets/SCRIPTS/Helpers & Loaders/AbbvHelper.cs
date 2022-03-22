@@ -41,7 +41,7 @@ public class AbbvHelper : MonoBehaviour
         //Crop Field
         recipes.Add("WHEATSE", "Wheat Seeds");
         recipes.Add("CLYSE", "Chilly Seeds");
-        recipes.Add("SBEANE", "Soybean Seeds");
+        recipes.Add("SBEANSE", "Soybean Seeds");
         recipes.Add("CORNSE", "Corn Seeds");
         recipes.Add("CRTSE", "Carrot Seeds");
         recipes.Add("WHEAT", "Wheat");

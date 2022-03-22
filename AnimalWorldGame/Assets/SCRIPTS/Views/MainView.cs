@@ -15,6 +15,11 @@ public class MainView : BaseView
     [Space]
     [Header("Main Menu")]
     public GameObject main_menu_panel;
+    public GameObject mutebtn;
+    public GameObject unmutebtn;
+
+    public GameObject audiolistener;
+
     public GameObject shop_parent_panel;
     public GameObject inv_parent_panel;
     public GameObject exchange_parent_panel;
@@ -1045,6 +1050,22 @@ public class MainView : BaseView
                 total++;
         }
         child_obj.registered_assets_text.text = "Registered NFTs : " + total.ToString();
+    }
+
+    public void MuteAudio(bool state)
+    {
+        if(state==true)
+    {
+    audiolistener.GetComponent<AudioListener>().enabled=false;
+    mutebtn.SetActive(false);
+    unmutebtn.SetActive(true);
+    }
+    else
+    {
+    audiolistener.GetComponent<AudioListener>().enabled=true;
+    mutebtn.SetActive(true);
+    unmutebtn.SetActive(false);
+    }
     }
 
     public void switchLand(string asset_id)
