@@ -883,13 +883,7 @@ public class MainView : BaseView
 
     public void LevelUpTRX(string asset_id, string fees)
     {
-        if (double.Parse(MessageHandler.GetBalanceKey("AWC")) > double.Parse(fees))
-            SSTools.ShowMessage("Insufficient Balance", SSTools.Position.bottom, SSTools.Time.twoSecond);
-        else
-        {
-            LoadingPanel.SetActive(true);
-            //
-        }
+
     }
 
     private void ShowElements_Lands(string show_level)
@@ -2291,6 +2285,7 @@ public class MainView : BaseView
                 break;
             case ("on_registered_machines"):
                 machine_deregister_all_btn.gameObject.SetActive(true);
+                machine_boost_all_btn.gameObject.SetActive(true);
                 machine_rarity_dropdown.gameObject.SetActive(true);
                 machine_show_panel.gameObject.SetActive(true);
                 show_machine_details.gameObject.SetActive(false);
@@ -2723,7 +2718,7 @@ public class MainView : BaseView
                         item_name = MessageHandler.shopmodle.price.in_name +"resource pack";
                         break;
                 }
-                var tkntxt = action_name == "Minted" ? " 10 AWC" : MessageHandler.shopmodle.price.in_qty;
+                var tkntxt = action_name == "Minted" ? " 10 AWC" : MessageHandler.shopmodle.price.in_qty.Split(' ')[0];
                 success_text.text = action_name + " " + qty + " " + helper.recipes_abv[item_name] + '\n' + "Wallet Debited for AWC " + tkntxt;
                 success_header_text.text = action_name + " Successfully";
                 StartCoroutine(StartTokenTimer(MessageHandler.shopmodle.price.in_qty, "withdraw"));
