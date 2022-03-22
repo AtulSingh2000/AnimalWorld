@@ -1244,6 +1244,7 @@ public class MainView : BaseView
             Debug.Log("Count of claim list " + claim_ids.Count);
             machine_detail_view_img.sprite = Resources.Load<Sprite>("Sprites/" + child_obj.asset_name);
             machine_deregister_all_btn.gameObject.SetActive(false);
+            machine_boost_all_btn.gameObject.SetActive(false);
             machine_child_asset = null;
             clearChildObjs(parent_machine_current_ing);
             machine_rarity_dropdown.gameObject.SetActive(false);
