@@ -2705,7 +2705,7 @@ public class MainView : BaseView
                 successPanel.SetActive(true);
                 string action_name = "";
                 string item_name = "";
-                string qty = " 1 ";
+                string qty = "1";
                 switch (MessageHandler.shopmodle.type)
                 {
                     case ("ingame"):
@@ -2722,9 +2722,8 @@ public class MainView : BaseView
                         item_name = MessageHandler.shopmodle.price.in_name +"resource pack";
                         break;
                 }
-                var tkntxt=MessageHandler.shopmodle.price.in_qty+ MessageHandler.shopmodle.price.in_name;
-                var gg= action_name=="Minted"?"+ 10 AWC":"";
-                success_text.text = action_name + qty + item_name + '\n' + "Wallet Debited for "+tkntxt+gg;
+                var tkntxt = action_name == "Minted" ? " 10 AWC" : MessageHandler.shopmodle.price.in_qty;
+                success_text.text = action_name + " " + qty + " " + helper.recipes_abv[item_name] + '\n' + "Wallet Debited for AWC " + tkntxt;
                 success_header_text.text = action_name + " Successfully";
                 StartCoroutine(StartTokenTimer(MessageHandler.shopmodle.price.in_qty, "withdraw"));
                 MessageHandler.shopmodle = null;
