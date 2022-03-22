@@ -24,6 +24,12 @@ public class NFTCounter : MonoBehaviour
     public GameObject[] Tree4;
     public GameObject[] Tree5;
 
+    public GameObject LemonTreeParent;
+    public GameObject FigTreeParent;
+    public GameObject OrangeTreeParent;
+    public GameObject MangoTreeParent;
+    public GameObject CoconutTreeParent;
+
     public int LemonTreeCount = 0;
     public int FigTreeCount = 0;
     public int OrangeTreeCount = 0;
@@ -68,7 +74,16 @@ public class NFTCounter : MonoBehaviour
        CheckTree5Count();
        CheckCropField();
        CheckMachines();
+
+    
     }
+
+    void Update()
+    {
+        SetTreeState();
+    }
+
+  
 
     public void CheckTree1Count()
     {
@@ -147,6 +162,54 @@ public class NFTCounter : MonoBehaviour
         {
             MilkFactory.SetActive(true);
         }
+    }
+
+    public void SetTreeState()
+    {
+        if(LemonTreeCount == 0)
+       {
+           LemonTreeParent.SetActive(false);
+       }
+       else
+       {
+           LemonTreeParent.SetActive(true);
+       }
+
+
+       if(FigTreeCount == 0)
+       {
+           FigTreeParent.SetActive(false);
+       }
+       else
+       {
+           FigTreeParent.SetActive(true);
+       }
+
+
+       if(OrangeTreeCount == 0)
+       {
+           OrangeTreeParent.SetActive(false);
+       }
+       else{
+           OrangeTreeParent.SetActive(true);
+       }
+
+
+       if(MangoTreeCount == 0)
+       {
+           MangoTreeParent.SetActive(false);
+       }
+       else{
+           MangoTreeParent.SetActive(true);
+       }
+
+       if(CoconutTreeCount == 0)
+       {
+           CoconutTreeParent.SetActive(false);
+       }
+       else{
+           CoconutTreeParent.SetActive(true);
+       }
     }
 
 }
