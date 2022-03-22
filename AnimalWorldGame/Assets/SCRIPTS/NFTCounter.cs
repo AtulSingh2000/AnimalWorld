@@ -62,7 +62,7 @@ public class NFTCounter : MonoBehaviour
        FeederMachine.SetActive(false);
        Juicer.SetActive(false);
        MilkFactory.SetActive(false);
-
+        PopcornMaker.SetActive(false);
     }
     
      public void Start()
@@ -161,6 +161,10 @@ public class NFTCounter : MonoBehaviour
          if(isMilkFactory)
         {
             MilkFactory.SetActive(true);
+        }
+        if (isPopcornMaker)
+        {
+            PopcornMaker.SetActive(true);
         }
     }
 
