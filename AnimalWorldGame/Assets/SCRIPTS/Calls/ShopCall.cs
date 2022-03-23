@@ -64,6 +64,8 @@ public class ShopCall : MonoBehaviour
                 template_image.sprite = sprite_img;
             price1txt.text = price.in_qty;
             min_level.text = req_level;
+
+            
             if (double.Parse(price.in_qty) <= user_balance)
                 buyButton.onClick.AddListener(delegate { BuyResource("1"); });
             else
@@ -76,7 +78,10 @@ public class ShopCall : MonoBehaviour
             description.text = "Mint 1 " + helper.recipes_abv[price.in_name] + " NFT";
             var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[price.in_name]);
             if (sprite_img)
+            {
                 template_image.sprite = sprite_img;
+                symbol1_image.sprite = sprite_img;
+            }
             price1txt.text = price.in_qty;
             min_level.text = req_level;
             string balance = MessageHandler.GetBalanceKey(price.in_name);
