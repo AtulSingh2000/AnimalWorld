@@ -35,12 +35,8 @@ public class CamSwitcher : MonoBehaviour
     void Start()
     {
         
-        thirdPersonCam = true;
-        
-        playerOV.SetActive(false);
-        Cursor.visible = false;
-               Cursor.lockState = CursorLockMode.Locked;
-        // player.GetComponent<NavMeshAgent>().enabled = false;
+        switch_to_overworld();
+
     }
 
     // Update is called once per frame
@@ -54,28 +50,10 @@ public class CamSwitcher : MonoBehaviour
         
        if(Input.GetKeyDown(KeyCode.V))
        {
-        
-           
-          
           // Debug.Log(camState);
            if(overworldCam || isUIOpen)
            {
-               
-               camState = true;
-               animator.Play("Overworld");
-               playerOV.gameObject.transform.position = player.gameObject.transform.position;
-               playerOV.SetActive(true);
-               player.SetActive(false);
-               OverworldCam.transform.position = new Vector3(51f, 51.25f, 78.6f);
-               player.GetComponent<ThirdPersonMovement>().enabled = false;
-               player.GetComponent<Animator>().enabled = false;
-               //player.GetComponent<NavMeshAgent>().enabled = true;
-               shoulHighlight = true;
-               thirdPersonCam = false;
-               
-               Cursor.visible = true;
-               Cursor.lockState = CursorLockMode.None;
-               
+            switch_to_overworld();
            }
            
            else
@@ -91,32 +69,57 @@ public class CamSwitcher : MonoBehaviour
                player.GetComponent<ThirdPersonMovement>().enabled = true;
                player.GetComponent<Animator>().enabled = true;
                thirdPersonCam = true;
-               Cursor.visible = false;
-               Cursor.lockState = CursorLockMode.Locked;
+               Cursor.visible = true;
+               Cursor.lockState = CursorLockMode.None;
               
                if(!isUIOpen)
                {
                    ZoomInOut();
                }
+           overworldCam = !overworldCam;
 
            }
-           overworldCam = !overworldCam;
            //thirdPersonCam = !thirdPersonCam;
           
        }
+    }
+
+    public void switch_to_overworld()
+    {
+               
+               camState = true;
+               animator.Play("Overworld");
+               playerOV.gameObject.transform.position = player.gameObject.transform.position;
+               playerOV.gameObject.transform.rotation = player.gameObject.transform.rotation;
+               playerOV.SetActive(true);
+               player.SetActive(false);
+               OverworldCam.transform.position = new Vector3(51f, 51.25f, 78.6f);
+               player.GetComponent<ThirdPersonMovement>().enabled = false;
+               player.GetComponent<Animator>().enabled = false;
+               //player.GetComponent<NavMeshAgent>().enabled = true;
+               shoulHighlight = true;
+               thirdPersonCam = false;
+               Cursor.visible = true;
+               Cursor.lockState = CursorLockMode.None;
+           overworldCam = !overworldCam;
+
     }
 
     public void OverworldCamera()
     {
         //cam.fieldOfView = 
     }
+
     public void ZoomInOut()
     {
+        if(!isUIOpen)
+        {
       float FOV = OverworldCam.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView;
       FOV -=  Input.GetAxis("Mouse ScrollWheel") * scrollSpeed;
 
       FOV = Mathf.Clamp(FOV, minFOV, maxFOV);
       OverworldCam.GetComponent<CinemachineVirtualCamera>().m_Lens.FieldOfView = FOV;
+        }
       //zoomCamera.transform.position = ClampCamera(zoomCamera.transform.position);
     }
 
