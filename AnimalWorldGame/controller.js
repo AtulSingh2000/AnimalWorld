@@ -1,5 +1,9 @@
+
 var loggedIn = false;
 var anchorAuth = "owner";
+var machine_obj = [];
+var crop_obj = [];
+var tree_obj = [];
 
 const dapp = "AnimalWorld";
 const endpoint = "https://wax.cryptolions.io";
@@ -12,8 +16,8 @@ const mch_schema = 'machine';
 const schemaName = '';
 let userAccount = "";
 const symbol = 'AWC';
-const tree_symbols = ["FIG","LEMON","MANGO","ORANGE","COCONUT"];
-const crop_symbols = ["CLY","CORN","CRTSE","CLYSE","WHEAT","SBEANE","CORNSE","WHEATSE"];
+const tree_symbols = ["FIG", "LEMON", "MANGO", "ORANGE", "COCONUT"];
+const crop_symbols = ["CLY", "CORN", "CRTSE", "CLYSE", "WHEAT", "SBEANE", "CORNSE", "WHEATSE"];
 let awc_balance = "";
 
 const wax = new waxjs.WaxJS({
@@ -67,7 +71,9 @@ const login = async () => {
 
 const logout = async () => {
   console.log("in");
-  await wallet_logout();
+  if (useAnchor) {
+    await anchorLink.clearSessions(dapp);
+  }
   loggedIn = false;
   let obj = [];
   obj.push({
@@ -208,12 +214,12 @@ const getAssets = async (schema) => {
       for (const asset of data) {
         obj.push({
           asset_id: asset.asset_id,
-          template_id : asset.template.template_id,
+          template_id: asset.template.template_id,
           name: asset.template.immutable_data.name,
           schema: asset.schema.schema_name,
           rarity: asset.template.immutable_data.Rarity,
-          level: typeof(asset.mutable_data.Level) != 'undefined' ? asset.mutable_data.Level : "1",
-          harvests : typeof(asset.mutable_data.harvests) != 'undefined' ? asset.mutable_data.harvests : "0"
+          level: typeof (asset.mutable_data.Level) != 'undefined' ? asset.mutable_data.Level : "1",
+          harvests: typeof (asset.mutable_data.harvests) != 'undefined' ? asset.mutable_data.harvests : "0"
         });
       }
       return obj;
@@ -246,7 +252,7 @@ const getLevelData = async () => {
       for (const data of Object.values(body.rows)) {
         obj.push({
           xp_amount: data.xp_amount,
-          level : data.level,
+          level: data.level,
           max_machine_level: data.max_machine_level,
           max_cropf_level: data.max_cropf_level,
           max_animal_level: data.max_animal_level
@@ -287,13 +293,13 @@ const getUserBalance = async () => {
     if (body.rows.length != 0) {
       for (const data of Object.values(body.rows)) {
         new_string = data.balance.split(' ');
-        if(new_string[1] == "AWC")
+        if (new_string[1] == "AWC")
           awc_balance = new_string[0] + " AWC";
 
         obj.push({
           in_qty: new_string[0],
           in_name: new_string[1] == "COCUNUT" ? "COCONUT" : new_string[1],
-          product_from: "tree"                
+          product_from: "tree"
         });
       }
     }
@@ -304,16 +310,15 @@ const getUserBalance = async () => {
   }
 }
 
-const getUserB = async() =>{
-  try{
+const getUserB = async () => {
+  try {
     data = await getUserBalance();
     unityInstance.SendMessage(
       "GameController",
       "Client_UpdateUserBalance",
       data === undefined ? JSON.stringify({}) : JSON.stringify(data)
     );
-  }
-  catch(e){
+  } catch (e) {
     unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
   }
 }
@@ -338,11 +343,11 @@ const getdmodata = async () => {
     console.log(body.rows);
     let obj = [];
 
-    
+
     if (body.rows.length != 0) {
       for (const data of Object.values(body.rows)) {
-        products=[];
-        data.products.forEach( x=> {
+        products = [];
+        data.products.forEach(x => {
           products.push({
             in_qty: parseFloat(x.split(' ')[0]).toFixed(0),
             in_name: x.split(' ')[1] == "COCUNUT" ? "COCONUT" : x.split(' ')[1]
@@ -350,19 +355,19 @@ const getdmodata = async () => {
         });
 
         obj.push({
-          id : data.id,
-          type : data.type,	
-          reward :({
+          id: data.id,
+          type: data.type,
+          reward: ({
             in_qty: parseFloat(data.reward.split(' ')[0]).toFixed(2),
             in_name: data.reward.split(' ')[1] == "COCUNUT" ? "COCONUT" : data.reward.split(' ')[1]
-          }),	
-          xp_boost : ({
+          }),
+          xp_boost: ({
             in_qty: parseFloat(data.xp_boost.split(' ')[0]).toFixed(2),
             in_name: data.xp_boost.split(' ')[1] == "COCUNUT" ? "COCONUT" : data.reward.split(' ')[1]
-          }),	
-          products : products,	
-          level_boost : data.max,	
-          xp_level : data.xp_level
+          }),
+          products: products,
+          level_boost: data.max,
+          xp_level: data.xp_level
         });
       }
     }
@@ -400,21 +405,21 @@ const getshopdata = async () => {
     if (body.rows.length != 0) {
       for (const data of Object.values(body.rows)) {
         obj.push({
-          id : data.id,
-          type : data.type,	
-          template_id : data.template_id,	
-          schema : data.schema,	
-          available : data.available,	
-          max : data.max,	
-          price : ({
+          id: data.id,
+          type: data.type,
+          template_id: data.template_id,
+          schema: data.schema,
+          available: data.available,
+          max: data.max,
+          price: ({
             in_qty: parseFloat(data.price.split(' ')[0]).toFixed(2),
             in_name: data.price.split(' ')[1] == "COCUNUT" ? "COCONUT" : data.price.split(' ')[1]
-          }),	
-          resource : ({
+          }),
+          resource: ({
             in_qty: parseFloat(data.resource.split(' ')[0]).toFixed(2),
             in_name: data.resource.split(' ')[1] == "COCUNUT" ? "COCONUT" : data.resource.split(' ')[1]
-          }),	
-          req_level : data.req_level
+          }),
+          req_level: data.req_level
         });
       }
     }
@@ -429,7 +434,7 @@ const getshopdata = async () => {
   }
 }
 
-const getAwcBalance = async() => {
+const getAwcBalance = async () => {
   console.log(wallet_userAccount);
   var path = "/v1/chain/get_table_rows";
   var data = JSON.stringify({
@@ -460,7 +465,7 @@ const getAwcBalance = async() => {
   return balance;
 }
 
-const getAwcB = async() => {
+const getAwcB = async () => {
   try {
     let updatedBal = await getAwcBalance();
     unityInstance.SendMessage(
@@ -468,8 +473,7 @@ const getAwcB = async() => {
       "Client_UpdateWalletBalance",
       updatedBal === undefined ? JSON.stringify({}) : updatedBal
     );
-  }
-  catch(e){
+  } catch (e) {
     unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
   }
 }
@@ -526,8 +530,8 @@ const getTreeConfig = async () => {
     });
     const body = await response.json();
     let obj = [];
-    if(body.rows.length != 0){
-      for(const data of Object.values(body.rows)){
+    if (body.rows.length != 0) {
+      for (const data of Object.values(body.rows)) {
         obj.push({
           template_id: data.template_id,
           max_harvests: data.max_harvests,
@@ -537,8 +541,7 @@ const getTreeConfig = async () => {
       }
     }
     return obj;
-  }
-  catch(e){
+  } catch (e) {
     unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
   }
 }
@@ -562,8 +565,8 @@ const getMachineConfig = async () => {
     });
     const body = await response.json();
     let obj = [];
-    if(body.rows.length != 0){
-      for(const data of Object.values(body.rows)){
+    if (body.rows.length != 0) {
+      for (const data of Object.values(body.rows)) {
         obj.push({
           template_id: data.template_id,
           max_harvests: data.cd_harvests,
@@ -572,8 +575,7 @@ const getMachineConfig = async () => {
       }
     }
     return obj;
-  }
-  catch(e){
+  } catch (e) {
     unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
   }
 }
@@ -591,17 +593,17 @@ const getTreeData = async () => {
       if (typeof check_data !== 'undefined') {
         const check_ids = check_data[0];
         for (const asset of arr) {
-          let harvest= "";
-           let boost= "";
-           let level_boost= "";
-           let cost_level= "";
+          let harvest = "";
+          let boost = "";
+          let level_boost = "";
+          let cost_level = "";
           if (check_ids.includes(asset.asset_id)) {
             const check_body_data = check_data[1];
             for (const bodyData of check_body_data) {
               if (bodyData.id == asset.asset_id) {
-                for(const c_data of config){
+                for (const c_data of config) {
 
-                  if(asset.template_id == c_data.template_id){
+                  if (asset.template_id == c_data.template_id) {
                     harvest = c_data.max_harvests;
                     boost = c_data.boost;
                     level_boost = c_data.level_boost;
@@ -610,7 +612,7 @@ const getTreeData = async () => {
                 }
                 let tree_name = asset.name.split('-');
                 tree_data.push({
-                  name: tree_name[0]+" "+tree_name[1],
+                  name: tree_name[0] + " " + tree_name[1],
                   type: "tree",
                   asset_id: asset.asset_id,
                   land_id: bodyData.land_id,
@@ -618,9 +620,9 @@ const getTreeData = async () => {
                   rarity: asset.rarity,
                   cooldown: bodyData.cooldown,
                   last_claim: bodyData.last_claim,
-                  delay : bodyData.delay,
+                  delay: bodyData.delay,
                   max_harvests: harvest,
-                  level : "Level"+asset.level,
+                  level: "Level" + asset.level,
                   current_harvests: asset.harvests,
                   boost: boost,
                   level_boost: level_boost,
@@ -632,7 +634,7 @@ const getTreeData = async () => {
           } else {
             let tree_name = asset.name.split('-');
             tree_data.push({
-              name: tree_name[0]+" "+tree_name[1],
+              name: tree_name[0] + " " + tree_name[1],
               type: "tree",
               asset_id: asset.asset_id,
               land_id: "null",
@@ -640,10 +642,10 @@ const getTreeData = async () => {
               rarity: asset.rarity,
               cooldown: "0",
               last_claim: "0",
-              delay : "0",
+              delay: "0",
               reg: "0",
               max_harvests: harvest,
-              level : "Level"+asset.level,
+              level: "Level" + asset.level,
               current_harvests: asset.harvests,
               boost: boost,
               level_boost: level_boost,
@@ -651,34 +653,35 @@ const getTreeData = async () => {
           }
         }
       } else {
-        for(const c_data of config){
-              if(asset.template_id == c_data.template_id){
-                harvest = c_data.max_harvests;
-                boost = c_data.boost;
-                level_boost = c_data.level_boost
-                break;
-              }
-            }
-            let tree_name = asset.name.split('-');
-            tree_data.push({
-            name: tree_name[0]+" "+tree_name[1],
-            type: "tree",
-            asset_id: asset.asset_id,
-            land_id: "null",
-            prod_pwer: "0",
-            rarity: asset.rarity,
-            cooldown: "0",
-            last_claim: "0",
-            delay : "0",
-            reg: "0",
-            max_harvests: harvest,
-            level : "Level"+asset.level,
-            current_harvests: asset.harvests,
-            boost: boost,
-            level_boost: level_boost,
-          });
+        for (const c_data of config) {
+          if (asset.template_id == c_data.template_id) {
+            harvest = c_data.max_harvests;
+            boost = c_data.boost;
+            level_boost = c_data.level_boost
+            break;
+          }
         }
+        let tree_name = asset.name.split('-');
+        tree_data.push({
+          name: tree_name[0] + " " + tree_name[1],
+          type: "tree",
+          asset_id: asset.asset_id,
+          land_id: "null",
+          prod_pwer: "0",
+          rarity: asset.rarity,
+          cooldown: "0",
+          last_claim: "0",
+          delay: "0",
+          reg: "0",
+          max_harvests: harvest,
+          level: "Level" + asset.level,
+          current_harvests: asset.harvests,
+          boost: boost,
+          level_boost: level_boost,
+        });
       }
+    }
+    tree_obj = tree_data;
     return tree_data;
   } catch (e) {
     console.log(e);
@@ -704,18 +707,18 @@ const getMachineData = async () => {
             for (const bodyData of check_body_data) {
               let harvest = "";
               let cost_level = [];
-                for(const c_data of config){
-                  if(asset.template_id == c_data.template_id){
-                    harvest = c_data.max_harvests;
-                    for(const cost_data of c_data.cost_level){
-                      cost_level.push({
-                        in_name: "Level"+cost_data.level,
-                        in_qty: cost_data.count
-                      });
-                    }
-                    break;
+              for (const c_data of config) {
+                if (asset.template_id == c_data.template_id) {
+                  harvest = c_data.max_harvests;
+                  for (const cost_data of c_data.cost_level) {
+                    cost_level.push({
+                      in_name: "Level" + cost_data.level,
+                      in_qty: cost_data.count
+                    });
                   }
+                  break;
                 }
+              }
               if (bodyData.id == asset.asset_id) {
                 machine_data.push({
                   name: asset.name,
@@ -725,7 +728,7 @@ const getMachineData = async () => {
                   cd_start: bodyData.cooldown,
                   harvests: bodyData.harvests,
                   land_id: bodyData.land_id,
-                  level: "Level"+asset.level,
+                  level: "Level" + asset.level,
                   on_recipe: bodyData.on_recipe,
                   rarity: asset.rarity,
                   reg: "1",
@@ -743,7 +746,7 @@ const getMachineData = async () => {
               cd_start: "0",
               harvests: "0",
               land_id: "null",
-              level: "Level"+asset.level,
+              level: "Level" + asset.level,
               on_recipe: "0",
               rarity: asset.rarity,
               reg: "0",
@@ -759,13 +762,15 @@ const getMachineData = async () => {
           cd_start: "0",
           harvests: "0",
           land_id: "null",
-          level: "Level"+asset.level,
+          level: "Level" + asset.level,
           on_recipe: "0",
           rarity: asset.rarity,
           reg: "0",
         });
       }
     }
+
+    machine_obj = machine_data;
     return machine_data;
   } catch (e) {
     console.log(e);
@@ -820,12 +825,12 @@ const getLandData = async () => {
           }
         }
       } else {
-          land_data.push({
-            name: asset.name,
-            asset_id: asset.asset_id,
-            template_id: asset.template_id,
-            reg: "0",
-          });
+        land_data.push({
+          name: asset.name,
+          asset_id: asset.asset_id,
+          template_id: asset.template_id,
+          reg: "0",
+        });
       }
     }
     return land_data;
@@ -865,18 +870,18 @@ const getCropsData = async () => {
             for (const bodyData of check_body_data) {
               let harvest = "";
               let cost_level = [];
-                for(const c_data of config){
-                  if(asset.template_id == c_data.template_id){
-                    harvest = c_data.max_harvests;
-                    for(const cost_data of c_data.cost_level){
-                      cost_level.push({
-                        in_name: "Level"+cost_data.level,
-                        in_qty: cost_data.count
-                      });
-                    }
-                    break;
+              for (const c_data of config) {
+                if (asset.template_id == c_data.template_id) {
+                  harvest = c_data.max_harvests;
+                  for (const cost_data of c_data.cost_level) {
+                    cost_level.push({
+                      in_name: "Level" + cost_data.level,
+                      in_qty: cost_data.count
+                    });
                   }
+                  break;
                 }
+              }
               if (bodyData.id == asset.asset_id) {
                 crop_data.push({
                   name: asset.name,
@@ -886,7 +891,7 @@ const getCropsData = async () => {
                   cd_start: bodyData.cd_start,
                   harvests: bodyData.harvests,
                   land_id: bodyData.land_id,
-                  level: "Level"+asset.level,
+                  level: "Level" + asset.level,
                   prod_sec: bodyData.prod_sec,
                   on_recipe: bodyData.on_recipe,
                   reg: "1",
@@ -904,7 +909,7 @@ const getCropsData = async () => {
               cd_start: "0",
               harvests: "0",
               land_id: "null",
-              level: "Level"+asset.level,
+              level: "Level" + asset.level,
               prod_sec: "0",
               on_recipe: "0",
               reg: "0",
@@ -920,13 +925,14 @@ const getCropsData = async () => {
           cd_start: "0",
           harvests: "0",
           land_id: "null",
-          level: "Level"+asset.level,
+          level: "Level" + asset.level,
           prod_sec: "0",
           on_recipe: "0",
           reg: "0",
         });
       }
     }
+    crop_obj = crop_data;
     return crop_data;
   } catch (e) {
     console.log(e);
@@ -1031,68 +1037,64 @@ const checkAssetIds = async (table) => {
     const table_data = [];
     if (arr.length != 0) {
       for (const data of arr) {
-        if(data.owner==wallet_userAccount)
-        {
-        ids.push(data.asset_id);
-        if (table == "dtrees") {
-          table_data.push({
-            id: data.asset_id,
-            land_id: data.land_id,
-            prod_power: (parseFloat(data.prod_power.split(' ')[0]).toFixed(2)),
-            cooldown: data.cooldown,
-            last_claim: data.last_claim,
-            delay : data.delay,
-          });
-        } else if (table == "machines") {
-          let recipe_obj = [];
-          for (const r_data of data.on_recipe) {
-            recipe_obj.push({
-              start: r_data.start,
-              delay: r_data.delay,
-              recipeID: r_data.recipeID,
-              orderID: r_data.orderID
+        if (data.owner == wallet_userAccount) {
+          ids.push(data.asset_id);
+          if (table == "dtrees") {
+            table_data.push({
+              id: data.asset_id,
+              land_id: data.land_id,
+              prod_power: (parseFloat(data.prod_power.split(' ')[0]).toFixed(2)),
+              cooldown: data.cooldown,
+              last_claim: data.last_claim,
+              delay: data.delay,
+            });
+          } else if (table == "machines") {
+            let recipe_obj = [];
+            for (const r_data of data.on_recipe) {
+              recipe_obj.push({
+                start: r_data.start,
+                delay: r_data.delay,
+                recipeID: r_data.recipeID,
+                orderID: r_data.orderID
+              });
+            }
+            table_data.push({
+              id: data.asset_id,
+              slots: data.slots,
+              cooldown: data.cooldown,
+              harvests: data.harvests,
+              land_id: data.land_id,
+              level: data.level,
+              prod_sec: data.prod_sec,
+              on_recipe: recipe_obj,
+            });
+          } else if (table == "cropfields") {
+            let recipe_obj = [];
+            for (const r_data of data.on_recipe) {
+              recipe_obj.push({
+                start: r_data.start,
+                delay: r_data.delay,
+                recipeID: r_data.recipeID,
+                orderID: r_data.orderID
+              });
+            }
+            table_data.push({
+              id: data.asset_id,
+              slots: data.slots,
+              cd_start: data.cooldown,
+              harvests: "0", //data.harvests,
+              land_id: data.land_id,
+              level: data.level,
+              prod_sec: data.prod_sec,
+              on_recipe: recipe_obj,
+            });
+          } else if (table == "lands") {
+            table_data.push({
+              id: data.asset_id
             });
           }
-          table_data.push({
-            id: data.asset_id,
-            slots: data.slots,
-            cooldown: data.cooldown,
-            harvests: data.harvests,
-            land_id: data.land_id,
-            level: data.level,
-            prod_sec: data.prod_sec,
-            on_recipe: recipe_obj,
-          });
-        }
-        else if (table == "cropfields"){
-          let recipe_obj = [];
-          for (const r_data of data.on_recipe) {
-            recipe_obj.push({
-              start: r_data.start,
-              delay: r_data.delay,
-              recipeID: r_data.recipeID,
-              orderID: r_data.orderID
-            });
-          }
-          table_data.push({
-            id: data.asset_id,
-            slots: data.slots,
-            cd_start: data.cooldown,
-            harvests: "0",//data.harvests,
-            land_id: data.land_id,
-            level: data.level,
-            prod_sec: data.prod_sec,
-            on_recipe: recipe_obj,
-          });
-        }
-        else if (table == "lands"){
-          table_data.push({
-            id: data.asset_id
-          });
-        }
+        } else break;
       }
-      else break;
-    }
     }
     return [ids, table_data];
   } catch (e) {
@@ -1142,23 +1144,23 @@ const getCallBack = async (table, asset_id, action_type) => {
             type: "start_machine"
           });
           break;
-          case ("recipe_claim"):
-            let r_obj = [];
-            for (const r_data of arr[0].on_recipe) {
-              r_obj.push({
-                start: r_data.start,
+        case ("recipe_claim"):
+          let r_obj = [];
+          for (const r_data of arr[0].on_recipe) {
+            r_obj.push({
+              start: r_data.start,
               delay: r_data.delay,
               recipeID: r_data.recipeID,
               orderID: r_data.orderID
-              });
-            }
-            callback_obj.push({
-              on_recip: r_obj,
-              cooldown: arr[0].cooldown,
-              harvest: table == "cropfields" ? "0" : arr[0].harvests,
-              type: "recipe_claim"
             });
-            break;
+          }
+          callback_obj.push({
+            on_recip: r_obj,
+            cooldown: arr[0].cooldown,
+            harvest: table == "cropfields" ? "0" : arr[0].harvests,
+            type: "recipe_claim"
+          });
+          break;
         default:
           break;
       }
@@ -1174,11 +1176,11 @@ const getCallBack = async (table, asset_id, action_type) => {
   }
 }
 
-const register_nft = async (asset_id,name,land_id,type) => {
+const register_nft = async (asset_id, name, land_id, type) => {
   try {
     var ids = asset_id.split(",");
     let action_name = "";
-    switch(type){
+    switch (type) {
       case ("tree"):
         action_name = "regtrees";
         break;
@@ -1204,7 +1206,7 @@ const register_nft = async (asset_id,name,land_id,type) => {
         asset_ids: ids,
         land_id: land_id
       },
-    },]):await wallet_transact([{
+    }, ]) : await wallet_transact([{
       account: contract,
       name: action_name,
       authorization: [{
@@ -1215,10 +1217,10 @@ const register_nft = async (asset_id,name,land_id,type) => {
         player: wallet_userAccount,
         asset_ids: ids,
       },
-    },]);
+    }, ]);
     await delay(2000);
     let obj = [];
-    switch(type){
+    switch (type) {
       case ("tree"):
         treeData = await getTreeData();
         unityInstance.SendMessage(
@@ -1267,29 +1269,24 @@ const register_nft = async (asset_id,name,land_id,type) => {
     unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
   }
 }
-const deregister_nft = async (asset_id, name,type) => {
+const deregister_nft = async (asset_id, name, type) => {
   try {
     var ids = asset_id.split(",");
-    var name="";
-    var data={};
-    if(type=="land")
-    {
-      name="deregland";
-      data=
-      {
+    var name = "";
+    var data = {};
+    if (type == "land") {
+      name = "deregland";
+      data = {
         player: wallet_userAccount,
         asset_ids: ids
       };
-    }
-    else
-    {
-      name="deregnft";
-      data=
-      {
+    } else {
+      name = "deregnft";
+      data = {
         player: wallet_userAccount,
         asset_ids: ids,
         type: type
-      }; 
+      };
     }
     const result = await wallet_transact([{
       account: contract,
@@ -1298,11 +1295,11 @@ const deregister_nft = async (asset_id, name,type) => {
         actor: wallet_userAccount,
         permission: anchorAuth
       }],
-      data:data,
-    },]);
+      data: data,
+    }, ]);
     await delay(2000);
     let obj = [];
-    switch(type){
+    switch (type) {
       case ("tree"):
         treeData = await getTreeData();
         unityInstance.SendMessage(
@@ -1346,7 +1343,7 @@ const deregister_nft = async (asset_id, name,type) => {
   }
 }
 
-const start_machine = async (asset_id, recipeID,type) => {
+const start_machine = async (asset_id, recipeID, type) => {
   try {
     let action_name = type == "machine" ? "startmch" : "startcf";
     const result = await wallet_transact([{
@@ -1361,14 +1358,13 @@ const start_machine = async (asset_id, recipeID,type) => {
         asset_id: asset_id,
         recipeID: recipeID
       },
-    },]);
+    }, ]);
     await delay(3000);
     await getUserB();
-    if(type == "machine"){
+    if (type == "machine") {
       await getMachineD();
       await getCallBack("machines", asset_id, "start_machine");
-    }
-    else {
+    } else {
       await getCropsD();
       await getCallBack("cropfields", asset_id, "start_machine");
     }
@@ -1378,7 +1374,7 @@ const start_machine = async (asset_id, recipeID,type) => {
   }
 }
 
-const filldmo = async (id,amount) => {
+const filldmo = async (id, amount) => {
   try {
     await wallet_transact([{
       account: contract,
@@ -1391,7 +1387,7 @@ const filldmo = async (id,amount) => {
         player: wallet_userAccount,
         dmoid: id,
       },
-    },]);
+    }, ]);
     await delay(2000);
     await getUserB();
     await getdmodata();
@@ -1411,7 +1407,7 @@ const filldmo = async (id,amount) => {
   }
 }
 
-const buyshopl = async (id,amount) => {
+const buyshopl = async (id, amount) => {
   try {
     const result = await wallet_transact([{
       account: contract,
@@ -1425,7 +1421,7 @@ const buyshopl = async (id,amount) => {
         player: wallet_userAccount,
         quantity: amount
       },
-    },]);
+    }, ]);
     await delay(2000);
     await getUserB();
     await getshopdata();
@@ -1458,10 +1454,10 @@ const depositawc = async (amount) => {
       data: {
         from: wallet_userAccount,
         to: "anmworldgame",
-        quantity: final+" AWC",
-        memo:"deposit"
+        quantity: final + " AWC",
+        memo: "deposit"
       },
-    },]);
+    }, ]);
     await delay(1500);
     await getUserB();
     await getAwcB();
@@ -1483,7 +1479,7 @@ const depositawc = async (amount) => {
 }
 const withdrawawc = async (amount) => {
   try {
-    var final=parseFloat(amount).toFixed(4);
+    var final = parseFloat(amount).toFixed(4);
     const result = await wallet_transact([{
       account: contract,
       name: "withdrawawc",
@@ -1493,9 +1489,9 @@ const withdrawawc = async (amount) => {
       }],
       data: {
         player: wallet_userAccount,
-        quantity: final+" AWC",
+        quantity: final + " AWC",
       },
-    },]);
+    }, ]);
     await delay(1500);
     await getUserB();
     await getAwcB();
@@ -1514,12 +1510,12 @@ const withdrawawc = async (amount) => {
     unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
   }
 }
-const claim_machine = async (asset_id, recipeID,type) => {
+const claim_machine = async (asset_id, recipeID, type) => {
   try {
     var ids = recipeID.split(",");
     let action_name = "";
     console.log(recipeID);
-    switch(type){
+    switch (type) {
       case ("machine"):
         action_name = "claimmch";
         break;
@@ -1539,10 +1535,10 @@ const claim_machine = async (asset_id, recipeID,type) => {
         asset_id: asset_id,
         orderIDs: ids
       },
-    },]);
+    }, ]);
     await delay(3000);
     await getUserB();
-    switch(type){
+    switch (type) {
       case ("machine"):
         await getMachineD();
         await getCallBack("machines", asset_id, "recipe_claim");
@@ -1573,7 +1569,7 @@ const claim_tree = async (asset_id) => {
         player: wallet_userAccount,
         asset_ids: ids
       },
-    },]);
+    }, ]);
     await delay(2500);
     await getUserB();
     treeData = await getTreeData();
@@ -1582,7 +1578,6 @@ const claim_tree = async (asset_id) => {
       "Client_SetTreeData",
       treeData === undefined ? JSON.stringify({}) : JSON.stringify(treeData)
     );
-    await getUserB();
     let callback_obj = [];
     callback_obj.push({
       type: "tree_claim"
@@ -1611,7 +1606,7 @@ const burnid = async (id) => {
         asset_owner: wallet_userAccount,
         asset_id: id
       },
-    },]);
+    }, ]);
     await getUserB();
   } catch (e) {
     console.log(e);
@@ -1619,57 +1614,53 @@ const burnid = async (id) => {
   }
 }
 
-const  getburnids= async () => {
+const getburnids = async () => {
   try {
-      var path = "atomicassets/v1/assets?collection_name=" + collectionName + "&schema_name=" + "resourcepack" + "&owner=" + wallet_userAccount + "&page=1&limit=1000&order=desc&sort=asset_id";
-      const response = await fetch("https://" + "wax.api.atomicassets.io/" + path, {
-        headers: {
-          "Content-Type": "text/plain"
-        },
-        method: "POST",
-      });
-      const body = await response.json();
-      const data = Object.values(body.data);
-      var obj=[];
-      console.log(data);
-      for (const asset of data) {
-        var symbol= asset.template.immutable_data.Symbol;
-        console.log(symbol);
-      var id=asset.asset_id;
-        var ids=[];
-        var exists=false;
-        for(let i=0;i<obj.length;i++) 
-        {
-          if(obj[i].symbol==symbol) {
-          ids= obj[i].ids;
-          exists=true;
+    var path = "atomicassets/v1/assets?collection_name=" + collectionName + "&schema_name=" + "resourcepack" + "&owner=" + wallet_userAccount + "&page=1&limit=1000&order=desc&sort=asset_id";
+    const response = await fetch("https://" + "wax.api.atomicassets.io/" + path, {
+      headers: {
+        "Content-Type": "text/plain"
+      },
+      method: "POST",
+    });
+    const body = await response.json();
+    const data = Object.values(body.data);
+    var obj = [];
+    console.log(data);
+    for (const asset of data) {
+      var symbol = asset.template.immutable_data.Symbol;
+      console.log(symbol);
+      var id = asset.asset_id;
+      var ids = [];
+      var exists = false;
+      for (let i = 0; i < obj.length; i++) {
+        if (obj[i].symbol == symbol) {
+          ids = obj[i].ids;
+          exists = true;
           obj[i].ids.push(id);
         }
       }
-      if(!exists)
-      {
+      if (!exists) {
         ids.push(id);
-        obj.push(
-          {
-            symbol:symbol,
-            ids:ids
-          }
-        );
+        obj.push({
+          symbol: symbol,
+          ids: ids
+        });
       }
-        
-      }
-      console.log(obj);
-      unityInstance.SendMessage(
-        "GameController",
-        "Client_SetBurnids",
-        obj === undefined ? JSON.stringify({}) : JSON.stringify(obj)
-      );
+
+    }
+    console.log(obj);
+    unityInstance.SendMessage(
+      "GameController",
+      "Client_SetBurnids",
+      obj === undefined ? JSON.stringify({}) : JSON.stringify(obj)
+    );
   } catch (e) {
     unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
   }
 }
 
-const use_boost = async (asset_id,type) => {
+const use_boost = async (asset_id, type) => {
   try {
     let action_name = "";
     const result = await wallet_transact([{
@@ -1682,13 +1673,13 @@ const use_boost = async (asset_id,type) => {
       data: {
         player: wallet_userAccount,
         asset_ids: [asset_id],
-        type : type
+        type: type
       },
-    },]);
+    }, ]);
     await delay(2000);
     await getUserB();
     let obj = [];
-    switch(type){
+    switch (type) {
       case ("tree"):
         treeData = await getTreeData();
         unityInstance.SendMessage(
@@ -1725,4 +1716,110 @@ const use_boost = async (asset_id,type) => {
     console.log(e);
     unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
   }
+}
+
+const claim_all_assets = async (type, sub_type,land_id) => {
+  try {
+    let claim_struct = [];
+    if(type == "tree"){
+      for(const tdata of tree_obj){
+        if(tdata.land_id == land_id && tdata.reg == "1"){
+          can_claim = await check_for_finish(tdata.last_claim,tdata.delay);
+          if(can_claim){
+            claim_struct.push(tdata.asset_id);
+          }
+        }
+      }
+    }
+    else {
+      let data_obj = [];
+      if(type == "machine"){
+        for(const mdata of machine_obj){
+          if(mdata.name == sub_type){
+            data_obj.push(mdata);
+          }
+        }
+      }
+      else if(type == "crop") data_obj = crop_obj;
+      console.log(data_obj);
+      for (const data of data_obj) {
+        if (data.land_id == land_id && data.reg == "1" && data.on_recipe.length > 0) {
+          let order_arr = [];
+          for (const rdata of data.on_recipe) {
+            can_claim = await check_for_finish(rdata.start, rdata.delay);
+            if (can_claim) {
+              order_arr.push(rdata.orderID);
+            }
+          }
+          console.log(order_arr);
+          if (order_arr.length > 0)
+            claim_struct.push({
+              asset_id: data.asset_id,
+              order_ids: order_arr
+            });
+        }
+      }
+    }
+    console.log(claim_struct);
+
+    /* TRANSACTION */
+
+    let obj = [];
+    if(claim_struct.length == 0){
+      obj.push({
+        helper: "none",
+        type: "all_claim"
+      });
+    }
+    else{
+      await delay(2000);
+      await getUserB();
+      switch(type){
+        case "tree":
+          treeData = await getTreeData();
+          unityInstance.SendMessage(
+            "GameController",
+            "Client_SetTreeData",
+            treeData === undefined ? JSON.stringify({}) : JSON.stringify(treeData)
+          );
+          obj.push({
+            helper: "none",
+            type: "all_claim"
+          });
+          break;
+        case "machine":
+          await getMachineD();
+          obj.push({
+            helper: "machine",
+            type: "all_claim"
+          });
+          break;
+        case "crop":
+          await getCropsD();
+          obj.push({
+            helper: "crop",
+            type: "all_claim"
+          });
+          break;
+      }
+    }
+    unityInstance.SendMessage(
+      "GameController",
+      "Client_SetCallBackData",
+      obj === undefined ? JSON.stringify({}) : JSON.stringify(obj)
+    );
+  } catch (e) {
+    console.log(e);
+    unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
+  }
+}
+
+const check_for_finish = async (start, delay) => {
+  const utcMilllisecondsSinceEpoch = Date.now();
+  var utcSecondsSinceEpoch = Math.round(utcMilllisecondsSinceEpoch / 1000);
+  var tr = start + delay - utcSecondsSinceEpoch;
+  if(tr > 0)
+    return false;
+  else
+    return true;
 }

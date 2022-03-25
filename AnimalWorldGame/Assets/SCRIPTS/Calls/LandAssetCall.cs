@@ -34,8 +34,15 @@ public class LandAssetCall : MonoBehaviour
         Debug.Log("DeRegister_Asset");
         if (!string.IsNullOrEmpty(asset_id) && !string.IsNullOrEmpty(asset_name))
         {
-            LoadingPanel.SetActive(true);
-            MessageHandler.Server_DeRegisterAsset(asset_id, asset_name,"land");
+            if (MessageHandler.userModel.land_id != asset_id)
+            {
+                LoadingPanel.SetActive(true);
+                MessageHandler.Server_DeRegisterAsset(asset_id, asset_name, "land");
+            }
+            else
+            {
+                SSTools.ShowMessage("First Switch to Other Land !", SSTools.Position.bottom, SSTools.Time.twoSecond);
+            }
         }
         else
             SSTools.ShowMessage("Land Not Selected", SSTools.Position.bottom, SSTools.Time.twoSecond);

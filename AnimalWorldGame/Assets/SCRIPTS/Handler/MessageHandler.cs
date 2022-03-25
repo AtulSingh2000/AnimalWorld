@@ -56,6 +56,9 @@ public class MessageHandler : MonoBehaviour
     [DllImport("__Internal")]
     private static extern void tree_claim(string symbol);
 
+    [DllImport("__Internal")]
+    private static extern void claim_all_assets(string type,string subtype,string land);
+
     public delegate void LoadingData();
     public static LoadingData onLoadingData;
 
@@ -141,6 +144,11 @@ public class MessageHandler : MonoBehaviour
     {
         getburnids();
 
+    }
+
+    public static void Server_Claim_All_Assets(string type,string subtype)
+    {
+        claim_all_assets(type, subtype, userModel.land_id);
     }
 public static void Server_BurnNFT(string asset_id)
     {

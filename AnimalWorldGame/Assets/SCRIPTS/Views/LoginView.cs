@@ -15,12 +15,15 @@ public class LoginView : BaseView
     public GameObject land_panel;
     public GameObject land_prefab;
     public Transform land_parent_obj;
+
+    private string id = "";
     protected override void Start()
     {
         base.Start();
         MessageHandler.Server_TryAutoLogin();
         MessageHandler.onLoadingData += onLoadingData;
         MessageHandler.OnUserData += OnUserData;
+        MessageHandler.OnCallBackData += OnCallBackData;
     }
 
     protected override void OnDestroy()
@@ -28,6 +31,7 @@ public class LoginView : BaseView
         base.OnDestroy();
         MessageHandler.onLoadingData -= onLoadingData;
         MessageHandler.OnUserData -= OnUserData;
+        MessageHandler.OnCallBackData -= OnCallBackData;
     }
 
     public void OnAnchorButtonClick()
@@ -73,13 +77,40 @@ public class LoginView : BaseView
             ins.transform.SetParent(land_parent_obj);
             ins.transform.localScale = new Vector3(1, 1, 1);
             var child = ins.gameObject.GetComponent<LandAssetCall>();
+            child.asset_id = land.asset_id;
+            child.asset_name = land.name;
             child.asset_id_text.text = "#" + land.asset_id;
             child.login_select_btn.gameObject.SetActive(true);
             child.registered_assets_text.gameObject.SetActive(false);
-            string id = land.asset_id;
-            child.login_select_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { Select_Land(id); });
+            child.LoadingPanel = LoadingPanel;
+            if(land.reg == "0")
+            {
+                id = land.asset_id;
+                child.login_select_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { child.RegisterAsset(); });
+            }
+            else
+                child.login_select_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { Select_Land(land.asset_id); });
         }
 
+    }
+
+    public void OnCallBackData(CallBackDataModel[] callback)
+    {
+        CallBackDataModel callBack = callback[0];
+        if (!string.IsNullOrEmpty(callBack.type))
+        {
+            if (callBack.type == "reg")
+            {
+                LoadingPanel.SetActive(true);
+                if (id == "community")
+                    MessageHandler.userModel.land_id = "0";
+                else
+                    MessageHandler.userModel.land_id = id;
+
+                Debug.Log(id);
+                SceneManager.LoadScene("GameScene");
+            }
+        }
     }
 
     public void Select_Land(string asset_id)
@@ -90,7 +121,6 @@ public class LoginView : BaseView
         else
             MessageHandler.userModel.land_id = asset_id;
 
-        Debug.Log(asset_id);
         SceneManager.LoadScene("GameScene");
     }
 

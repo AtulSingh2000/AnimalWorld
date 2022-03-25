@@ -19,10 +19,10 @@ public class MachineRecipeCall : MonoBehaviour
     public TMP_Text recipe_name_text;
     public GameObject LoadingPanel;
     public Button claim_all;
+    private bool can_claim = false;
 
     public void Start_Timer(string last_search, string delayValue)
     {
-        Debug.Log("function called");
         StartCoroutine(StartCountdown(last_search, delayValue));
     }
     private IEnumerator StartCountdown(string time, string delayValue)
@@ -32,7 +32,6 @@ public class MachineRecipeCall : MonoBehaviour
         double final_epoch_time = Convert.ToDouble(time) + delay_seconds;
         double currentEpochTime = (int)(DateTime.UtcNow - epochStart).TotalSeconds;
         double diff = final_epoch_time - currentEpochTime;
-        Debug.Log("Difference is  - " + diff);
         if (diff > 0)
         {
             int temp = 0;
@@ -46,7 +45,8 @@ public class MachineRecipeCall : MonoBehaviour
                 if (diff == 0) temp = 1;
             }
         }
-        if(timer_btn.activeInHierarchy)timer_btn.SetActive(false);
+        claim_status = true;
+        if (timer_btn.activeInHierarchy)timer_btn.SetActive(false);
         claim_all.interactable = true;
         check_btn.SetActive(true);
         check_btn.GetComponent<Button>().onClick.RemoveAllListeners();
@@ -58,5 +58,11 @@ public class MachineRecipeCall : MonoBehaviour
         LoadingPanel.SetActive(true);
         MessageHandler.Server_ClaimMachine(machine_asset_id,order_id,type);
         LoadingPanel.transform.parent.GetComponent<MainView>().set_helper_var = recipe_id;
+    }
+
+    public bool claim_status
+    {
+        get { return can_claim; }
+        set { can_claim = value; }
     }
 }

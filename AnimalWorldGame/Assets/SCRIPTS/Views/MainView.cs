@@ -122,7 +122,7 @@ public class MainView : BaseView
     public Button tree_unregister_btn;
     public Button tree_register_all_btn;
     public Button tree_deregister_all_btn;
-    public Button tree_claim_btn;
+    public Button tree_claim_all_trees_btn;
     public Button tree_claim_all_btn;
     public Button tree_boost_all_btn;
     [Header("Machines")]
@@ -133,6 +133,7 @@ public class MainView : BaseView
     public Button machine_unregister_btn;
     public Button machine_register_all_btn;
     public Button machine_deregister_all_btn;
+    public Button machine_registered_claim_all_btn;
     public Button machine_claim_all_btn;
     public Button machine_boost_all_btn;
     [Header("Recipes")]
@@ -145,6 +146,7 @@ public class MainView : BaseView
     public Button crop_unregister_btn;
     public Button crop_register_all_btn;
     public Button crop_deregister_all_btn;
+    public Button crop_registered_claim_all_btn;
     public Button crop_claim_all_btn;
     [Header("Land")]
     public Button land_registered_btn;
@@ -225,6 +227,8 @@ public class MainView : BaseView
     private List<string> boost_ids = new List<string>();
     private List<string> reg_ids = new List<string>();
     private List<string> dereg_ids = new List<string>();
+    private List<MachineAssetCall> machine_child_gb = new List<MachineAssetCall>();
+    private List<CropAssetCall> crop_child_gb = new List<CropAssetCall>();
     public NFTCounter nft_counter;
 
     //Enums
@@ -635,6 +639,7 @@ public class MainView : BaseView
                                 break;
                             }
                         }
+                        machine_child_gb.Add(child);
                     }
                 }
             }
@@ -702,6 +707,7 @@ public class MainView : BaseView
                                 break;
                             }
                         }
+                        machine_child_gb.Add(child);
                     }
                 }
             }
@@ -801,6 +807,7 @@ public class MainView : BaseView
                                 break;
                             }
                         }
+                        crop_child_gb.Add(child);
                     }
                 }
             }
@@ -865,6 +872,7 @@ public class MainView : BaseView
                                 break;
                             }
                         }
+                        crop_child_gb.Add(child);
                     }
                 }
             }
@@ -1239,6 +1247,7 @@ public class MainView : BaseView
             machine_detail_view_img.sprite = Resources.Load<Sprite>("Sprites/" + child_obj.asset_name);
             machine_deregister_all_btn.gameObject.SetActive(false);
             machine_boost_all_btn.gameObject.SetActive(false);
+            machine_registered_claim_all_btn.gameObject.SetActive(false);
             machine_child_asset = null;
             clearChildObjs(parent_machine_current_ing);
             machine_rarity_dropdown.gameObject.SetActive(false);
@@ -1381,6 +1390,7 @@ public class MainView : BaseView
         else
         {
             crop_deregister_all_btn.gameObject.SetActive(false);
+            crop_registered_claim_all_btn.gameObject.SetActive(false);
             crop_child_asset = null;
             clearChildObjs(parent_crops_current_ing);
             crop_level_dropdown.gameObject.SetActive(false);
@@ -1512,6 +1522,17 @@ public class MainView : BaseView
                 child.show_btn.onClick.AddListener(delegate { Show_Recipe_Ing_OnClick(child); });
             }
         }
+    }
+
+    public void all_assets_claim()
+    {
+        LoadingPanel.SetActive(true);
+        if (onTrees)
+            MessageHandler.Server_Claim_All_Assets("tree", "");
+        else if (onMachines)
+            MessageHandler.Server_Claim_All_Assets("machine", stack_machines_type);
+        else if (onCrops)
+            MessageHandler.Server_Claim_All_Assets("crop", "");
     }
 
     public void recipes_claim_all(string asset_id, string type)
@@ -1672,6 +1693,7 @@ public class MainView : BaseView
                     parent_transform_machine_reg.parent.gameObject.transform.parent.gameObject.GetComponent<ScrollRect>().content = parent_transform_machine_reg.GetComponent<RectTransform>();
                     machine_subheading_text.GetComponent<TMP_Text>().text = "Registered Machines";
                     machine_boost_all_btn.gameObject.SetActive(true);
+                    machine_registered_claim_all_btn.gameObject.SetActive(true);
                     machine_register_all_btn.gameObject.SetActive(false);
                     machine_deregister_all_btn.gameObject.SetActive(true);
                 }
@@ -1696,6 +1718,7 @@ public class MainView : BaseView
                     crop_subheading_text.GetComponent<TMP_Text>().text = "Registered CropFields";
                     crop_deregister_all_btn.gameObject.SetActive(true);
                     crop_register_all_btn.gameObject.SetActive(false);
+                    crop_registered_claim_all_btn.gameObject.SetActive(true);
                 }
                 break;
             case ("lands"):
@@ -1709,7 +1732,7 @@ public class MainView : BaseView
                     parent_transform_land_reg.gameObject.SetActive(true);
                     parent_transform_land_reg.parent.gameObject.transform.parent.gameObject.GetComponent<ScrollRect>().content = parent_transform_land_reg.GetComponent<RectTransform>();
                     land_subheading_text.GetComponent<TMP_Text>().text = "Registered Lands";
-                    land_deregister_all_btn.gameObject.SetActive(true);
+                    land_deregister_all_btn.gameObject.SetActive(false);
                 }
                 break;
         }
@@ -1980,6 +2003,7 @@ public class MainView : BaseView
             if (tree_show_panel.activeInHierarchy) tree_show_panel.SetActive(false);
             if (!tree_stats_panel.activeInHierarchy) tree_stats_panel.SetActive(true);
             tree_registered_btn.gameObject.SetActive(true);
+            tree_claim_all_trees_btn.gameObject.SetActive(false);
             tree_unregistered_btn.gameObject.SetActive(true);
             total_trees.text = data.Count.ToString();
             reg_total_trees.text = reg.ToString();
@@ -2262,7 +2286,7 @@ public class MainView : BaseView
             case ("main_tree_menu"):
                 if (from_main_menu) current_back_status = "close";
                 else current_back_status = "closeall";
-                tree_claim_btn.gameObject.SetActive(false);
+                tree_claim_all_trees_btn.gameObject.SetActive(true);
                 parent_transform_trees_unreg.gameObject.SetActive(false);
                 parent_transform_trees_reg.gameObject.SetActive(false);
                 tree_subheading_text_type_2.gameObject.SetActive(true);
@@ -2276,6 +2300,7 @@ public class MainView : BaseView
                 parent_tree_main_menu_panel.parent.gameObject.transform.parent.gameObject.GetComponent<ScrollRect>().content = parent_tree_main_menu_panel.GetComponent<RectTransform>();
                 break;
             case ("on_trees_stats_panel"):
+                tree_claim_all_trees_btn.gameObject.SetActive(false);
                 parent_transform_trees_unreg.gameObject.SetActive(false);
                 tree_register_all_btn.gameObject.SetActive(false);
                 tree_deregister_all_btn.gameObject.SetActive(false);
@@ -2288,6 +2313,7 @@ public class MainView : BaseView
                 machine_boost_all_btn.gameObject.SetActive(true);
                 machine_rarity_dropdown.gameObject.SetActive(true);
                 machine_show_panel.gameObject.SetActive(true);
+                machine_registered_claim_all_btn.gameObject.SetActive(true);
                 show_machine_details.gameObject.SetActive(false);
                 can_start_machine = false;
                 start_machine.interactable = false;
@@ -2317,6 +2343,7 @@ public class MainView : BaseView
                 machine_register_all_btn.gameObject.SetActive(false);
                 machine_deregister_all_btn.gameObject.SetActive(false);
                 machine_boost_all_btn.gameObject.SetActive(false);
+                machine_registered_claim_all_btn.gameObject.SetActive(false);
                 can_start_machine = false;
                 onStackPanelOpen();
                 break;
@@ -2325,12 +2352,14 @@ public class MainView : BaseView
                 crop_level_dropdown.gameObject.SetActive(false);
                 crop_register_all_btn.gameObject.SetActive(false);
                 crop_deregister_all_btn.gameObject.SetActive(false);
+                crop_registered_claim_all_btn.gameObject.SetActive(false);
                 onStackPanelOpen();
                 if (from_main_menu) current_back_status = "close";
                 else current_back_status = "closeall";
                 break;
             case ("on_registered_crops"):
                 crop_deregister_all_btn.gameObject.SetActive(true);
+                crop_registered_claim_all_btn.gameObject.SetActive(true);
                 crop_level_dropdown.gameObject.SetActive(true);
                 crop_show_panel.gameObject.SetActive(true);
                 show_crop_details.gameObject.SetActive(false);
@@ -2652,6 +2681,16 @@ public class MainView : BaseView
                     show_crops_details(crop_child_asset);
                 }
                 SSTools.ShowMessage("Claim Successfull !", SSTools.Position.bottom, SSTools.Time.twoSecond);
+            }
+            else if(callBack.type == "all_claim")
+            {
+                if(callBack.helper != "none") SetData();
+                if(callBack.helper == "tree")
+                    SSTools.ShowMessage("All Fruits Claimed Successfully !", SSTools.Position.bottom, SSTools.Time.twoSecond);
+                else if(callBack.helper == "machine" || callBack.helper == "crop")
+                    SSTools.ShowMessage("All Recipes Claimed Successfully !", SSTools.Position.bottom, SSTools.Time.twoSecond);
+                else if(callBack.helper == "none")
+                    SSTools.ShowMessage("Nothing to Claim Yet :(", SSTools.Position.bottom, SSTools.Time.twoSecond);
             }
             else if (callBack.type == "withdraw")
             {

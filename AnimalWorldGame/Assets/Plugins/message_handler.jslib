@@ -52,5 +52,8 @@ mergeInto(LibraryManager.library, {
   },
   tree_claim: function(t_claimsymbol){
     claim_tree(UTF8ToString(t_claimsymbol));
+  },
+  claim_all_assets: function(type,subtype,land){
+    claim_all_assets(UTF8ToString(type),UTF8ToString(subtype),UTF8ToString(land));
   }
 });
