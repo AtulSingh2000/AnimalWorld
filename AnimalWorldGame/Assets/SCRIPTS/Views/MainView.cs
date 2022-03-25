@@ -160,6 +160,7 @@ public class MainView : BaseView
     public Camera camera;
     [Space]
     [Header("Machine Dropdown")]
+    public TMP_Dropdown machine_level_dropdown;
     public TMP_Dropdown machine_rarity_dropdown;
     [Header("Crop Dropdown")]
     public TMP_Dropdown crop_level_dropdown;
@@ -188,6 +189,7 @@ public class MainView : BaseView
     private string s_trees_type = "null";
     private string s_machine_type = "null";
     private string level_type = "Level";
+    private string rarity_type = "Rarity";
     private bool onTrees = false;
     private bool onMachines = false;
     private bool onCrops = false;
@@ -197,6 +199,7 @@ public class MainView : BaseView
     private bool stopTimer = false;
     private bool populated_tree_rarity = false;
     private bool populated_machine_rarity = false;
+    private bool populated_machine_level = false;
     private bool populated_crop_level = false;
     private string helper_var = "";
     private bool UI_opened = false;
@@ -247,6 +250,15 @@ public class MainView : BaseView
         Level10
     };
 
+    enum machine_level_rarities
+    {
+        Rarity,
+        Common,
+        Rare,
+        Legendary
+    };
+
+
     enum crop_level
     {
         Level,
@@ -265,6 +277,7 @@ public class MainView : BaseView
         SSTools.ShowMessage("Welcome Farmer " + MessageHandler.userModel.account, SSTools.Position.bottom, SSTools.Time.twoSecond);
         machine_rarity_dropdown.onValueChanged.AddListener(delegate { changeValue(machine_rarity_dropdown); });
         crop_level_dropdown.onValueChanged.AddListener(delegate { changeValue(crop_level_dropdown); });
+        machine_level_dropdown.onValueChanged.AddListener(delegate { changeRarity(machine_level_dropdown); });
         SetElements();
         SetData();
         SetLevel();
@@ -276,10 +289,18 @@ public class MainView : BaseView
         MessageHandler.OnCallBackData -= OnCallBackData;
     }
 
+    public void changeRarity(TMP_Dropdown dropdown)
+    {
+        rarity_type = dropdown.options[dropdown.value].text;
+        ShowElements_Machines(stack_machines_type, level_type,rarity_type);
+        if (level_type == "Rarity") SSTools.ShowMessage("Showing All Rarities", SSTools.Position.bottom, SSTools.Time.twoSecond);
+        else if (level_type != "Rarity") SSTools.ShowMessage(rarity_type, SSTools.Position.bottom, SSTools.Time.twoSecond);
+    }
+
     public void changeValue(TMP_Dropdown dropdown)
     {
         level_type = dropdown.options[dropdown.value].text;
-        if (onMachines) ShowElements_Machines(stack_machines_type, level_type);
+        if (onMachines) ShowElements_Machines(stack_machines_type, level_type,rarity_type);
         else if (onCrops) ShowElements_Crops(level_type);
         if (level_type == "Level") SSTools.ShowMessage("Showing All Levels", SSTools.Position.bottom, SSTools.Time.twoSecond);
         else if (level_type != "Level") SSTools.ShowMessage(level_type, SSTools.Position.bottom, SSTools.Time.twoSecond);
@@ -453,6 +474,9 @@ public class MainView : BaseView
         string[] rarity_names_machines = Enum.GetNames(typeof(machine_rarities));
         List<string> rarity_list_machine = new List<string>(rarity_names_machines);
         machine_rarity_dropdown.AddOptions(rarity_list_machine);
+        string[] level_names_machines = Enum.GetNames(typeof(machine_level_rarities));
+        List<string> level_list_machine = new List<string>(level_names_machines);
+        machine_level_dropdown.AddOptions(level_list_machine);
     }
 
     private void PopulateCropLevel()
@@ -519,7 +543,7 @@ public class MainView : BaseView
             land_id.text = land;
     }
 
-    private void ShowElements_Machines(string name, string show_rarity)
+    private void ShowElements_Machines(string name,string show_level, string show_rarity)
     {
         var reg = parent_transform_machine_reg;
         var unreg = parent_transform_machine_unreg;
@@ -571,9 +595,10 @@ public class MainView : BaseView
             }
         }
         machine_rarity_dropdown.gameObject.SetActive(true);
+        machine_level_dropdown.gameObject.SetActive(true);
         if (data.Count != 0)
         {
-            if (show_rarity == "Level")
+            if (show_level == "Level" && show_rarity == "Rarity")
             {
                 foreach (MachineDataModel asset_data in data)
                 {
@@ -597,6 +622,7 @@ public class MainView : BaseView
                         string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
                         Debug.Log(nums);
                         child.level_text.text = nums;
+                        child.slots_text.gameObject.transform.parent.gameObject.SetActive(false);
                     }
                     else if (asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id)
                     {
@@ -627,6 +653,150 @@ public class MainView : BaseView
                         child_level_gb.SetActive(true);
                         string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
                         child.level_text.text = nums;
+                        child.slots_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.slots_text.text = "Slots : " + asset_data.on_recipe.Length + " / " + asset_data.slots;
+                        for (int i = 0; i < asset_data.cost_level.Length; i++)
+                        {
+                            if (asset_data.cost_level[i].in_name == asset_data.level)
+                            {
+                                string fees = asset_data.cost_level[++i].in_qty;
+                                string level = asset_data.cost_level[++i].in_name;
+                                string a_id = asset_data.asset_id;
+                                child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums); });
+                                break;
+                            }
+                        }
+                        machine_child_gb.Add(child);
+                    }
+                }
+            }
+            else if(show_level == "Level" && show_rarity != "Rarity")
+            {
+                foreach (MachineDataModel asset_data in data)
+                {
+                    if (asset_data.reg == "0" && asset_data.rarity == show_rarity)
+                    {
+                        Debug.Log("in reg");
+                        var ins = Instantiate(asset_prefab);
+                        ins.transform.SetParent(unreg);
+                        ins.transform.localScale = new Vector3(1, 1, 1);
+                        var child = ins.gameObject.GetComponent<MachineAssetCall>();
+                        child.asset_id = asset_data.asset_id;
+                        child.asset_id_text.text = "#" + asset_data.asset_id;
+                        child.asset_id_text.fontSize = 14;
+                        child.asset_name = name;
+                        child.LoadingPanel = LoadingPanel;
+                        child.register_btn.SetActive(true);
+                        child.boost_btn.gameObject.SetActive(false);
+                        reg_ids.Add(asset_data.asset_id);
+                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
+                        Debug.Log(nums);
+                        child.level_text.text = nums;
+                        child.slots_text.gameObject.transform.parent.gameObject.SetActive(false);
+                    }
+                    else if (asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id && asset_data.rarity == show_rarity)
+                    {
+                        var ins = Instantiate(asset_prefab);
+                        ins.transform.SetParent(reg);
+                        ins.transform.localScale = new Vector3(1, 1, 1);
+                        var child = ins.gameObject.GetComponent<MachineAssetCall>();
+                        child.asset_id = asset_data.asset_id;
+                        child.asset_id_text.text = "#" + asset_data.asset_id;
+                        child.asset_id_text.fontSize = 14;
+                        child.asset_name = asset_data.name;
+                        child.slot_size = asset_data.slots;
+                        child.land_id = asset_data.land_id;
+                        child.level = asset_data.level;
+                        child.on_recip = asset_data.on_recipe;
+                        child.prod_sec = asset_data.prod_sec;
+                        child.harvest = asset_data.harvests;
+                        child.max_harvest = asset_data.max_harvests;
+                        child.LoadingPanel = LoadingPanel;
+                        child.cooldown = asset_data.cd_start;
+                        child.details_btn.SetActive(true);
+                        child.details_btn.GetComponent<Button>().onClick.AddListener(delegate { show_machines_details(child); });
+                        child.boost_btn.gameObject.SetActive(true);
+                        child.boost_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { show_boost("machine", asset_data.asset_id); });
+                        dereg_ids.Add(asset_data.asset_id);
+                        var child_level_gb = child.level_text.gameObject.transform.parent.gameObject;
+                        child_level_gb.SetActive(true);
+                        string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
+                        child.level_text.text = nums;
+                        child.slots_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.slots_text.text = "Slots : " + asset_data.on_recipe.Length + " / " + asset_data.slots;
+                        for (int i = 0; i < asset_data.cost_level.Length; i++)
+                        {
+                            if (asset_data.cost_level[i].in_name == asset_data.level)
+                            {
+                                string fees = asset_data.cost_level[++i].in_qty;
+                                string level = asset_data.cost_level[++i].in_name;
+                                string a_id = asset_data.asset_id;
+                                child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums); });
+                                break;
+                            }
+                        }
+                        machine_child_gb.Add(child);
+                    }
+                }
+            }
+            else if(show_rarity == "Rarity" && show_level != "Level")
+            {
+                foreach (MachineDataModel asset_data in data)
+                {
+                    if (asset_data.reg == "0" && asset_data.level == show_level)
+                    {
+                        Debug.Log("in reg");
+                        var ins = Instantiate(asset_prefab);
+                        ins.transform.SetParent(unreg);
+                        ins.transform.localScale = new Vector3(1, 1, 1);
+                        var child = ins.gameObject.GetComponent<MachineAssetCall>();
+                        child.asset_id = asset_data.asset_id;
+                        child.asset_id_text.text = "#" + asset_data.asset_id;
+                        child.asset_id_text.fontSize = 14;
+                        child.asset_name = name;
+                        child.LoadingPanel = LoadingPanel;
+                        child.register_btn.SetActive(true);
+                        child.boost_btn.gameObject.SetActive(false);
+                        reg_ids.Add(asset_data.asset_id);
+                        child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
+                        Debug.Log(nums);
+                        child.level_text.text = nums;
+                        child.slots_text.gameObject.transform.parent.gameObject.SetActive(false);
+                    }
+                    else if (asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id && asset_data.level == show_level)
+                    {
+                        var ins = Instantiate(asset_prefab);
+                        ins.transform.SetParent(reg);
+                        ins.transform.localScale = new Vector3(1, 1, 1);
+                        var child = ins.gameObject.GetComponent<MachineAssetCall>();
+                        child.asset_id = asset_data.asset_id;
+                        child.asset_id_text.text = "#" + asset_data.asset_id;
+                        child.asset_id_text.fontSize = 14;
+                        child.asset_name = asset_data.name;
+                        child.slot_size = asset_data.slots;
+                        child.land_id = asset_data.land_id;
+                        child.level = asset_data.level;
+                        child.on_recip = asset_data.on_recipe;
+                        child.prod_sec = asset_data.prod_sec;
+                        child.harvest = asset_data.harvests;
+                        child.max_harvest = asset_data.max_harvests;
+                        child.LoadingPanel = LoadingPanel;
+                        child.cooldown = asset_data.cd_start;
+                        child.details_btn.SetActive(true);
+                        child.details_btn.GetComponent<Button>().onClick.AddListener(delegate { show_machines_details(child); });
+                        child.boost_btn.gameObject.SetActive(true);
+                        child.boost_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { show_boost("machine", asset_data.asset_id); });
+                        dereg_ids.Add(asset_data.asset_id);
+                        var child_level_gb = child.level_text.gameObject.transform.parent.gameObject;
+                        child_level_gb.SetActive(true);
+                        string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
+                        child.level_text.text = nums;
+                        child.slots_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.slots_text.text = "Slots : " + asset_data.on_recipe.Length + " / " + asset_data.slots;
                         for (int i = 0; i < asset_data.cost_level.Length; i++)
                         {
                             if (asset_data.cost_level[i].in_name == asset_data.level)
@@ -647,7 +817,7 @@ public class MainView : BaseView
             {
                 foreach (MachineDataModel asset_data in data)
                 {
-                    if (asset_data.level == show_rarity && asset_data.reg == "0")
+                    if (asset_data.level == show_level && asset_data.reg == "0" && asset_data.rarity == show_rarity)
                     {
                         var ins = Instantiate(asset_prefab);
                         ins.transform.SetParent(unreg);
@@ -664,9 +834,10 @@ public class MainView : BaseView
                         child.level_text.gameObject.transform.parent.gameObject.SetActive(true); string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
                         Debug.Log(nums);
                         child.level_text.text = nums;
+                        child.slots_text.gameObject.transform.parent.gameObject.SetActive(false);
                     }
 
-                    else if (asset_data.level == show_rarity && asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id)
+                    else if (asset_data.level == show_level && asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id && asset_data.rarity == rarity_type)
                     {
                         var ins = Instantiate(asset_prefab);
                         ins.transform.SetParent(reg);
@@ -695,6 +866,8 @@ public class MainView : BaseView
                         child_level_gb.SetActive(true);
                         string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
                         child.level_text.text = nums;
+                        child.slots_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.slots_text.text = "Slots : " + asset_data.on_recipe.Length + " / " + asset_data.slots;
                         for (int i = 0; i < asset_data.cost_level.Length; i++)
                         {
                             if (asset_data.cost_level[i].in_name == asset_data.level)
@@ -768,6 +941,7 @@ public class MainView : BaseView
                         child.level_text.gameObject.transform.parent.gameObject.SetActive(true); string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
                         Debug.Log(nums);
                         child.level_text.text = nums;
+                        child.slots_text.gameObject.transform.parent.gameObject.SetActive(false);
                     }
                     else if (asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id)
                     {
@@ -808,6 +982,8 @@ public class MainView : BaseView
                             }
                         }
                         crop_child_gb.Add(child);
+                        child.slots_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.slots_text.text = "Slots : " + asset_data.on_recipe.Length + " / " + asset_data.slots;
                     }
                 }
             }
@@ -832,6 +1008,7 @@ public class MainView : BaseView
                         string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
                         Debug.Log(nums);
                         child.level_text.text = nums;
+                        child.slots_text.gameObject.transform.parent.gameObject.SetActive(false);
                     }
 
                     else if (asset_data.level == show_rarity && asset_data.reg == "1" && asset_data.land_id == MessageHandler.userModel.land_id)
@@ -860,6 +1037,8 @@ public class MainView : BaseView
                         child_level_gb.SetActive(true);
                         string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
                         child.level_text.text = nums;
+                        child.slots_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.slots_text.text = "Slots : " + asset_data.on_recipe.Length + " / " + asset_data.slots;
                         for (int i = 0; i < asset_data.cost_level.Length; i++)
                         {
                             if (asset_data.cost_level[i].in_name == asset_data.level)
@@ -1238,7 +1417,7 @@ public class MainView : BaseView
         current_back_status = "on_registered_machines";
         if (double.Parse(child_obj.harvest) >= double.Parse(child_obj.max_harvest))
         {
-            ShowElements_Machines(stack_machines_type, level_type);
+            ShowElements_Machines(stack_machines_type, level_type,rarity_type);
             navButton("back");
         }
         else
@@ -1251,6 +1430,7 @@ public class MainView : BaseView
             machine_child_asset = null;
             clearChildObjs(parent_machine_current_ing);
             machine_rarity_dropdown.gameObject.SetActive(false);
+            machine_level_dropdown.gameObject.SetActive(false);
             if (machine_show_panel.gameObject.activeInHierarchy) machine_show_panel.gameObject.SetActive(false);
             if (!show_machine_details.gameObject.activeInHierarchy) show_machine_details.gameObject.SetActive(true);
             machine_subheading_text.GetComponent<TMP_Text>().text = " #" + child_obj.asset_id + " Details";
@@ -1678,13 +1858,14 @@ public class MainView : BaseView
                 var listAvailableStrings = machine_rarity_dropdown.options.Select(option => option.text).ToList();
                 machine_rarity_dropdown.value = listAvailableStrings.IndexOf("Level");
                 current_back_status = "on_machine_stats_panel";
-                if (!populated_machine_rarity)
+                if (!populated_machine_rarity && !populated_machine_level)
                 {
                     PopulateMachineRarity();
                     populated_machine_rarity = true;
+                    populated_machine_level = true;
                 }
                 parent_transform_machine_unreg.gameObject.SetActive(false);
-                ShowElements_Machines(stack_machines_type, level_type);
+                ShowElements_Machines(stack_machines_type, level_type,rarity_type);
                 if (parent_transform_machine_reg.childCount == 0)
                     SSTools.ShowMessage("No Registered Machine", SSTools.Position.bottom, SSTools.Time.twoSecond);
                 else
@@ -1762,12 +1943,13 @@ public class MainView : BaseView
                 }
                 break;
             case ("machines"):
-                if (!populated_machine_rarity)
+                if (!populated_machine_rarity && !populated_machine_level)
                 {
                     PopulateMachineRarity();
                     populated_machine_rarity = true;
+                    populated_machine_level = true;
                 }
-                ShowElements_Machines(stack_machines_type, level_type);
+                ShowElements_Machines(stack_machines_type, level_type,rarity_type);
                 current_back_status = "on_machine_stats_panel";
                 parent_transform_machine_reg.gameObject.SetActive(false);
                 if (parent_transform_machine_unreg.childCount == 0)
@@ -1827,7 +2009,7 @@ public class MainView : BaseView
             foreach (Transform child in parent_transform_trees_reg)
             {
                 var child_obj = child.gameObject.GetComponent<AssetCall>();
-                if (child_obj.maxed_harvests || double.Parse(child_obj.current_harvest.text) >= 1)
+                if (child_obj.maxed_harvests)
                 {
                     boost_ids.Add(child_obj.asset_id);
                 }
@@ -1846,7 +2028,7 @@ public class MainView : BaseView
             foreach (Transform child in parent_transform_machine_reg)
             {
                 var child_obj = child.gameObject.GetComponent<AssetCall>();
-                if (child_obj.maxed_harvests || double.Parse(child_obj.current_harvest.text) >= 1)
+                if (child_obj.maxed_harvests)
                 {
                     boost_ids.Add(child_obj.asset_id);
                 }
@@ -2022,6 +2204,7 @@ public class MainView : BaseView
         else if (onMachines)
         {
             machine_rarity_dropdown.gameObject.SetActive(false);
+            machine_level_dropdown.gameObject.SetActive(false);
             int in_cooldown = 0;
             if (data_machine.Count != 0)
             {
@@ -2312,6 +2495,7 @@ public class MainView : BaseView
                 machine_deregister_all_btn.gameObject.SetActive(true);
                 machine_boost_all_btn.gameObject.SetActive(true);
                 machine_rarity_dropdown.gameObject.SetActive(true);
+                machine_level_dropdown.gameObject.SetActive(true);
                 machine_show_panel.gameObject.SetActive(true);
                 machine_registered_claim_all_btn.gameObject.SetActive(true);
                 show_machine_details.gameObject.SetActive(false);
@@ -2340,6 +2524,7 @@ public class MainView : BaseView
             case ("on_machine_stats_panel"):
                 parent_transform_machine_unreg.gameObject.SetActive(false);
                 machine_rarity_dropdown.gameObject.SetActive(false);
+                machine_level_dropdown.gameObject.SetActive(false);
                 machine_register_all_btn.gameObject.SetActive(false);
                 machine_deregister_all_btn.gameObject.SetActive(false);
                 machine_boost_all_btn.gameObject.SetActive(false);
@@ -2549,7 +2734,7 @@ public class MainView : BaseView
                 }
                 else if (onMachines && !string.IsNullOrEmpty(callBack.machine_name))
                 {
-                    ShowElements_Machines(callBack.machine_name, level_type);
+                    ShowElements_Machines(callBack.machine_name, level_type,rarity_type);
                 }
                 else if (onLand)
                 {
@@ -2574,6 +2759,7 @@ public class MainView : BaseView
                 else if (onMachines && !string.IsNullOrEmpty(callBack.machine_name))
                 {
                     machine_rarity_dropdown.gameObject.SetActive(true);
+                    machine_level_dropdown.gameObject.SetActive(true);
                     machine_show_panel.gameObject.SetActive(true);
                     show_machine_details.gameObject.SetActive(false);
                     showRegisteredAssets("machines");

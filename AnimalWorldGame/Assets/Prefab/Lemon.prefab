@@ -231,6 +231,7 @@ MonoBehaviour:
   time: 
   delayValue: 
   cooldown: 
+  level: 
   asset_id_text: {fileID: 3320313002570868895}
   time_to_claim: {fileID: 3320313004060475436}
   current_harvest: {fileID: 631694317207230276}
@@ -243,6 +244,8 @@ MonoBehaviour:
   boost_btn: {fileID: 6501119085331011670}
   start_timer: 0
   maxed_harvests: 0
+  can_claim: 0
+  tree_claim_all: {fileID: 0}
 --- !u!1 &3320313003426080993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,7 +1060,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: UnRegister
+  m_text: Deregister
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ad5569965d2734880a004e3e3d7d1358, type: 2}
   m_sharedMaterial: {fileID: 49358412944804727, guid: f68833ba1c171c44c9be405fa68f82ea,

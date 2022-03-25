@@ -16,6 +16,7 @@ public class MachineAssetCall : MonoBehaviour
     public string harvest;
     public string max_harvest;
     public string cooldown;
+    public TMP_Text slots_text;
     public TMP_Text asset_id_text;
     public TMP_Text level_text;
     public GameObject register_btn;

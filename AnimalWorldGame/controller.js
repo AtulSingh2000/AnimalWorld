@@ -4,6 +4,7 @@ var anchorAuth = "owner";
 var machine_obj = [];
 var crop_obj = [];
 var tree_obj = [];
+var land_obj = [];
 
 const dapp = "AnimalWorld";
 const endpoint = "https://wax.cryptolions.io";
@@ -156,11 +157,11 @@ const sendUserData = async () => {
   try {
     await fetchingData();
     balance = await getAwcBalance();
+    landData = await getLandData();
     treeData = await getTreeData();
     recipeData = await getRecipeData();
     machineData = await getMachineData();
     cropfieldData = await getCropsData();
-    landData = await getLandData();
     userBalanceData = await getUserBalance();
     let obj = {
       account: userAccount.toString(),
@@ -602,7 +603,6 @@ const getTreeData = async () => {
             for (const bodyData of check_body_data) {
               if (bodyData.id == asset.asset_id) {
                 for (const c_data of config) {
-
                   if (asset.template_id == c_data.template_id) {
                     harvest = c_data.max_harvests;
                     boost = c_data.boost;
@@ -611,11 +611,16 @@ const getTreeData = async () => {
                   }
                 }
                 let tree_name = asset.name.split('-');
+                let land_id = "";
+                if(land_obj.includes(bodyData.land_id))
+                  land_id = bodyData.land_id;
+                else
+                  land_id = "0";
                 tree_data.push({
                   name: tree_name[0] + " " + tree_name[1],
                   type: "tree",
                   asset_id: asset.asset_id,
-                  land_id: bodyData.land_id,
+                  land_id: land_id,
                   prod_pwer: bodyData.prod_power,
                   rarity: asset.rarity,
                   cooldown: bodyData.cooldown,
@@ -720,6 +725,11 @@ const getMachineData = async () => {
                 }
               }
               if (bodyData.id == asset.asset_id) {
+                let land_id = "";
+                if(land_obj.includes(bodyData.land_id))
+                  land_id = bodyData.land_id;
+                else
+                  land_id = "0";
                 machine_data.push({
                   name: asset.name,
                   asset_id: asset.asset_id,
@@ -727,7 +737,7 @@ const getMachineData = async () => {
                   slots: bodyData.slots,
                   cd_start: bodyData.cooldown,
                   harvests: bodyData.harvests,
-                  land_id: bodyData.land_id,
+                  land_id: land_id,
                   level: "Level" + asset.level,
                   on_recipe: bodyData.on_recipe,
                   rarity: asset.rarity,
@@ -803,6 +813,7 @@ const getLandData = async () => {
       if (typeof check_data !== 'undefined') {
         const check_ids = check_data[0];
         for (const asset of arr) {
+          land_obj.push(asset.asset_id);
           if (check_ids.includes(asset.asset_id)) {
             const check_body_data = check_data[1];
             for (const bodyData of check_body_data) {
@@ -883,6 +894,11 @@ const getCropsData = async () => {
                 }
               }
               if (bodyData.id == asset.asset_id) {
+                let land_id = "";
+                if(land_obj.includes(bodyData.land_id))
+                  land_id = bodyData.land_id;
+                else
+                  land_id = "0";
                 crop_data.push({
                   name: asset.name,
                   asset_id: asset.asset_id,
@@ -890,7 +906,7 @@ const getCropsData = async () => {
                   slots: bodyData.slots,
                   cd_start: bodyData.cd_start,
                   harvests: bodyData.harvests,
-                  land_id: bodyData.land_id,
+                  land_id: land_id,
                   level: "Level" + asset.level,
                   prod_sec: bodyData.prod_sec,
                   on_recipe: bodyData.on_recipe,
@@ -1218,7 +1234,6 @@ const register_nft = async (asset_id, name, land_id, type) => {
         asset_ids: ids,
       },
     }, ]);
-    await delay(2000);
     let obj = [];
     switch (type) {
       case ("tree"):
@@ -1297,7 +1312,6 @@ const deregister_nft = async (asset_id, name, type) => {
       }],
       data: data,
     }, ]);
-    await delay(2000);
     let obj = [];
     switch (type) {
       case ("tree"):
@@ -1359,7 +1373,6 @@ const start_machine = async (asset_id, recipeID, type) => {
         recipeID: recipeID
       },
     }, ]);
-    await delay(3000);
     await getUserB();
     if (type == "machine") {
       await getMachineD();
@@ -1388,7 +1401,6 @@ const filldmo = async (id, amount) => {
         dmoid: id,
       },
     }, ]);
-    await delay(2000);
     await getUserB();
     await getdmodata();
     let callback_obj = [];
@@ -1422,7 +1434,6 @@ const buyshopl = async (id, amount) => {
         quantity: amount
       },
     }, ]);
-    await delay(2000);
     await getUserB();
     await getshopdata();
     let callback_obj = [];
@@ -1458,7 +1469,6 @@ const depositawc = async (amount) => {
         memo: "deposit"
       },
     }, ]);
-    await delay(1500);
     await getUserB();
     await getAwcB();
     let callback_obj = [];
@@ -1492,7 +1502,6 @@ const withdrawawc = async (amount) => {
         quantity: final + " AWC",
       },
     }, ]);
-    await delay(1500);
     await getUserB();
     await getAwcB();
     let callback_obj = [];
@@ -1536,7 +1545,6 @@ const claim_machine = async (asset_id, recipeID, type) => {
         orderIDs: ids
       },
     }, ]);
-    await delay(3000);
     await getUserB();
     switch (type) {
       case ("machine"):
@@ -1570,7 +1578,6 @@ const claim_tree = async (asset_id) => {
         asset_ids: ids
       },
     }, ]);
-    await delay(2500);
     await getUserB();
     treeData = await getTreeData();
     unityInstance.SendMessage(
@@ -1676,7 +1683,6 @@ const use_boost = async (asset_id, type) => {
         type: type
       },
     }, ]);
-    await delay(2000);
     await getUserB();
     let obj = [];
     switch (type) {
@@ -1772,7 +1778,6 @@ const claim_all_assets = async (type, sub_type,land_id) => {
       });
     }
     else{
-      await delay(2000);
       await getUserB();
       switch(type){
         case "tree":

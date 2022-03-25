@@ -16,6 +16,7 @@ public class CropAssetCall : MonoBehaviour
     public string prod_sec;
     public string harvest;
     public string max_harvest;
+    public TMP_Text slots_text;
     public TMP_Text asset_id_text;
     public TMP_Text level_text;
     public GameObject register_btn;
@@ -43,6 +44,7 @@ public class CropAssetCall : MonoBehaviour
             machine_image.color = alpha;
             details_btn.GetComponent<Button>().interactable = false;
         }
+
     }
     public void RegisterAsset()
     {
