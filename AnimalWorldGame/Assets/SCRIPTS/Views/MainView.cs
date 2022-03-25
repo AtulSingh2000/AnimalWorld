@@ -655,6 +655,9 @@ public class MainView : BaseView
                         child.level_text.text = nums;
                         child.slots_text.gameObject.transform.parent.gameObject.SetActive(true);
                         child.slots_text.text = "Slots : " + asset_data.on_recipe.Length + " / " + asset_data.slots;
+                        child.harvests_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.harvests_text.text = "Harvests : " + asset_data.harvests + " / " + asset_data.max_harvests;
+
                         for (int i = 0; i < asset_data.cost_level.Length; i++)
                         {
                             if (asset_data.cost_level[i].in_name == asset_data.level)
@@ -726,6 +729,9 @@ public class MainView : BaseView
                         child.level_text.text = nums;
                         child.slots_text.gameObject.transform.parent.gameObject.SetActive(true);
                         child.slots_text.text = "Slots : " + asset_data.on_recipe.Length + " / " + asset_data.slots;
+                        child.harvests_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.harvests_text.text = "Harvests : " + asset_data.harvests + " / " + asset_data.max_harvests;
+
                         for (int i = 0; i < asset_data.cost_level.Length; i++)
                         {
                             if (asset_data.cost_level[i].in_name == asset_data.level)
@@ -797,6 +803,9 @@ public class MainView : BaseView
                         child.level_text.text = nums;
                         child.slots_text.gameObject.transform.parent.gameObject.SetActive(true);
                         child.slots_text.text = "Slots : " + asset_data.on_recipe.Length + " / " + asset_data.slots;
+                        child.harvests_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.harvests_text.text = "Harvests : " + asset_data.harvests + " / " + asset_data.max_harvests;
+
                         for (int i = 0; i < asset_data.cost_level.Length; i++)
                         {
                             if (asset_data.cost_level[i].in_name == asset_data.level)
@@ -868,6 +877,9 @@ public class MainView : BaseView
                         child.level_text.text = nums;
                         child.slots_text.gameObject.transform.parent.gameObject.SetActive(true);
                         child.slots_text.text = "Slots : " + asset_data.on_recipe.Length + " / " + asset_data.slots;
+                        child.harvests_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.harvests_text.text = "Harvests : " + asset_data.harvests + " / " + asset_data.max_harvests;
+
                         for (int i = 0; i < asset_data.cost_level.Length; i++)
                         {
                             if (asset_data.cost_level[i].in_name == asset_data.level)
@@ -984,6 +996,9 @@ public class MainView : BaseView
                         crop_child_gb.Add(child);
                         child.slots_text.gameObject.transform.parent.gameObject.SetActive(true);
                         child.slots_text.text = "Slots : " + asset_data.on_recipe.Length + " / " + asset_data.slots;
+                        child.harvests_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.harvests_text.text = "Harvests : " + asset_data.harvests + " / " + asset_data.max_harvests;
+
                     }
                 }
             }
@@ -1039,6 +1054,12 @@ public class MainView : BaseView
                         child.level_text.text = nums;
                         child.slots_text.gameObject.transform.parent.gameObject.SetActive(true);
                         child.slots_text.text = "Slots : " + asset_data.on_recipe.Length + " / " + asset_data.slots;
+                        child.harvests_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.harvests_text.text = "Harvests : " + asset_data.harvests + " / " + asset_data.max_harvests;
+
+                        child.harvests_text.gameObject.transform.parent.gameObject.SetActive(true);
+                        child.harvests_text.text = "Harvests : " + asset_data.harvests + " / " + asset_data.max_harvests;
+
                         for (int i = 0; i < asset_data.cost_level.Length; i++)
                         {
                             if (asset_data.cost_level[i].in_name == asset_data.level)
@@ -1061,11 +1082,11 @@ public class MainView : BaseView
 
     public void Levelup(string asset_id, string fees, string level)
     {
-        levelPanel.SetActive(true);
-        fees_text.text = "Level Up Fees : " + fees + " AWC";
-        message_text.text = "Sure ? You want to upgrade this NFT to Level " + level;
-        level_up_btn.onClick.RemoveAllListeners();
-        level_up_btn.onClick.AddListener(delegate { LevelUpTRX(asset_id, fees); });
+        // levelPanel.SetActive(true);
+        // fees_text.text = "Level Up Fees : " + fees + " AWC";
+        // message_text.text = "Sure ? You want to upgrade this NFT to Level " + level;
+        // level_up_btn.onClick.RemoveAllListeners();
+        // level_up_btn.onClick.AddListener(delegate { LevelUpTRX(asset_id, fees); });
     }
 
     public void LevelUpTRX(string asset_id, string fees)

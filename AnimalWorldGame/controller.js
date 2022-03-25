@@ -72,6 +72,14 @@ const login = async () => {
 
 const logout = async () => {
   console.log("in");
+  const transport = new AnchorLinkBrowserTransport();
+  const anchorLink = new AnchorLink({
+    transport,
+    chains: [{
+      chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+      nodeUrl: endpoint,
+    }],
+  });
   if (useAnchor) {
     await anchorLink.clearSessions(dapp);
   }
@@ -813,8 +821,9 @@ const getLandData = async () => {
       if (typeof check_data !== 'undefined') {
         const check_ids = check_data[0];
         for (const asset of arr) {
-          land_obj.push(asset.asset_id);
           if (check_ids.includes(asset.asset_id)) {
+          land_obj.push(asset.asset_id);
+
             const check_body_data = check_data[1];
             for (const bodyData of check_body_data) {
               if (bodyData.id == asset.asset_id) {
@@ -1027,15 +1036,19 @@ const checkAssetIds = async (table) => {
     console.log(table);
     console.log(contract);
     let wallet = wallet_userAccount;
+    var x=eosjsName.nameToUint64(wallet_userAccount);
+    var y=parseInt(x)+1;
+    console.log(y);
     var path = "/v1/chain/get_table_rows";
     var data = JSON.stringify({
       json: true,
       code: contract,
       scope: contract,
+      lower_bound: x.toString(),
       table: table,
       key_type: `i64`,
       index_position: 2,
-      lower_bound: eosjsName.nameToUint64(wallet_userAccount),
+      upper_bound: parseInt(y),
       limit: 2000
     });
     const response = await fetch(endpoint + path, {
@@ -1670,6 +1683,7 @@ const getburnids = async () => {
 const use_boost = async (asset_id, type) => {
   try {
     let action_name = "";
+    var ids = asset_id.split(",");
     const result = await wallet_transact([{
       account: contract,
       name: "useboost",
@@ -1679,7 +1693,7 @@ const use_boost = async (asset_id, type) => {
       }],
       data: {
         player: wallet_userAccount,
-        asset_ids: [asset_id],
+        asset_ids: ids,
         type: type
       },
     }, ]);
@@ -1727,17 +1741,7 @@ const use_boost = async (asset_id, type) => {
 const claim_all_assets = async (type, sub_type,land_id) => {
   try {
     let claim_struct = [];
-    if(type == "tree"){
-      for(const tdata of tree_obj){
-        if(tdata.land_id == land_id && tdata.reg == "1"){
-          can_claim = await check_for_finish(tdata.last_claim,tdata.delay);
-          if(can_claim){
-            claim_struct.push(tdata.asset_id);
-          }
-        }
-      }
-    }
-    else {
+
       let data_obj = [];
       if(type == "machine"){
         for(const mdata of machine_obj){
@@ -1746,30 +1750,46 @@ const claim_all_assets = async (type, sub_type,land_id) => {
           }
         }
       }
-      else if(type == "crop") data_obj = crop_obj;
+      else if(type == "crop")
+      { type="cropfield";
+        data_obj = crop_obj;}
+
       console.log(data_obj);
       for (const data of data_obj) {
         if (data.land_id == land_id && data.reg == "1" && data.on_recipe.length > 0) {
-          let order_arr = [];
+          var order_IDs = [];
           for (const rdata of data.on_recipe) {
             can_claim = await check_for_finish(rdata.start, rdata.delay);
             if (can_claim) {
-              order_arr.push(rdata.orderID);
+              order_IDs.push(rdata.orderID.toString());
             }
           }
-          console.log(order_arr);
-          if (order_arr.length > 0)
+          if (order_IDs.length > 0)
             claim_struct.push({
               asset_id: data.asset_id,
-              order_ids: order_arr
+              orderIDs: order_IDs
             });
         }
-      }
     }
     console.log(claim_struct);
-
+    
     /* TRANSACTION */
-
+    if(claim_struct.length>0)
+    {
+    const result = await wallet_transact([{
+      account: contract,
+      name: "claimallmch",
+      authorization: [{
+        actor: wallet_userAccount,
+        permission: anchorAuth
+      }],
+      data: {
+        player: wallet_userAccount,
+        order_pairs: claim_struct,
+        type: type
+      },
+    }, ]);
+  }
     let obj = [];
     if(claim_struct.length == 0){
       obj.push({
@@ -1788,7 +1808,7 @@ const claim_all_assets = async (type, sub_type,land_id) => {
             treeData === undefined ? JSON.stringify({}) : JSON.stringify(treeData)
           );
           obj.push({
-            helper: "none",
+            helper: "tree",
             type: "all_claim"
           });
           break;
