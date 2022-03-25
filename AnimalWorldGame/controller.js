@@ -1,22 +1,25 @@
-const wax = new waxjs.WaxJS({
-  rpcEndpoint: 'https://waxtestnet.greymass.com',
-  tryAutoLogin: false
-});
-
 var loggedIn = false;
 var anchorAuth = "owner";
 
 const dapp = "AnimalWorld";
-const endpoint = "testnet.wax.pink.gg";
+const endpoint = "https://wax.cryptolions.io";
 const contract = "anmworldgame";
 const tokenContract = 'tokenanimal1';
-const collectionName = 'animaltestin';
+const collectionName = 'animalworld1';
+const tree_schema = 'gametrees';
+const mch_schema = 'machine';
+
 const schemaName = '';
 let userAccount = "";
 const symbol = 'AWC';
 const tree_symbols = ["FIG","LEMON","MANGO","ORANGE","COCONUT"];
 const crop_symbols = ["CLY","CORN","CRTSE","CLYSE","WHEAT","SBEANE","CORNSE","WHEATSE"];
 let awc_balance = "";
+
+const wax = new waxjs.WaxJS({
+  rpcEndpoint: endpoint,
+  tryAutoLogin: false
+});
 
 const autoLogin = async () => {
   var isAutoLoginAvailable = await wallet_isAutoLoginAvailable();
@@ -30,8 +33,8 @@ const wallet_isAutoLoginAvailable = async () => {
   const anchorLink = new AnchorLink({
     transport,
     chains: [{
-      chainId: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
-      nodeUrl: 'https://waxtestnet.greymass.com',
+      chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+      nodeUrl: endpoint,
     }],
   });
   var sessionList = await anchorLink.listSessions(dapp);
@@ -82,8 +85,8 @@ const wallet_login = async () => {
   const anchorLink = new AnchorLink({
     transport,
     chains: [{
-      chainId: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
-      nodeUrl: 'https://waxtestnet.greymass.com',
+      chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+      nodeUrl: endpoint,
     }],
   });
   if (useAnchor) {
@@ -147,7 +150,6 @@ const sendUserData = async () => {
   try {
     await fetchingData();
     balance = await getAwcBalance();
-    userData = await getUserData();
     treeData = await getTreeData();
     recipeData = await getRecipeData();
     machineData = await getMachineData();
@@ -163,7 +165,6 @@ const sendUserData = async () => {
       machine_recipes: recipeData,
       user_balance: userBalanceData,
       crops: cropfieldData,
-      user_data: userData,
     }
     console.log(obj);
     unityInstance.SendMessage(
@@ -183,7 +184,7 @@ const getAssets = async (schema) => {
   try {
     if (schema == "all") {
       var path = "atomicassets/v1/assets?collection_name=" + collectionName + "&owner=" + wallet_userAccount + "&page=1&limit=1000&order=desc&sort=asset_id";
-      const response = await fetch("https://" + "test.wax.api.atomicassets.io/" + path, {
+      const response = await fetch("https://" + "wax.api.atomicassets.io/" + path, {
         headers: {
           "Content-Type": "text/plain"
         },
@@ -194,7 +195,7 @@ const getAssets = async (schema) => {
       return body.data;
     } else {
       var path = "atomicassets/v1/assets?collection_name=" + collectionName + "&schema_name=" + schema + "&owner=" + wallet_userAccount + "&page=1&limit=1000&order=desc&sort=asset_id";
-      const response = await fetch("https://" + "test.wax.api.atomicassets.io/" + path, {
+      const response = await fetch("https://" + "wax.api.atomicassets.io/" + path, {
         headers: {
           "Content-Type": "text/plain"
         },
@@ -232,7 +233,7 @@ const getLevelData = async () => {
       table: "lvlconfig",
       limit: 1000
     });
-    const response = await fetch("https://" + endpoint + path, {
+    const response = await fetch(endpoint + path, {
       headers: {
         "Content-Type": "text/plain"
       },
@@ -252,12 +253,12 @@ const getLevelData = async () => {
         });
       }
     }
-    console.log(obj);
     unityInstance.SendMessage(
       "GameController",
       "Client_SetLevelData",
       obj === undefined ? JSON.stringify({}) : JSON.stringify(obj)
     );
+
   } catch (e) {
     unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
   }
@@ -273,7 +274,7 @@ const getUserBalance = async () => {
       table: "balances",
       limit: 1000
     });
-    const response = await fetch("https://" + endpoint + path, {
+    const response = await fetch(endpoint + path, {
       headers: {
         "Content-Type": "text/plain"
       },
@@ -326,7 +327,7 @@ const getdmodata = async () => {
       table: "dmos",
       limit: 1000
     });
-    const response = await fetch("https://" + endpoint + path, {
+    const response = await fetch(endpoint + path, {
       headers: {
         "Content-Type": "text/plain"
       },
@@ -386,7 +387,7 @@ const getshopdata = async () => {
       table: "shop",
       limit: 1000
     });
-    const response = await fetch("https://" + endpoint + path, {
+    const response = await fetch(endpoint + path, {
       headers: {
         "Content-Type": "text/plain"
       },
@@ -429,16 +430,17 @@ const getshopdata = async () => {
 }
 
 const getAwcBalance = async() => {
+  console.log(wallet_userAccount);
   var path = "/v1/chain/get_table_rows";
   var data = JSON.stringify({
     json: true,
-    code: "anmworldtokn",
+    code: tokenContract,
     scope: wallet_userAccount,
     table: "accounts",
     limit: 1,
   });
 
-  const response = await fetch("https://" + endpoint + path, {
+  const response = await fetch(endpoint + path, {
     headers: {
       "Content-Type": "text/plain"
     },
@@ -465,58 +467,6 @@ const getAwcB = async() => {
       "GameController",
       "Client_UpdateWalletBalance",
       updatedBal === undefined ? JSON.stringify({}) : updatedBal
-    );
-  }
-  catch(e){
-    unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
-  }
-}
-
-const getUserData = async () => {
-  try {
-    var path = "/v1/chain/get_table_rows";
-    var data = JSON.stringify({
-      json: true,
-      code: contract,
-      scope: userAccount,
-      table: "user",
-      limit: 1000
-    });
-    const response = await fetch("https://" + endpoint + path, {
-      headers: {
-        "Content-Type": "text/plain"
-      },
-      body: data,
-      method: "POST",
-    });
-    const body = await response.json();
-    let obj = [];
-    if (body.rows.length != 0) {
-      for (const data of Object.values(body.rows)) {
-        new_string = data.power.split(' ');
-        obj.push({
-          name: new_string[1] == "COCUNUT" ? "COCONUT" : new_string[1],
-          value: new_string[0],
-          unclaimed: data.unclaimed.split(' ')[0],
-          last_claim: data.last_claim,
-          cd_start: data.cooldown,
-          harvests: data.harvests
-        });
-      }
-    }
-    return obj;
-  } catch (e) {
-    unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
-  }
-}
-
-const getUserD = async() =>{
-  try{
-    data = await getUserData();
-    unityInstance.SendMessage(
-      "GameController",
-      "Client_SetUserTreeData",
-      data === undefined ? JSON.stringify({}) : JSON.stringify(data)
     );
   }
   catch(e){
@@ -567,7 +517,7 @@ const getTreeConfig = async () => {
       table: "treeconfigs",
       limit: 1000
     });
-    const response = await fetch("https://" + endpoint + path, {
+    const response = await fetch(endpoint + path, {
       headers: {
         "Content-Type": "text/plain"
       },
@@ -603,7 +553,7 @@ const getMachineConfig = async () => {
       table: "mchconfig",
       limit: 1000
     });
-    const response = await fetch("https://" + endpoint + path, {
+    const response = await fetch(endpoint + path, {
       headers: {
         "Content-Type": "text/plain"
       },
@@ -630,7 +580,7 @@ const getMachineConfig = async () => {
 
 const getTreeData = async () => {
   try {
-    let assetData = await getAssets("tree");
+    let assetData = await getAssets("gametrees");
     let config = Object.values(await getTreeConfig());
     var tree_data = [];
     const arr = Object.values(assetData);
@@ -641,7 +591,10 @@ const getTreeData = async () => {
       if (typeof check_data !== 'undefined') {
         const check_ids = check_data[0];
         for (const asset of arr) {
-          let harvest,boost,level_boost,cost_level = "";
+          let harvest= "";
+           let boost= "";
+           let level_boost= "";
+           let cost_level= "";
           if (check_ids.includes(asset.asset_id)) {
             const check_body_data = check_data[1];
             for (const bodyData of check_body_data) {
@@ -652,12 +605,12 @@ const getTreeData = async () => {
                     harvest = c_data.max_harvests;
                     boost = c_data.boost;
                     level_boost = c_data.level_boost;
-                    //cost_level = c_data.cost_level;
                     break;
                   }
                 }
+                let tree_name = asset.name.split('-');
                 tree_data.push({
-                  name: asset.name,
+                  name: tree_name[0]+" "+tree_name[1],
                   type: "tree",
                   asset_id: asset.asset_id,
                   land_id: bodyData.land_id,
@@ -677,8 +630,9 @@ const getTreeData = async () => {
               }
             }
           } else {
+            let tree_name = asset.name.split('-');
             tree_data.push({
-              name: asset.name,
+              name: tree_name[0]+" "+tree_name[1],
               type: "tree",
               asset_id: asset.asset_id,
               land_id: "null",
@@ -705,8 +659,9 @@ const getTreeData = async () => {
                 break;
               }
             }
-          tree_data.push({
-            name: asset.name,
+            let tree_name = asset.name.split('-');
+            tree_data.push({
+            name: tree_name[0]+" "+tree_name[1],
             type: "tree",
             asset_id: asset.asset_id,
             land_id: "null",
@@ -1002,7 +957,7 @@ const getRecipeData = async () => {
       table: "recipes",
       limit: 1000
     });
-    const response = await fetch("https://" + endpoint + path, {
+    const response = await fetch(endpoint + path, {
       headers: {
         "Content-Type": "text/plain"
       },
@@ -1061,7 +1016,7 @@ const checkAssetIds = async (table) => {
       lower_bound: eosjsName.nameToUint64(wallet_userAccount),
       limit: 2000
     });
-    const response = await fetch("https://" + endpoint + path, {
+    const response = await fetch(endpoint + path, {
       headers: {
         "Content-Type": "text/plain"
       },
@@ -1156,7 +1111,7 @@ const getCallBack = async (table, asset_id, action_type) => {
       limit: 1,
       lower_bound: asset_id,
     });
-    const response = await fetch("https://" + endpoint + path, {
+    const response = await fetch(endpoint + path, {
       headers: {
         "Content-Type": "text/plain"
       },
@@ -1425,7 +1380,7 @@ const start_machine = async (asset_id, recipeID,type) => {
 
 const filldmo = async (id,amount) => {
   try {
-    let result = await wallet_transact([{
+    await wallet_transact([{
       account: contract,
       name: "filldmo",
       authorization: [{
@@ -1494,7 +1449,7 @@ const depositawc = async (amount) => {
   try {
     var final = parseFloat(amount).toFixed(4);
     const result = await wallet_transact([{
-      account: "anmworldtokn",
+      account: tokenContract,
       name: "transfer",
       authorization: [{
         actor: wallet_userAccount,
@@ -1621,7 +1576,6 @@ const claim_tree = async (asset_id) => {
     },]);
     await delay(2500);
     await getUserB();
-    await getUserD();
     treeData = await getTreeData();
     unityInstance.SendMessage(
       "GameController",
@@ -1668,7 +1622,7 @@ const burnid = async (id) => {
 const  getburnids= async () => {
   try {
       var path = "atomicassets/v1/assets?collection_name=" + collectionName + "&schema_name=" + "resourcepack" + "&owner=" + wallet_userAccount + "&page=1&limit=1000&order=desc&sort=asset_id";
-      const response = await fetch("https://" + "test.wax.api.atomicassets.io/" + path, {
+      const response = await fetch("https://" + "wax.api.atomicassets.io/" + path, {
         headers: {
           "Content-Type": "text/plain"
         },
