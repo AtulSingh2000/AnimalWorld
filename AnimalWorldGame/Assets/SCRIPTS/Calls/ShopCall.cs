@@ -52,7 +52,6 @@ public class ShopCall : MonoBehaviour
     public void SetData()
     {
         double user_balance = double.Parse(MessageHandler.GetBalanceKey("AWC"));
-        Debug.Log(user_balance);
         if (type=="ingame")
         {
             if(helper.recipes_abv.ContainsKey(resource.in_name))
@@ -136,15 +135,13 @@ public class ShopCall : MonoBehaviour
                 button_sprite.sprite = Resources.Load<Sprite>("Sprites/green_btn"); //green
             }
 
-            buyButton.onClick.AddListener(delegate { FillDMO(id); });
-
             if (double.TryParse(reqtxt.text,out double required_amt))
             {
                 if (required_amt <= double.Parse(balance))
                     buyButton.onClick.AddListener(delegate { FillDMO(products[0].in_qty); });
                 else
                 {
-                    buyButton.onClick.AddListener(delegate { FillDMO(balance); });
+                    //buyButton.onClick.AddListener(delegate { FillDMO(balance); });
                     buyButton.interactable = false;
                     UnityEngine.Color alpha = buyButton.gameObject.transform.parent.gameObject.GetComponent<Image>().color;
                     alpha.a = 0.7f;
@@ -162,7 +159,7 @@ public class ShopCall : MonoBehaviour
             LoadingPanel.SetActive(true);
             MessageHandler.marketmodel.id = id;
             MessageHandler.marketmodel.products = products;
-            MessageHandler.marketmodel.reward.in_qty = reward.in_qty;
+            MessageHandler.marketmodel.reward.in_qty = price1txt.text;
             MessageHandler.marketmodel.xp_boost = xp_boost;
             MessageHandler.marketmodel.xp_level = xp_level;
             MessageHandler.Server_FillDmo(id,quantity);

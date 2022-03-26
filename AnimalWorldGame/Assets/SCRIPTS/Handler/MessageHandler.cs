@@ -288,9 +288,7 @@ public static void Server_BurnNFT(string asset_id)
     public void Client_SetShopdata(string data)
     {
         string jsonData = JsonHelper.fixJson(data);
-        Debug.Log(jsonData);
         ShopModel[]  listings= JsonHelper.FromJson<ShopModel>(jsonData);
-        Debug.Log(listings[0]);
         OnShopData(listings);
     }
 

@@ -2942,8 +2942,10 @@ public class MainView : BaseView
                 successPanel.SetActive(true);
                 success_text.text = "Wallet Credited for AWC " + MessageHandler.marketmodel.reward.in_qty + '\n' + "Earned AWXP " + MessageHandler.marketmodel.xp_boost.in_qty;
                 success_header_text.text = "Order Filled Successfully";
+                Debug.Log(MessageHandler.marketmodel.reward.in_qty);
                 StartCoroutine(StartTokenTimer(MessageHandler.marketmodel.reward.in_qty, "deposit"));
                 MessageHandler.marketmodel = null;
+                shop_parent_panel.GetComponent<ShopView>().PopulateDMOs();
                 var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[MessageHandler.marketmodel.products[0].in_name]);
                 if (sprite_img)
                     final_product_successPanel.sprite = sprite_img;
@@ -2962,20 +2964,27 @@ public class MainView : BaseView
                         action_name = "Purchased";
                         item_name = MessageHandler.shopmodle.resource.in_name;
                         qty = MessageHandler.shopmodle.price.in_qty.Split(' ')[1];
+                        shop_parent_panel.GetComponent<ShopView>().switchtype("resource");
                         break;
                     case ("pack"):
                         action_name = "Purchased";
                         item_name = "pack";
+                        MessageHandler.Server_GetShopdata();
+                        shop_parent_panel.GetComponent<ShopView>().switchtype("pack");
                         break;
                     case ("mint"):
                         action_name = "Minted";
-                        item_name = MessageHandler.shopmodle.price.in_name +"resource pack";
+                        item_name = MessageHandler.shopmodle.price.in_name +" resource pack";
+                        shop_parent_panel.GetComponent<ShopView>().switchtype("mint");
                         break;
                 }
                 var tkntxt = action_name == "Minted" ? " 10 AWC" : MessageHandler.shopmodle.price.in_qty.Split(' ')[0];
                 success_text.text = action_name + " " + qty + " " + helper.recipes_abv[item_name] + '\n' + "Wallet Debited for AWC " + tkntxt;
                 success_header_text.text = action_name + " Successfully";
-                StartCoroutine(StartTokenTimer(MessageHandler.shopmodle.price.in_qty, "withdraw"));
+                if (action_name == "Minted")
+                    StartCoroutine(StartTokenTimer("10", "withdraw"));
+                else
+                    StartCoroutine(StartTokenTimer(MessageHandler.shopmodle.price.in_qty.Split(' ')[0], "withdraw"));
                 MessageHandler.shopmodle = null;
                 var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[item_name]);
                 if (sprite_img)

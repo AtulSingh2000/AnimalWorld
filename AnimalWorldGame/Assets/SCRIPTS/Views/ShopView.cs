@@ -139,7 +139,7 @@ public class ShopView : BaseView
 
     public void OnCallBackData(CallBackDataModel[] callback)
     {
-        CallBackDataModel callBack = callback[0];
+        /*CallBackDataModel callBack = callback[0];
         Debug.Log("in callBAck");
         if (!string.IsNullOrEmpty(callBack.type))
         {
@@ -147,7 +147,7 @@ public class ShopView : BaseView
             {
                 
             }
-        }
+        }*/
     }
 
     public void PopulateShop(string type)
