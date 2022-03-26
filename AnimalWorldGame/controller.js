@@ -1741,55 +1741,78 @@ const use_boost = async (asset_id, type) => {
 const claim_all_assets = async (type, sub_type,land_id) => {
   try {
     let claim_struct = [];
-
-      let data_obj = [];
-      if(type == "machine"){
-        for(const mdata of machine_obj){
-          if(mdata.name == sub_type){
-            data_obj.push(mdata);
-          }
-        }
-      }
-      else if(type == "crop")
-      { type="cropfield";
-        data_obj = crop_obj;}
-
-      console.log(data_obj);
-      for (const data of data_obj) {
-        if (data.land_id == land_id && data.reg == "1" && data.on_recipe.length > 0) {
-          var order_IDs = [];
-          for (const rdata of data.on_recipe) {
-            can_claim = await check_for_finish(rdata.start, rdata.delay);
-            if (can_claim) {
-              order_IDs.push(rdata.orderID.toString());
+    if(type != "tree"){
+        let data_obj = [];
+        if(type == "machine"){
+          for(const mdata of machine_obj){
+            if(mdata.name == sub_type){
+              data_obj.push(mdata);
             }
           }
-          if (order_IDs.length > 0)
-            claim_struct.push({
-              asset_id: data.asset_id,
-              orderIDs: order_IDs
-            });
         }
+        else if(type == "crop")
+        { type="cropfield";
+          data_obj = crop_obj;}
+
+        for (const data of data_obj) {
+          if (data.land_id == land_id && data.reg == "1" && data.on_recipe.length > 0) {
+            var order_IDs = [];
+            for (const rdata of data.on_recipe) {
+              can_claim = await check_for_finish(rdata.start, rdata.delay);
+              if (can_claim) {
+                order_IDs.push(rdata.orderID.toString());
+              }
+            }
+            if (order_IDs.length > 0)
+              claim_struct.push({
+                asset_id: data.asset_id,
+                orderIDs: order_IDs
+              });
+          }
+      }
+      console.log(claim_struct);
+      if(claim_struct.length > 0)
+      {
+        const result = await wallet_transact([{
+          account: contract,
+          name: "claimallmch",
+          authorization: [{
+            actor: wallet_userAccount,
+            permission: anchorAuth
+          }],
+          data: {
+            player: wallet_userAccount,
+            order_pairs: claim_struct,
+            type: type
+          },
+        }, ]);
+      }
     }
-    console.log(claim_struct);
-    
-    /* TRANSACTION */
-    if(claim_struct.length>0)
-    {
-    const result = await wallet_transact([{
-      account: contract,
-      name: "claimallmch",
-      authorization: [{
-        actor: wallet_userAccount,
-        permission: anchorAuth
-      }],
-      data: {
-        player: wallet_userAccount,
-        order_pairs: claim_struct,
-        type: type
-      },
-    }, ]);
-  }
+    else {
+      for(const tdata of tree_obj){
+        if(tdata.land_id == land_id && tdata.reg == "1"){
+          can_claim = check_for_finish(tdata.last_claim,tdata.delay);
+          if(can_claim)
+            claim_struct.push(tdata.asset_id);
+        }
+      }
+      console.log(claim_struct);
+      if(claim_struct.length > 0)
+      {
+        await wallet_transact([{
+          account: contract,
+          name: "claimtree",
+          authorization: [{
+            actor: wallet_userAccount,
+            permission: anchorAuth
+          }],
+          data: {
+            player: wallet_userAccount,
+            asset_ids: claim_struct
+          },
+        }, ]);
+      }
+    }
     let obj = [];
     if(claim_struct.length == 0){
       obj.push({

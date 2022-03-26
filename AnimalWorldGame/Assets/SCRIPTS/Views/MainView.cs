@@ -1372,7 +1372,7 @@ public class MainView : BaseView
                     child.delayValue = asset_data.delay;
                     child.cooldown = asset_data.cooldown;
                     child.boost_btn.gameObject.SetActive(false);
-                    child.current_harvest.text = asset_data.current_harvests;
+                    child.current_harvest.gameObject.transform.parent.gameObject.SetActive(false);
                     reg_ids.Add(asset_data.asset_id);
                     child.start_timer = false;
                     child.level = asset_data.level;
@@ -1397,7 +1397,8 @@ public class MainView : BaseView
                     child.cooldown = asset_data.cooldown;
                     child.boost_btn.gameObject.SetActive(true);
                     child.tree_claim_all = tree_claim_all_btn;
-                    child.current_harvest.text = asset_data.current_harvests;
+                    child.current_harvest.gameObject.transform.parent.gameObject.SetActive(true);
+                    child.current_harvest.text = "Harvests : " + asset_data.current_harvests + " / " + asset_data.max_harvests;
                     child.boost_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { show_boost("tree", asset_data.asset_id); });
                     if (asset_data.cooldown == "1" || Int64.Parse(asset_data.current_harvests) == Int64.Parse(asset_data.max_harvests))
                         child.maxed_harvests = true;
@@ -2892,10 +2893,17 @@ public class MainView : BaseView
             else if(callBack.type == "all_claim")
             {
                 if(callBack.helper != "none") SetData();
-                if(callBack.helper == "tree")
+                if (callBack.helper == "tree")
                     SSTools.ShowMessage("All Fruits Claimed Successfully !", SSTools.Position.bottom, SSTools.Time.twoSecond);
-                else if(callBack.helper == "machine" || callBack.helper == "crop")
+                else if (callBack.helper == "machine") {
+                    showRegisteredAssets("machines");
                     SSTools.ShowMessage("All Recipes Claimed Successfully !", SSTools.Position.bottom, SSTools.Time.twoSecond);
+                }
+                else if(callBack.helper == "crop")
+                {
+                    showRegisteredAssets("crops");
+                    SSTools.ShowMessage("All Recipes Claimed Successfully !", SSTools.Position.bottom, SSTools.Time.twoSecond);
+                }
                 else if(callBack.helper == "none")
                     SSTools.ShowMessage("Nothing to Claim Yet :(", SSTools.Position.bottom, SSTools.Time.twoSecond);
             }
