@@ -100,7 +100,6 @@ public class MessageHandler : MonoBehaviour
     {
         string jsonData = JsonHelper.fixJson(infojson);
         infos.AddRange(JsonHelper.FromJson<InfoDataModel>(jsonData));
-        Debug.Log(infos[1]);
     }
     public static void Server_TryAutoLogin()
     {

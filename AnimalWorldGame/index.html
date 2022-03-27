@@ -14,7 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/eosjs-account-name@2.2.1/lib/index.js" id="id-sc-include-js"></script>
   </head>
   <body>
-    <div class="api">
+    <div class="api" id="api_div" style="visibility:hidden">
       <div class="dropdown wallet_dropdown">
       <input id="api_dropdown" class="api_dropbtn" type="button" value="RPC Endpoints Available <>">
       <div id="api_dropdown" class="dropdown-content">
@@ -35,16 +35,10 @@
                 onclick="select_atomic_api('wax-atomic-api.eosphere.io/')">
             <input class="api-buttons" style="margin-top: 5px;" type="button" value="https://wax.api.atomicassets.io"
                 onclick="select_atomic_api('wax.api.atomicassets.io/')">
-            <input class="api-buttons" style="margin-top: 5px;" type="button" value="https://atomic.sentnl.io/"
-                onclick="select_atomic_api('atomic.sentnl.io/')">
             <input class="api-buttons" style="margin-top: 5px;margin-bottom: 10px;"
                 type="button" value="https://atomic.hivebp.io" onclick="select_atomic_api('atomic.hivebp.io/')">
             <input class="api-buttons" style="margin-top: 5px;margin-bottom: 10px;"
-                type="button" value="https://atomic-wax-mainnet.wecan.dev" onclick="select_atomic_api('atomic-wax-mainnet.wecan.dev/')">
-            <input class="api-buttons" style="margin-top: 5px;margin-bottom: 10px;"
                 type="button" value="https://api.atomic.greeneosio.com" onclick="select_atomic_api('api.atomic.greeneosio.com/')">
-            <input class="api-buttons" style="margin-top: 5px;margin-bottom: 10px;"
-                type="button" value="https://wax-atomic.eosiomadrid.io" onclick="select_atomic_api('wax-atomic.eosiomadrid.io/')">
         </div>
         </div>
     </div>
@@ -75,7 +69,7 @@
       // user.
       function unityShowBanner(msg, type) {
         function updateBannerVisibility() {
-          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+          //warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
         }
         var div = document.createElement('div');
         div.innerHTML = msg;

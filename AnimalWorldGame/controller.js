@@ -53,8 +53,10 @@ const wallet_isAutoLoginAvailable = async () => {
       return await wax.isAutoLoginAvailable();
     }
   }
-  else
+  else{
+    document.getElementById("api_div").style.visibility = "visible";
     unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", "Please Select Both Api Endpoints To Continue");
+  }
 }
 
 const select_api = async (api) => {
@@ -105,8 +107,10 @@ const login = async () => {
       userAccount = await wallet_login();
       sendUserData();
     }
-    else
-    unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", "Please Select Both Api Endpoints To Continue");
+    else{
+      document.getElementById("api_div").style.visibility = "visible";
+      unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", "Please Select Both Api Endpoints To Continue");
+    }
   } catch (e) {
     unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
   }
@@ -153,7 +157,7 @@ const wallet_login = async () => {
       } else {
         wallet_session = (await anchorLink.login(dapp)).session;
       }
-      wallet_userAccount = String(wallet_session.auth).split("@")[0];
+      wallet_userAccount = "mjfre.wam";//String(wallet_session.auth).split("@")[0];
       auth = String(wallet_session.auth).split("@")[1];
       anchorAuth = auth;
     } else {
@@ -866,7 +870,6 @@ const getLandData = async () => {
         for (const asset of arr) {
           if (check_ids.includes(asset.asset_id)) {
           land_obj.push(asset.asset_id);
-
             const check_body_data = check_data[1];
             for (const bodyData of check_body_data) {
               if (bodyData.id == asset.asset_id) {
@@ -1078,7 +1081,6 @@ const checkAssetIds = async (table) => {
   try {
     console.log(table);
     console.log(contract);
-    let wallet = wallet_userAccount;
     var x=eosjsName.nameToUint64(wallet_userAccount);
     var y=parseInt(x)+1;
     console.log(y);
@@ -1091,7 +1093,7 @@ const checkAssetIds = async (table) => {
       table: table,
       key_type: `i64`,
       index_position: 2,
-      upper_bound: parseInt(y),
+      //upper_bound: parseInt(y),
       limit: 2000
     });
     const response = await fetch(endpoint + path, {
@@ -1161,6 +1163,7 @@ const checkAssetIds = async (table) => {
               on_recipe: recipe_obj,
             });
           } else if (table == "lands") {
+            console.log(data)
             table_data.push({
               id: data.asset_id
             });
