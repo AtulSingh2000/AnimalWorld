@@ -7,7 +7,8 @@ var tree_obj = [];
 var land_obj = [];
 
 const dapp = "AnimalWorld";
-const endpoint = "https://wax.cryptolions.io";
+var endpoint = "";
+var atomic_api = "";
 const contract = "anmworldgame";
 const tokenContract = 'tokenanimal1';
 const collectionName = 'animalworld1';
@@ -34,21 +35,57 @@ const autoLogin = async () => {
 }
 
 const wallet_isAutoLoginAvailable = async () => {
-  const transport = new AnchorLinkBrowserTransport();
-  const anchorLink = new AnchorLink({
-    transport,
-    chains: [{
-      chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
-      nodeUrl: endpoint,
-    }],
-  });
-  var sessionList = await anchorLink.listSessions(dapp);
-  if (sessionList && sessionList.length > 0) {
-    useAnchor = true;
-    return true;
-  } else {
-    useAnchor = false;
-    return await wax.isAutoLoginAvailable();
+  if(atomic_api != "" && endpoint != ""){
+    const transport = new AnchorLinkBrowserTransport();
+    const anchorLink = new AnchorLink({
+      transport,
+      chains: [{
+        chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+        nodeUrl: endpoint,
+      }],
+    });
+    var sessionList = await anchorLink.listSessions(dapp);
+    if (sessionList && sessionList.length > 0) {
+      useAnchor = true;
+      return true;
+    } else {
+      useAnchor = false;
+      return await wax.isAutoLoginAvailable();
+    }
+  }
+  else
+    unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", "Please Select Both Api Endpoints To Continue");
+}
+
+const select_api = async (api) => {
+  endpoint = "https://" + api;
+  document.getElementById("api_dropdown").value = endpoint;
+  if(endpoint != "" && atomic_api != ""){
+    let obj = [];
+    obj.push({
+      type: "reload"
+    });
+    unityInstance.SendMessage(
+      "GameController",
+      "Client_SetCallBackData",
+      obj === undefined ? JSON.stringify({}) : JSON.stringify(obj)
+    );
+  }
+}
+
+const select_atomic_api = async (api) => {
+  atomic_api = "https://" + api;
+  document.getElementById("atomic_api_dropdown").value = atomic_api;
+  if(endpoint != "" && atomic_api != ""){
+    let obj = [];
+    obj.push({
+      type: "reload"
+    });
+    unityInstance.SendMessage(
+      "GameController",
+      "Client_SetCallBackData",
+      obj === undefined ? JSON.stringify({}) : JSON.stringify(obj)
+    );
   }
 }
 
@@ -63,8 +100,13 @@ const wallet_selectWallet = async (walletType) => {
 
 const login = async () => {
   try {
-    userAccount = await wallet_login();
-    sendUserData();
+    if(atomic_api != "" && endpoint != "")
+    { 
+      userAccount = await wallet_login();
+      sendUserData();
+    }
+    else
+    unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", "Please Select Both Api Endpoints To Continue");
   } catch (e) {
     unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
   }
@@ -96,30 +138,30 @@ const logout = async () => {
 }
 
 const wallet_login = async () => {
-  const transport = new AnchorLinkBrowserTransport();
-  const anchorLink = new AnchorLink({
-    transport,
-    chains: [{
-      chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
-      nodeUrl: endpoint,
-    }],
-  });
-  if (useAnchor) {
-    var sessionList = await anchorLink.listSessions(dapp);
-    if (sessionList && sessionList.length > 0) {
-      wallet_session = await anchorLink.restoreSession(dapp);
+    const transport = new AnchorLinkBrowserTransport();
+    const anchorLink = new AnchorLink({
+      transport,
+      chains: [{
+        chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+        nodeUrl: endpoint,
+      }],
+    });
+    if (useAnchor) {
+      var sessionList = await anchorLink.listSessions(dapp);
+      if (sessionList && sessionList.length > 0) {
+        wallet_session = await anchorLink.restoreSession(dapp);
+      } else {
+        wallet_session = (await anchorLink.login(dapp)).session;
+      }
+      wallet_userAccount = String(wallet_session.auth).split("@")[0];
+      auth = String(wallet_session.auth).split("@")[1];
+      anchorAuth = auth;
     } else {
-      wallet_session = (await anchorLink.login(dapp)).session;
+      wallet_userAccount = await wax.login();
+      wallet_session = wax.api;
+      anchorAuth = "active";
     }
-    wallet_userAccount = String(wallet_session.auth).split("@")[0];
-    auth = String(wallet_session.auth).split("@")[1];
-    anchorAuth = auth;
-  } else {
-    wallet_userAccount = await wax.login();
-    wallet_session = wax.api;
-    anchorAuth = "active";
-  }
-  return wallet_userAccount;
+    return wallet_userAccount;
 }
 
 const wallet_transact = async (actions) => {
@@ -187,7 +229,7 @@ const sendUserData = async () => {
       "Client_SetUserData",
       obj === undefined ? JSON.stringify({}) : JSON.stringify(obj)
     );
-
+    loggedIn = true;
   } catch (e) {
     console.log(e);
     unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
@@ -197,9 +239,10 @@ const sendUserData = async () => {
 
 const getAssets = async (schema) => {
   try {
+    console.log(atomic_api);
     if (schema == "all") {
       var path = "atomicassets/v1/assets?collection_name=" + collectionName + "&owner=" + wallet_userAccount + "&page=1&limit=1000&order=desc&sort=asset_id";
-      const response = await fetch("https://" + "wax.api.atomicassets.io/" + path, {
+      const response = await fetch(atomic_api + path, {
         headers: {
           "Content-Type": "text/plain"
         },
@@ -210,7 +253,7 @@ const getAssets = async (schema) => {
       return body.data;
     } else {
       var path = "atomicassets/v1/assets?collection_name=" + collectionName + "&schema_name=" + schema + "&owner=" + wallet_userAccount + "&page=1&limit=1000&order=desc&sort=asset_id";
-      const response = await fetch("https://" + "wax.api.atomicassets.io/" + path, {
+      const response = await fetch(atomic_api + path, {
         headers: {
           "Content-Type": "text/plain"
         },
@@ -1637,7 +1680,7 @@ const burnid = async (id) => {
 const getburnids = async () => {
   try {
     var path = "atomicassets/v1/assets?collection_name=" + collectionName + "&schema_name=" + "resourcepack" + "&owner=" + wallet_userAccount + "&page=1&limit=1000&order=desc&sort=asset_id";
-    const response = await fetch("https://" + "wax.api.atomicassets.io/" + path, {
+    const response = await fetch(atomic_api + path, {
       headers: {
         "Content-Type": "text/plain"
       },
@@ -1751,7 +1794,7 @@ const claim_all_assets = async (type, sub_type,land_id) => {
           }
         }
         else if(type == "crop")
-        { type="cropfield";
+        { type = "cropfield";
           data_obj = crop_obj;}
 
         for (const data of data_obj) {
@@ -1791,9 +1834,10 @@ const claim_all_assets = async (type, sub_type,land_id) => {
     else {
       for(const tdata of tree_obj){
         if(tdata.land_id == land_id && tdata.reg == "1"){
-          can_claim = check_for_finish(tdata.last_claim,tdata.delay);
-          if(can_claim)
-            claim_struct.push(tdata.asset_id);
+          console.log(tdata);
+          can_claim = await check_for_finish(tdata.last_claim,tdata.delay);
+          console.log(can_claim);
+          if(can_claim){claim_struct.push(tdata.asset_id);}
         }
       }
       console.log(claim_struct);
@@ -1842,7 +1886,7 @@ const claim_all_assets = async (type, sub_type,land_id) => {
             type: "all_claim"
           });
           break;
-        case "crop":
+        case "cropfield":
           await getCropsD();
           obj.push({
             helper: "crop",
@@ -1866,6 +1910,7 @@ const check_for_finish = async (start, delay) => {
   const utcMilllisecondsSinceEpoch = Date.now();
   var utcSecondsSinceEpoch = Math.round(utcMilllisecondsSinceEpoch / 1000);
   var tr = start + delay - utcSecondsSinceEpoch;
+  console.log(tr);
   if(tr > 0)
     return false;
   else

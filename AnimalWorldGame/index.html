@@ -26,7 +26,28 @@
               onclick="select_api('wax.eosphere.io')">
           <input class="api-buttons" style="margin-top: 5px;margin-bottom: 10px;"
               type="button" value="https://api.waxsweden.org" onclick="select_api('api.waxsweden.org')">
-    </div></div></div>
+      </div>
+      </div>
+      <div class="dropdown wallet_dropdown">
+        <input id="atomic_api_dropdown" class="api_dropbtn" type="button" value="Atomic Endpoints Available <>">
+        <div id="atomic_api_dropdown" class="dropdown-content">
+            <input class="api-buttons" style="margin-top: 10px;" type="button" value="https://wax-atomic-api.eosphere.io"
+                onclick="select_atomic_api('wax-atomic-api.eosphere.io/')">
+            <input class="api-buttons" style="margin-top: 5px;" type="button" value="https://wax.api.atomicassets.io"
+                onclick="select_atomic_api('wax.api.atomicassets.io/')">
+            <input class="api-buttons" style="margin-top: 5px;" type="button" value="https://atomic.sentnl.io/"
+                onclick="select_atomic_api('atomic.sentnl.io/')">
+            <input class="api-buttons" style="margin-top: 5px;margin-bottom: 10px;"
+                type="button" value="https://atomic.hivebp.io" onclick="select_atomic_api('atomic.hivebp.io/')">
+            <input class="api-buttons" style="margin-top: 5px;margin-bottom: 10px;"
+                type="button" value="https://atomic-wax-mainnet.wecan.dev" onclick="select_atomic_api('atomic-wax-mainnet.wecan.dev/')">
+            <input class="api-buttons" style="margin-top: 5px;margin-bottom: 10px;"
+                type="button" value="https://api.atomic.greeneosio.com" onclick="select_atomic_api('api.atomic.greeneosio.com/')">
+            <input class="api-buttons" style="margin-top: 5px;margin-bottom: 10px;"
+                type="button" value="https://wax-atomic.eosiomadrid.io" onclick="select_atomic_api('wax-atomic.eosiomadrid.io/')">
+        </div>
+        </div>
+    </div>
     <div id="unity-container" class="unity-desktop" style="order: 2;">
       <canvas id="unity-canvas" width=960 height=600></canvas>
       <div id="unity-loading-bar">

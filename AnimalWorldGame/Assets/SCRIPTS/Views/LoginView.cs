@@ -110,6 +110,11 @@ public class LoginView : BaseView
                 Debug.Log(id);
                 SceneManager.LoadScene("GameScene");
             }
+            if(callBack.type == "reload")
+            {
+                LoadingPanel.SetActive(true);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
         }
     }
 

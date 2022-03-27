@@ -1804,7 +1804,7 @@ public class MainView : BaseView
                     bool found = false;
 
                     foreach (IngModel balance in MessageHandler.userModel.user_balance)
-                    {
+                    {//Check .....
                         if (balance.in_name == ings.in_name)
                         {
                             found = true;
@@ -2038,7 +2038,7 @@ public class MainView : BaseView
             }
 
             if (boost_ids.Count == 0)
-                SSTools.ShowMessage("Trees Already Boosted", SSTools.Position.bottom, SSTools.Time.twoSecond);
+                SSTools.ShowMessage("No Trees with Maxed Harvests", SSTools.Position.bottom, SSTools.Time.twoSecond);
             else
             {
                 var all_ids = string.Join(",", boost_ids.ToArray());
@@ -2057,7 +2057,7 @@ public class MainView : BaseView
             }
 
             if (boost_ids.Count == 0)
-                SSTools.ShowMessage("Machines Already Boosted", SSTools.Position.bottom, SSTools.Time.twoSecond);
+                SSTools.ShowMessage("No Machines with Maxed Harvests", SSTools.Position.bottom, SSTools.Time.twoSecond);
             else
             {
                 var all_ids = string.Join(",", boost_ids.ToArray());
@@ -2989,6 +2989,11 @@ public class MainView : BaseView
                 var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[item_name]);
                 if (sprite_img)
                     final_product_successPanel.sprite = sprite_img;
+            }
+            else if (callBack.type == "reload")
+            {
+                LoadingPanel.SetActive(true);
+                SceneManager.LoadScene("GameLoginScene");
             }
         }
     }
