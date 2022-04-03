@@ -96,6 +96,9 @@ public class MessageHandler : MonoBehaviour
     public static List<InfoDataModel> infos = new List<InfoDataModel>();
     public  string infojson;
 
+    public delegate void inv_data(IngModel[] user_balance);
+    public static inv_data OnBalanceUpdate;
+
     public void Start()
     {
         string jsonData = JsonHelper.fixJson(infojson);
@@ -223,7 +226,7 @@ public static void Server_BurnNFT(string asset_id)
     public void Client_UpdateUserBalance(string data)
     {
         string jsonData = JsonHelper.fixJson(data);
-        userModel.user_balance = JsonHelper.FromJson<IngModel>(jsonData);
+        OnBalanceUpdate(JsonHelper.FromJson<IngModel>(jsonData));
         Debug.Log("in balance update");
     }
 

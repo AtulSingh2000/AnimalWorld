@@ -17,7 +17,6 @@ public class CropAssetCall : MonoBehaviour
     public string harvest;
     public string max_harvest;
     public TMP_Text slots_text;
-    public TMP_Text harvests_text;
     public TMP_Text asset_id_text;
     public TMP_Text level_text;
     public GameObject register_btn;

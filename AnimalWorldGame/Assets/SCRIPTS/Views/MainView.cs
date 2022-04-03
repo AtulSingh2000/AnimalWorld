@@ -274,6 +274,7 @@ public class MainView : BaseView
         base.Start();
         nft_counter = GameObject.Find("NFTCounter").GetComponent<NFTCounter>();
         MessageHandler.OnCallBackData += OnCallBackData;
+        MessageHandler.OnBalanceUpdate += OnBalanceUpdate;
         SSTools.ShowMessage("Welcome Farmer " + MessageHandler.userModel.account, SSTools.Position.bottom, SSTools.Time.twoSecond);
         machine_rarity_dropdown.onValueChanged.AddListener(delegate { changeValue(machine_rarity_dropdown); });
         crop_level_dropdown.onValueChanged.AddListener(delegate { changeValue(crop_level_dropdown); });
@@ -287,6 +288,7 @@ public class MainView : BaseView
     {
         base.OnDestroy();
         MessageHandler.OnCallBackData -= OnCallBackData;
+        MessageHandler.OnBalanceUpdate -= OnBalanceUpdate;
     }
 
     public void changeRarity(TMP_Dropdown dropdown)
@@ -996,8 +998,6 @@ public class MainView : BaseView
                         crop_child_gb.Add(child);
                         child.slots_text.gameObject.transform.parent.gameObject.SetActive(true);
                         child.slots_text.text = "Slots : " + asset_data.on_recipe.Length + " / " + asset_data.slots;
-                        child.harvests_text.gameObject.transform.parent.gameObject.SetActive(true);
-                        child.harvests_text.text = "Harvests : " + asset_data.harvests + " / " + asset_data.max_harvests;
 
                     }
                 }
@@ -1054,11 +1054,6 @@ public class MainView : BaseView
                         child.level_text.text = nums;
                         child.slots_text.gameObject.transform.parent.gameObject.SetActive(true);
                         child.slots_text.text = "Slots : " + asset_data.on_recipe.Length + " / " + asset_data.slots;
-                        child.harvests_text.gameObject.transform.parent.gameObject.SetActive(true);
-                        child.harvests_text.text = "Harvests : " + asset_data.harvests + " / " + asset_data.max_harvests;
-
-                        child.harvests_text.gameObject.transform.parent.gameObject.SetActive(true);
-                        child.harvests_text.text = "Harvests : " + asset_data.harvests + " / " + asset_data.max_harvests;
 
                         for (int i = 0; i < asset_data.cost_level.Length; i++)
                         {
@@ -2524,7 +2519,7 @@ public class MainView : BaseView
                 can_start_machine = false;
                 start_machine.interactable = false;
                 current_back_status = "on_machine_stats_panel";
-                machine_subheading_text.GetComponent<TMP_Text>().text = "Registered Machines";
+                showRegisteredAssets("machines");
                 break;
             case ("on_unregistered_trees"):
                 break;
@@ -2574,6 +2569,7 @@ public class MainView : BaseView
                 start_crop.interactable = false;
                 current_back_status = "on_crops_stats_panel";
                 machine_subheading_text.GetComponent<TMP_Text>().text = "Registered Crop Fields";
+                showRegisteredAssets("crops");
                 break;
             case ("on_lands_stats_panel"):
                 parent_transform_land_unreg.gameObject.SetActive(false);
@@ -2736,6 +2732,13 @@ public class MainView : BaseView
         from_main_menu = false;
         UI_opened = false;
         cam_switch.isUIOpen = UI_opened;
+    }
+
+    public void OnBalanceUpdate(IngModel[] user_balance)
+    {
+        Debug.Log("in balance callback");
+        Debug.Log(user_balance);
+        MessageHandler.userModel.user_balance = user_balance;
     }
 
     public void OnCallBackData(CallBackDataModel[] callback)
