@@ -18,6 +18,19 @@ public class NFTCounter : MonoBehaviour
     public GameObject PopcornMaker;
     public GameObject MilkFactory;
     
+
+    public GameObject CowShelter;
+    public GameObject GoatShelter;
+    public GameObject PigShelter;
+    public GameObject ChickenShelter;
+    public GameObject BeeShelter;
+
+
+    public GameObject[] Cow;
+    public GameObject[] Goat;
+    public GameObject[] Pig;
+    public GameObject[] Chicken;
+    public GameObject[] Bee;
     public GameObject[] Tree1;
     public GameObject[] Tree2;
     public GameObject[] Tree3;
