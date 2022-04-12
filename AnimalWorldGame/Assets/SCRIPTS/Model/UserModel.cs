@@ -9,6 +9,8 @@ public class UserModel
     public AssetModel[] lands;
     public AssetModel[] trees;
     public MachineDataModel[] machines;
+    public AnimalDataModel[] animals;
+    public ShelterDataModel[] shelters;
     public CropDataModel[] crops;
     public RecipesModel[] machine_recipes;
     public ProduceDataModel[] user_data;
