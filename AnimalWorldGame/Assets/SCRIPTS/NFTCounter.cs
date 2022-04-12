@@ -10,6 +10,11 @@ public class NFTCounter : MonoBehaviour
     public bool isJuicer;
     public bool isPopcornMaker;
     public bool isMilkFactory;
+    public bool isCowShelter;
+    public bool isGoatShelter;
+    public bool isPigShelter;
+    public bool isChickenShelter;
+    public bool isBeeShelter;
 
     public GameObject BBQMachine;
     public GameObject IceCreamMaker;
@@ -48,6 +53,12 @@ public class NFTCounter : MonoBehaviour
     public int OrangeTreeCount = 0;
     public int MangoTreeCount = 0;
     public int CoconutTreeCount = 0;
+    
+    public int CowCount = 0;
+     public int GoatCount = 0;
+      public int PigCount = 0;
+       public int ChickenCount = 0;
+       public int BeeCount = 0;
     public int CropFieldCount = 0;
     public GameObject[] CropField;
 
@@ -65,6 +76,15 @@ public class NFTCounter : MonoBehaviour
            Tree5[i].SetActive(false);
        }
 
+       for(int i = 0; i <= 2; i++)
+       {
+           Cow[i].SetActive(false);
+           Goat[i].SetActive(false);
+           Pig[i].SetActive(false);
+           Chicken[i].SetActive(false);
+           Bee[i].SetActive(false);
+       }
+
        for (int i = 0; i<=2; i++)
        {
            CropField[i].SetActive(false);
@@ -75,7 +95,12 @@ public class NFTCounter : MonoBehaviour
        FeederMachine.SetActive(false);
        Juicer.SetActive(false);
        MilkFactory.SetActive(false);
-        PopcornMaker.SetActive(false);
+       PopcornMaker.SetActive(false);
+       CowShelter.SetActive(false);
+       GoatShelter.SetActive(false);
+       PigShelter.SetActive(false);
+       ChickenShelter.SetActive(false);
+       BeeShelter.SetActive(false);
     }
     
      public void Start()
@@ -87,6 +112,14 @@ public class NFTCounter : MonoBehaviour
        CheckTree5Count();
        CheckCropField();
        CheckMachines();
+       
+       CheckCowCount();
+       CheckGoatCount();
+       CheckPigCount();
+       CheckChickenCount();
+       CheckBeeCount();
+
+       CheckShelters();
 
     
     }
@@ -144,6 +177,46 @@ public class NFTCounter : MonoBehaviour
         }
     }
 
+    public void CheckCowCount()
+    {
+        for (int i = 1; i<= CowCount; i++)
+        {
+            Cow[i-1].SetActive(true);
+        }
+    }
+
+    public void CheckGoatCount()
+    {
+        for (int i = 1; i<= GoatCount; i++)
+        {
+            Goat[i-1].SetActive(true);
+        }
+    }
+
+    public void CheckPigCount()
+    {
+        for (int i = 1; i<= PigCount; i++)
+        {
+            Pig[i-1].SetActive(true);
+        }
+    }
+
+    public void CheckChickenCount()
+    {
+        for (int i = 1; i<= ChickenCount; i++)
+        {
+            Chicken[i-1].SetActive(true);
+        }
+    }
+
+    public void CheckBeeCount()
+    {
+        for (int i = 1; i<= BeeCount; i++)
+        {
+            Bee[i-1].SetActive(true);
+        }
+    }
+
 
     public void CheckCropField()
     {
@@ -178,6 +251,32 @@ public class NFTCounter : MonoBehaviour
         if (isPopcornMaker)
         {
             PopcornMaker.SetActive(true);
+        }
+    }
+
+
+    public void CheckShelters()
+    {
+        if(isCowShelter)
+        {
+            CowShelter.SetActive(true);
+        }
+        if(isGoatShelter)
+        {
+            GoatShelter.SetActive(true);
+        
+        }
+        if(isPigShelter)
+        {
+            PigShelter.SetActive(true);
+        }
+        if(isChickenShelter)
+        {
+            ChickenShelter.SetActive(true);
+        }
+        if(isBeeShelter)
+        {
+            BeeShelter.SetActive(true);
         }
     }
 

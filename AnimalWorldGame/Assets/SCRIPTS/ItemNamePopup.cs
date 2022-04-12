@@ -19,6 +19,12 @@ public class ItemNamePopup : MonoBehaviour
     public GameObject orangeTrees;
     public GameObject figTrees;
     public GameObject lemonTrees;
+    public GameObject cowShelter;
+    public GameObject goatShelter;
+    public GameObject pigShelter;
+    public GameObject chickenShelter;
+    public GameObject beeShelter;
+
 
     
     // Start is called before the first frame update
@@ -39,6 +45,11 @@ public class ItemNamePopup : MonoBehaviour
         orangeTrees.SetActive(false);
         figTrees.SetActive(false);
         lemonTrees.SetActive(false);
+        cowShelter.SetActive(false);
+        goatShelter.SetActive(false);
+        pigShelter.SetActive(false);
+        chickenShelter.SetActive(false);
+        beeShelter.SetActive(false);
         
 
     }
@@ -114,6 +125,29 @@ public class ItemNamePopup : MonoBehaviour
             {
                 lemonTrees.SetActive(true);
             }
+            if(gameObject.name == "CowShelter")
+            {
+                cowShelter.SetActive(true);
+            }
+             if(gameObject.name == "GoatShelter")
+            {
+                goatShelter.SetActive(true);
+            }
+            if(gameObject.name == "PigShelter")
+            {
+                pigShelter.SetActive(true);
+            }
+            if(gameObject.name == "ChickenShelter")
+            {
+                chickenShelter.SetActive(true);
+            }
+            if(gameObject.name == "BeeShelter")
+            {
+                beeShelter.SetActive(true);
+            }
+
+
+        
         }
             
      
@@ -136,5 +170,11 @@ public class ItemNamePopup : MonoBehaviour
         orangeTrees.SetActive(false);
         figTrees.SetActive(false);
         lemonTrees.SetActive(false);
+          cowShelter.SetActive(false);
+        goatShelter.SetActive(false);
+        pigShelter.SetActive(false);
+        chickenShelter.SetActive(false);
+        beeShelter.SetActive(false);
+        
     }
 }
