@@ -13,7 +13,9 @@ public class AbbvHelper : MonoBehaviour
         machines.Add("Popcorn Maker", "popcornmaker");
         machines.Add("Crop Field", "cropfield");
         machines.Add("Dairy", "dairy");
-        machines.Add("Ice Cream Maker", "icecream");
+        machines.Add("Ice Cream Maker", "icecreammaker");
+        machines.Add("icecreammaker", "Ice Cream Maker");
+        machines.Add("BBQ", "bbq");
 
         //Popcorn Maker
         recipes.Add("CPOPCORN", "Cheese Popcorn");
@@ -37,6 +39,7 @@ public class AbbvHelper : MonoBehaviour
         recipes.Add("CJUICE", "Coconut Juice");
         recipes.Add("OJUICE", "Orange Juice");
         recipes.Add("MJUICE", "Mango Juice");
+        recipes.Add("CRJUICE", "Carrot Juice");
 
         //Crop Field
         recipes.Add("WHEATSE", "Wheat Seeds");
@@ -51,12 +54,33 @@ public class AbbvHelper : MonoBehaviour
 
         recipes.Add("FLZR", "Fertilizer");
         recipes.Add("OIL", "Oil");
-        recipes.Add("BFOOD", "Bee Food");
-        recipes.Add("CFOOD", "Cow Food");
-        recipes.Add("PFOOD", "Pig Food");
-        recipes.Add("GFOOD", "Goat Food");
-        //recipes.Add("BFOOD", "Bee Food");
+        recipes.Add("BFEED", "Bee Feed");
+        recipes.Add("CFEED", "Cow Feed");
+        recipes.Add("PFEED", "Pig Feed");
+        recipes.Add("HFEED", "Bee Feed");
+        recipes.Add("GFEED", "Goat Feed");
 
+        recipes.Add("HONEY", "Honey");
+        recipes.Add("PORK", "Pork");
+        recipes.Add("EGG", "Egg");
+        recipes.Add("GMILK", "Goat Milk");
+        recipes.Add("CMILK", "Cow Milk");
+        recipes.Add("CREAM", "Cream");
+        recipes.Add("HICE", "Honey Ice Cream");
+        recipes.Add("MICE", "Mango Ice Cream");
+        recipes.Add("OICE", "Orange Ice Cream");
+        recipes.Add("CICE", "Coconut Ice Cream");
+        recipes.Add("FICE", "Fig Ice Cream");
+        recipes.Add("LICE", "Lemon Ice Cream");
+        recipes.Add("MFICE", "Mixed Fruit Ice Cream");
+        recipes.Add("HPBBQ", "Honey Pork BBQ");
+        recipes.Add("LPBBQ", "Lemon Pork BBQ");
+        recipes.Add("CPBBQ", "Cheesy Chilly Pork BBQ");
+        recipes.Add("SBBQ", "Creamy Soy Lemon Grill");
+        recipes.Add("CLOM", "Chilly Omelette");
+        recipes.Add("CHOM", "Cheese Omelette");
+        recipes.Add("GVEG", "Cheesy Grilled Veggies");
+        recipes.Add("GFRUIT", "Creamy Grilled Fruits");
     }
 
     public Dictionary<string, string> machines_abv

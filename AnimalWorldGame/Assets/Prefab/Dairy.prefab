@@ -101,7 +101,7 @@ MonoBehaviour:
   max_harvest: 
   cooldown: 
   harvests_text: {fileID: 9164508999703566933}
-  slots_text: {fileID: 0}
+  slots_text: {fileID: 4166855892296916621}
   asset_id_text: {fileID: 1838736194865283735}
   level_text: {fileID: 2484748546826896491}
   register_btn: {fileID: 1838736194865283575}
@@ -1930,6 +1930,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e7dd26e33251624bb0277acde38b7b9, type: 3}
+--- !u!114 &4166855892296916621 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8541236305858375679, guid: 6e7dd26e33251624bb0277acde38b7b9,
+    type: 3}
+  m_PrefabInstance: {fileID: 5718221815499878770}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &3616855792271044374 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9037197641823510116, guid: 6e7dd26e33251624bb0277acde38b7b9,

@@ -873,13 +873,18 @@ public class MainView : BaseView
 
                         for (int i = 0; i < asset_data.cost_level.Length; i++)
                         {
-                            if (asset_data.cost_level[i].in_name == asset_data.level)
+                            double levl_num = Double.Parse(new String(asset_data.cost_level[i].in_name.Where(Char.IsDigit).ToArray()));
+                            double incr_nums = Double.Parse(nums);
+                            incr_nums++;
+                            Debug.Log(incr_nums);
+                            Debug.Log(levl_num);
+                            if (levl_num == incr_nums)
                             {
-                                string fees = asset_data.cost_level[++i].in_qty;
-                                string level = asset_data.cost_level[++i].in_name;
+                                string fees = asset_data.cost_level[i].in_qty;
+                                string level = asset_data.cost_level[i].in_name;
                                 string a_id = asset_data.asset_id;
                                 child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
-                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums,"machine"); });
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums, "machine"); });
                                 break;
                             }
                         }
@@ -947,13 +952,18 @@ public class MainView : BaseView
 
                         for (int i = 0; i < asset_data.cost_level.Length; i++)
                         {
-                            if (asset_data.cost_level[i].in_name == asset_data.level)
+                            double levl_num = Double.Parse(new String(asset_data.cost_level[i].in_name.Where(Char.IsDigit).ToArray()));
+                            double incr_nums = Double.Parse(nums);
+                            incr_nums++;
+                            Debug.Log(incr_nums);
+                            Debug.Log(levl_num);
+                            if (levl_num == incr_nums)
                             {
-                                string fees = asset_data.cost_level[++i].in_qty;
-                                string level = asset_data.cost_level[++i].in_name;
+                                string fees = asset_data.cost_level[i].in_qty;
+                                string level = asset_data.cost_level[i].in_name;
                                 string a_id = asset_data.asset_id;
                                 child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
-                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums,"machine"); });
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums, "machine"); });
                                 break;
                             }
                         }
@@ -1021,13 +1031,18 @@ public class MainView : BaseView
 
                         for (int i = 0; i < asset_data.cost_level.Length; i++)
                         {
-                            if (asset_data.cost_level[i].in_name == asset_data.level)
+                            double levl_num = Double.Parse(new String(asset_data.cost_level[i].in_name.Where(Char.IsDigit).ToArray()));
+                            double incr_nums = Double.Parse(nums);
+                            incr_nums++;
+                            Debug.Log(incr_nums);
+                            Debug.Log(levl_num);
+                            if (levl_num == incr_nums)
                             {
-                                string fees = asset_data.cost_level[++i].in_qty;
-                                string level = asset_data.cost_level[++i].in_name;
+                                string fees = asset_data.cost_level[i].in_qty;
+                                string level = asset_data.cost_level[i].in_name;
                                 string a_id = asset_data.asset_id;
                                 child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
-                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums,"machine"); });
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums, "machine"); });
                                 break;
                             }
                         }
@@ -1095,13 +1110,18 @@ public class MainView : BaseView
 
                         for (int i = 0; i < asset_data.cost_level.Length; i++)
                         {
-                            if (asset_data.cost_level[i].in_name == asset_data.level)
+                            double levl_num = Double.Parse(new String(asset_data.cost_level[i].in_name.Where(Char.IsDigit).ToArray()));
+                            double incr_nums = Double.Parse(nums);
+                            incr_nums++;
+                            Debug.Log(incr_nums);
+                            Debug.Log(levl_num);
+                            if (levl_num == incr_nums)
                             {
-                                string fees = asset_data.cost_level[i++].in_qty;
-                                string level = asset_data.cost_level[i++].in_name;
+                                string fees = asset_data.cost_level[i].in_qty;
+                                string level = asset_data.cost_level[i].in_name;
                                 string a_id = asset_data.asset_id;
                                 child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
-                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums,"machine"); });
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums, "machine"); });
                                 break;
                             }
                         }
@@ -1196,13 +1216,18 @@ public class MainView : BaseView
                         child.level_text.text = nums;
                         for (int i = 0; i < asset_data.cost_level.Length; i++)
                         {
-                            if (asset_data.cost_level[i].in_name == asset_data.level)
+                            double levl_num = Double.Parse(new String(asset_data.cost_level[i].in_name.Where(Char.IsDigit).ToArray()));
+                            double incr_nums = Double.Parse(nums);
+                            incr_nums++;
+                            Debug.Log(incr_nums);
+                            Debug.Log(levl_num);
+                            if (levl_num == incr_nums)
                             {
-                                string fees = asset_data.cost_level[++i].in_qty;
-                                string level = asset_data.cost_level[++i].in_name;
+                                string fees = asset_data.cost_level[i].in_qty;
+                                string level = asset_data.cost_level[i].in_name;
                                 string a_id = asset_data.asset_id;
                                 child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
-                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums,"crop"); });
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums, "crop"); });
                                 break;
                             }
                         }
@@ -1268,13 +1293,18 @@ public class MainView : BaseView
 
                         for (int i = 0; i < asset_data.cost_level.Length; i++)
                         {
-                            if (asset_data.cost_level[i].in_name == asset_data.level)
+                            double levl_num = Double.Parse(new String(asset_data.cost_level[i].in_name.Where(Char.IsDigit).ToArray()));
+                            double incr_nums = Double.Parse(nums);
+                            incr_nums++;
+                            Debug.Log(incr_nums);
+                            Debug.Log(levl_num);
+                            if (levl_num == incr_nums)
                             {
-                                string fees = asset_data.cost_level[i++].in_qty;
-                                string level = asset_data.cost_level[i++].in_name;
+                                string fees = asset_data.cost_level[i].in_qty;
+                                string level = asset_data.cost_level[i].in_name;
                                 string a_id = asset_data.asset_id;
                                 child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
-                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums,"crop"); });
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums, "machine"); });
                                 break;
                             }
                         }
@@ -1768,10 +1798,15 @@ public class MainView : BaseView
                     child_level_gb.SetActive(true);
                     for (int i = 0; i < asset_data.cost_level.Length; i++)
                     {
-                        if (asset_data.cost_level[i].in_name == asset_data.level)
+                        double levl_num = Double.Parse(new String(asset_data.cost_level[i].in_name.Where(Char.IsDigit).ToArray()));
+                        double incr_nums = Double.Parse(nums);
+                        incr_nums++;
+                        Debug.Log(incr_nums);
+                        Debug.Log(levl_num);
+                        if (levl_num == incr_nums)
                         {
-                            string fees = asset_data.cost_level[++i].in_qty;
-                            string level = asset_data.cost_level[++i].in_name;
+                            string fees = asset_data.cost_level[i].in_qty;
+                            string level = asset_data.cost_level[i].in_name;
                             string a_id = asset_data.asset_id;
                             child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
                             child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums, "tree"); });
@@ -1934,6 +1969,7 @@ public class MainView : BaseView
         {
             if (recipes.machine.ToUpper() == machine.asset_name.ToUpper() || recipes.machine == helper.machines_abv[machine.asset_name])
             {
+                Debug.Log(recipes.machine.ToUpper());
                 var ins = Instantiate(new_ing_prefab);
                 ins.transform.SetParent(child_machine_show_recipes);
                 ins.transform.localScale = new Vector3(1, 1, 1);
@@ -1942,7 +1978,9 @@ public class MainView : BaseView
                 child.machine_asset_id = machine.asset_id;
                 child.machine_asset_name = machine.asset_name;
                 child.recipe_name = recipes.out_name;
+                Debug.Log(recipes.out_name);
                 child.recipe_name_text.text = helper.recipes_abv[recipes.out_name];
+                Debug.Log(helper.recipes_abv[recipes.out_name]);
                 var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[recipes.out_name]);
                 if (sprite_img)
                     child.gameObject.transform.Find("NFT_Image").GetComponent<Image>().sprite = sprite_img;
