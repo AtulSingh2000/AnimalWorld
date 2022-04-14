@@ -3721,6 +3721,7 @@ public class MainView : BaseView
                 dereg_ids.Clear();
                 reg_ids.Clear();
                 SetData();
+                SetElements();
                 if (onTrees && !string.IsNullOrEmpty(callBack.tree_name))
                 {
                     showRegisteredAssets("trees");
@@ -3751,7 +3752,9 @@ public class MainView : BaseView
                     {
                         if (callBack.helper == "shelter")
                         {
-                            ShowElements_Shelter(stack_shelter_type, "Rarity");
+                            if (!shelter_show_panel.gameObject.activeInHierarchy) shelter_show_panel.gameObject.SetActive(true);
+                            if (show_shelter_detail.gameObject.activeInHierarchy) show_shelter_detail.gameObject.SetActive(false);
+                            showRegisteredAssets("shelter");
                         }
                         else if (callBack.helper == "animal")
                         {
