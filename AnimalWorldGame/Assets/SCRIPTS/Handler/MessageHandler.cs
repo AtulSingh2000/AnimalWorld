@@ -61,6 +61,8 @@ public class MessageHandler : MonoBehaviour
 
     [DllImport("__Internal")]
     private static extern void claim_all_assets(string type,string subtype,string land);
+    [DllImport("__Internal")]
+    private static extern void level_up_trx(string asset_id, string type);
 
     public delegate void LoadingData();
     public static LoadingData onLoadingData;
@@ -148,6 +150,11 @@ public class MessageHandler : MonoBehaviour
     public static void Server_ClaimAnimal(string asset_ids)
     {
         animal_claim(asset_ids);
+    }
+
+    public static void Server_LevelUp(string asset_id,string type)
+    {
+        level_up_trx(asset_id, type);
     }
 
     public static void Server_GetBurnids()

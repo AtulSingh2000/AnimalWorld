@@ -11,13 +11,13 @@ var shelter_obj = [];
 var animal_obj = [];
 
 const dapp = "AnimalWorld";
-var endpoint = "https://waxtestnet.greymass.com";
-var atomic_api = "https://test.wax.api.atomicassets.io/";
+var endpoint = "https://wax.cryptolions.io";
+var atomic_api = "https://wax-aa.eu.eosamsterdam.net/";
 //var endpoint = "https://animalworld-wax-rpc.global.binfra.one";
 //var atomic_api = "https://animalworld-wax-aa.global.binfra.one/";
 const contract = "anmworldgame";
 const tokenContract = 'tokenanimal1';
-const collectionName = 'animaltestin';//'animalworld1';
+const collectionName = 'animalworld1';
 const tree_schema = 'gametrees';
 const mch_schema = 'machine';
 
@@ -45,8 +45,7 @@ const wallet_isAutoLoginAvailable = async () => {
     const anchorLink = new AnchorLink({
       transport,
       chains: [{
-        //chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
-        chainId: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
+        chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
         nodeUrl: endpoint,
       }],
     });
@@ -83,8 +82,7 @@ const logout = async () => {
   const anchorLink = new AnchorLink({
     transport,
     chains: [{
-      //chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
-      chainId: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
+      chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
       nodeUrl: endpoint,
     }],
   });
@@ -108,8 +106,7 @@ const wallet_login = async () => {
     const anchorLink = new AnchorLink({
       transport,
       chains: [{
-        //chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
-        chainId: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
+        chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
         nodeUrl: endpoint,
       }],
     });
@@ -173,7 +170,7 @@ const delay = async (delayInms) => {
 const sendUserData = async () => {
   try {
     await fetchingData();
-    balance = 0//await getAwcBalance();
+    balance = await getAwcBalance();
     landData = await getLandData();
     treeData = await getTreeData();
     recipeData = await getRecipeData();
@@ -560,7 +557,7 @@ const getTreeConfig = async () => {
         let cost_level = [];
         for(const c_data of data.cost_level){
           cost_level.push({
-            in_name : c_data.level,
+            in_name : "Level" + c_data.level,
             in_qty : c_data.count
           });
         }
@@ -1045,7 +1042,6 @@ const getShelterData = async () => {
     }
 
     shelter_obj = shelter_data;
-    console.log(shelter_data);
     return shelter_data;
   } catch (e) {
     console.log(e);
@@ -1969,6 +1965,7 @@ const claim_animal = async (asset_id) => {
     callback_obj.push({
       type: "animal_claim"
     });
+    console.log()
     unityInstance.SendMessage(
       "GameController",
       "Client_SetCallBackData",
@@ -2093,6 +2090,18 @@ const use_boost = async (asset_id, type) => {
           type: "boost"
         });
         break;
+      case ("shelter"):
+        await getShelterD();
+        obj.push({
+          helper: "shelter",
+          type: "boost"
+        });
+      case ("animal"):
+        await getAnimalD();
+        obj.push({
+          helper: "animal",
+          type: "boost"
+        });
     }
     unityInstance.SendMessage(
       "GameController",
@@ -2105,10 +2114,65 @@ const use_boost = async (asset_id, type) => {
   }
 }
 
+const levelup = async (asset_id,type) => {
+  try{
+    const result = await wallet_transact([{
+      account: contract,
+      name: "nftlvlup",
+      authorization: [{
+        actor: wallet_userAccount,
+        permission: anchorAuth
+      }],
+      data: {
+        player: wallet_userAccount,
+        asset_id: asset_id,
+        type: type == "crop" ? "cropfield" : type
+      },
+    }, ]);
+    await getUserB();
+    switch(type){
+      case "animal":
+        await getAnimalD();
+        break;
+      case "machine":
+        await getMachineD();
+        break;
+      case "crop":
+        await getCropsD();
+        break;
+      case "tree":
+        treeData = await getTreeData();
+        unityInstance.SendMessage(
+          "GameController",
+          "Client_SetTreeData",
+          treeData === undefined ? JSON.stringify({}) : JSON.stringify(treeData)
+        );  
+        break;
+      case "shelter":
+        await getShelterD();
+        break;
+    }
+    let obj = [];
+    obj.push({
+      helper: type,
+      type: "levelup"
+    });
+    unityInstance.SendMessage(
+      "GameController",
+      "Client_SetCallBackData",
+      obj === undefined ? JSON.stringify({}) : JSON.stringify(obj)
+    );
+  }
+  catch (e) {
+    console.log(e);
+    unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
+  }
+}
+
 const claim_all_assets = async (type, sub_type,land_id) => {
   try {
     let claim_struct = [];
-    if(type != "tree"){
+    if(type != "tree" && type != "shelter"){
         let data_obj = [];
         if(type == "machine"){
           for(const mdata of machine_obj){
@@ -2155,7 +2219,7 @@ const claim_all_assets = async (type, sub_type,land_id) => {
         }, ]);
       }
     }
-    else {
+    else if(type == "tree"){
       for(const tdata of tree_obj){
         if(tdata.land_id == land_id && tdata.reg == "1"){
           console.log(tdata);
@@ -2170,6 +2234,41 @@ const claim_all_assets = async (type, sub_type,land_id) => {
         await wallet_transact([{
           account: contract,
           name: "claimtree",
+          authorization: [{
+            actor: wallet_userAccount,
+            permission: anchorAuth
+          }],
+          data: {
+            player: wallet_userAccount,
+            asset_ids: claim_struct
+          },
+        }, ]);
+      }
+    }
+    else if (type == "shelter"){
+      var shelter_asset_id = sub_type.split(' ')[0];
+      var shelter_name = sub_type.split(' ')[1];
+      console.log(shelter_asset_id + " " + shelter_name);
+      for(const shelterdata of shelter_obj){
+        if(shelter_asset_id == shelterdata.asset_id && shelterdata.reg == "1"){
+          for(const animals of shelterdata.animals){
+            for(const animalD of animal_obj){
+              if(animalD.asset_id == animals.in_qty && animalD.reg == "1"){
+                console.log("found animals");
+                can_claim = await check_for_finish(animalD.last_claim,animalD.delay);
+                console.log(can_claim);
+                if(can_claim){claim_struct.push(animalD.asset_id);}
+              }
+            }
+          }
+          break;
+        }
+      }
+      if(claim_struct.length > 0)
+      {
+        await wallet_transact([{
+          account: contract,
+          name: "claimanm",
           authorization: [{
             actor: wallet_userAccount,
             permission: anchorAuth
@@ -2214,6 +2313,13 @@ const claim_all_assets = async (type, sub_type,land_id) => {
           await getCropsD();
           obj.push({
             helper: "crop",
+            type: "all_claim"
+          });
+          break;
+        case "shelter":
+          await getAnimalD();
+          obj.push({
+            helper: "shelter",
             type: "all_claim"
           });
           break;

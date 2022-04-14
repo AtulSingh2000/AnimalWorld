@@ -238,6 +238,7 @@ public class MainView : BaseView
     private bool onCrops = false;
     private bool onLand = false;
     private bool onShelters = false;
+    private bool onAnimals = false;
     private bool can_start_machine = false;
     private bool can_start_crop = false;
     private bool stopTimer = false;
@@ -345,8 +346,8 @@ public class MainView : BaseView
         SSTools.ShowMessage("Welcome Farmer " + MessageHandler.userModel.account, SSTools.Position.bottom, SSTools.Time.twoSecond);
         machine_rarity_dropdown.onValueChanged.AddListener(delegate { changeValue(machine_rarity_dropdown); });
         shelter_rarity_dropdown.onValueChanged.AddListener(delegate { changeRarity(shelter_rarity_dropdown); });
-        animal_rarity_dropdown.onValueChanged.AddListener(delegate { changeRarity(animal_rarity_dropdown); });
-        animal_level_dropdown.onValueChanged.AddListener(delegate { changeValue(animal_level_dropdown); });
+        animal_rarity_dropdown.onValueChanged.AddListener(delegate { changeAnimalRarity(animal_rarity_dropdown); });
+        //animal_level_dropdown.onValueChanged.AddListener(delegate { changeValue(animal_level_dropdown); });
         crop_level_dropdown.onValueChanged.AddListener(delegate { changeValue(crop_level_dropdown); });
         machine_level_dropdown.onValueChanged.AddListener(delegate { changeRarity(machine_level_dropdown); });
         SetElements();
@@ -365,7 +366,7 @@ public class MainView : BaseView
     {
         rarity_type = dropdown.options[dropdown.value].text;
         if(onMachines) ShowElements_Machines(stack_machines_type, level_type,rarity_type);
-        if (onShelters) ShowElements_Shelter(stack_shelter_type, rarity_type);
+        if (onShelters && !onAnimals) ShowElements_Shelter(stack_shelter_type, rarity_type);
         if (rarity_type == "Rarity") SSTools.ShowMessage("Showing All Rarities", SSTools.Position.bottom, SSTools.Time.twoSecond);
         else if (rarity_type != "Rarity") SSTools.ShowMessage(rarity_type, SSTools.Position.bottom, SSTools.Time.twoSecond);
     }
@@ -373,7 +374,8 @@ public class MainView : BaseView
     public void changeAnimalRarity(TMP_Dropdown dropdown)
     {
         rarity_type = dropdown.options[dropdown.value].text;
-        show_shelter_details(shelter_child_asset, rarity_type);
+        Debug.Log(rarity_type);
+        if(onAnimals) show_shelter_details(shelter_child_asset, rarity_type);
         if (rarity_type == "Rarity") SSTools.ShowMessage("Showing All Rarities", SSTools.Position.bottom, SSTools.Time.twoSecond);
         else if (rarity_type != "Rarity") SSTools.ShowMessage(rarity_type, SSTools.Position.bottom, SSTools.Time.twoSecond);
     }
@@ -877,7 +879,7 @@ public class MainView : BaseView
                                 string level = asset_data.cost_level[++i].in_name;
                                 string a_id = asset_data.asset_id;
                                 child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
-                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums); });
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums,"machine"); });
                                 break;
                             }
                         }
@@ -951,7 +953,7 @@ public class MainView : BaseView
                                 string level = asset_data.cost_level[++i].in_name;
                                 string a_id = asset_data.asset_id;
                                 child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
-                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums); });
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums,"machine"); });
                                 break;
                             }
                         }
@@ -1025,7 +1027,7 @@ public class MainView : BaseView
                                 string level = asset_data.cost_level[++i].in_name;
                                 string a_id = asset_data.asset_id;
                                 child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
-                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums); });
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums,"machine"); });
                                 break;
                             }
                         }
@@ -1099,7 +1101,7 @@ public class MainView : BaseView
                                 string level = asset_data.cost_level[i++].in_name;
                                 string a_id = asset_data.asset_id;
                                 child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
-                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums); });
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums,"machine"); });
                                 break;
                             }
                         }
@@ -1200,7 +1202,7 @@ public class MainView : BaseView
                                 string level = asset_data.cost_level[++i].in_name;
                                 string a_id = asset_data.asset_id;
                                 child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
-                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums); });
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums,"crop"); });
                                 break;
                             }
                         }
@@ -1272,7 +1274,7 @@ public class MainView : BaseView
                                 string level = asset_data.cost_level[i++].in_name;
                                 string a_id = asset_data.asset_id;
                                 child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
-                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums); });
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums,"crop"); });
                                 break;
                             }
                         }
@@ -1285,6 +1287,7 @@ public class MainView : BaseView
 
     public void ShowElements_Shelter(string shelter_name,string rarity)
     {
+        onAnimals = false;
         var reg = parent_transform_shelter_reg;
         var unreg = parent_transform_shelter_unreg;
         string type = "";
@@ -1384,6 +1387,20 @@ public class MainView : BaseView
                         if (!child.level_text.gameObject.transform.parent.gameObject.activeInHierarchy) child.level_text.gameObject.transform.parent.gameObject.SetActive(true);
                         string nums = new String(asset.level.Where(Char.IsDigit).ToArray());
                         child.level_text.text = nums;
+                        var child_level_gb = child.level_text.gameObject.transform.parent.gameObject;
+                        child_level_gb.SetActive(true);
+                        for (int i = 0; i < asset.cost_level.Length; i++)
+                        {
+                            if (asset.cost_level[i].in_name == asset.level)
+                            {
+                                string fees = asset.cost_level[++i].in_qty;
+                                string level = asset.cost_level[++i].in_name;
+                                string a_id = asset.asset_id;
+                                child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
+                                child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums, "shelter"); });
+                                break;
+                            }
+                        }
                     }
                 }
                 else
@@ -1426,6 +1443,20 @@ public class MainView : BaseView
                             string nums = new String(asset.level.Where(Char.IsDigit).ToArray());
                             child.level_text.text = nums;
                             child.select_btn.gameObject.SetActive(false);
+                            var child_level_gb = child.level_text.gameObject.transform.parent.gameObject;
+                            child_level_gb.SetActive(true);
+                            for (int i = 0; i < asset.cost_level.Length; i++)
+                            {
+                                if (asset.cost_level[i].in_name == asset.level)
+                                {
+                                    string fees = asset.cost_level[++i].in_qty;
+                                    string level = asset.cost_level[++i].in_name;
+                                    string a_id = asset.asset_id;
+                                    child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
+                                    child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums, "shelter"); });
+                                    break;
+                                }
+                            }
                         }
                     }
                 }
@@ -1433,19 +1464,22 @@ public class MainView : BaseView
         }
     }
 
-    public void Levelup(string asset_id, string fees, string level)
+    public void Levelup(string asset_id, string fees, string level,string type)
     {
         levelPanel.SetActive(true);
         fees_text.text = "Level Up Fees : " + fees + " AWC";
-        message_text.text = "Sure ? You want to upgrade this NFT to Level " + level;
+        double level_num = Double.Parse(level);
+        level_num += 1;
+        message_text.text = "Sure ? You want to upgrade this NFT to Level " + level_num;
         level_up_btn.onClick.RemoveAllListeners();
-        level_up_btn.onClick.AddListener(delegate { LevelUpTRX(asset_id, fees); });
+        level_up_btn.onClick.AddListener(delegate { LevelUpTRX(asset_id, type); });
     }
 
-    public void LevelUpTRX(string asset_id, string fees)
+    public void LevelUpTRX(string asset_id, string type)
     {
+        Debug.Log("in level up func");
         LoadingPanel.SetActive(true);
-        //MessageHandler.Se
+        MessageHandler.Server_LevelUp(asset_id, type);
     }
 
     private void ShowElements_Lands(string show_level)
@@ -1730,6 +1764,20 @@ public class MainView : BaseView
                     child.level = asset_data.level;
                     string nums = new String(asset_data.level.Where(Char.IsDigit).ToArray());
                     child.level_text.text = nums;
+                    var child_level_gb = child.level_text.gameObject.transform.parent.gameObject;
+                    child_level_gb.SetActive(true);
+                    for (int i = 0; i < asset_data.cost_level.Length; i++)
+                    {
+                        if (asset_data.cost_level[i].in_name == asset_data.level)
+                        {
+                            string fees = asset_data.cost_level[++i].in_qty;
+                            string level = asset_data.cost_level[++i].in_name;
+                            string a_id = asset_data.asset_id;
+                            child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
+                            child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums, "tree"); });
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -2126,6 +2174,7 @@ public class MainView : BaseView
 
     public void show_shelter_details(ShelterAssetCall child_obj,string rarity)
     {
+        onAnimals = true;
         current_back_status = "on_registered_shelter";
         string shelter_name = child_obj.asset_name;
         Debug.Log(shelter_name);
@@ -2136,7 +2185,7 @@ public class MainView : BaseView
         clearChildObjs(parent_transform_shelter_detail_reg);
         shelter_rarity_dropdown.gameObject.SetActive(false);
         animal_rarity_dropdown.gameObject.SetActive(true);
-        animal_level_dropdown.gameObject.SetActive(true);
+        //animal_level_dropdown.gameObject.SetActive(true);
         if (shelter_show_panel.gameObject.activeInHierarchy) shelter_show_panel.gameObject.SetActive(false);
         if (!show_shelter_detail.gameObject.activeInHierarchy) show_shelter_detail.gameObject.SetActive(true);
         shelter_subheading_text.GetComponent<TMP_Text>().text = " #" + child_obj.asset_id + " Details";
@@ -2191,6 +2240,7 @@ public class MainView : BaseView
             claim_ids.Clear();
             dereg_ids.Clear();
             clearChildObjs(parent_transform_shelter_detail_reg);
+            Debug.Log(rarity);
             foreach (IngModel animals in child_obj.animals)
             {
                 Debug.Log(animals.in_qty);
@@ -2198,38 +2248,60 @@ public class MainView : BaseView
                 {
                     if(animals.in_qty == animal_data.asset_id)
                     {
-                        Debug.Log("found");
-                        var ins = Instantiate(animal_prefab);
-                        ins.transform.SetParent(parent_transform_shelter_detail_reg);
-                        ins.transform.localScale = new Vector3(1, 1, 1);
-                        var child = ins.gameObject.GetComponent<AnimalCall>();
-                        child.asset_id = animal_data.asset_id;
-                        child.asset_id_text.text = "#" + animal_data.asset_id;
-                        child.asset_id_text.fontSize = 14;
-                        child.asset_name = animal_data.name;
-                        child.LoadingPanel = LoadingPanel;
-                        child.can_claim = false;
-                        child.unregister_btn.SetActive(true);
-                        child.time = animal_data.last_claim;
-                        child.delayValue = animal_data.delay;
-                        child.cooldown = animal_data.cooldown;
-                        child.boost_btn.gameObject.SetActive(true);
-                        child.current_harvest.gameObject.transform.parent.gameObject.SetActive(true);
-                        child.current_harvest.text = "Harvests : " + animal_data.current_harvests + " / " + animal_data.max_harvests;
-                        string asset_animal = animal_data.asset_id + " " + animal_data.boost;
-                        child.boost_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { show_boost("animal", asset_animal); });
-                        if (animal_data.cooldown == "1" || Int64.Parse(animal_data.current_harvests) == Int64.Parse(animal_data.max_harvests))
-                            child.maxed_harvests = true;
-                        else
-                            child.start_timer = true;
-                        dereg_ids.Add(animal_data.asset_id);
-                        child.level = animal_data.level;
-                        string nums = new String(animal_data.level.Where(Char.IsDigit).ToArray());
-                        child.level_text.text = nums;
-                        var sprite_img = Resources.Load<Sprite>("Sprites/" + animal_data.name);
-                        if (sprite_img)
-                            child.asset_image.sprite = sprite_img;
-                        break;
+                        if(rarity == "Rarity" || animal_data.rarity == rarity)
+                        {
+                            Debug.Log("found");
+                            var ins = Instantiate(animal_prefab);
+                            ins.transform.SetParent(parent_transform_shelter_detail_reg);
+                            ins.transform.localScale = new Vector3(1, 1, 1);
+                            var child = ins.gameObject.GetComponent<AnimalCall>();
+                            child.asset_id = animal_data.asset_id;
+                            child.asset_id_text.text = "#" + animal_data.asset_id;
+                            child.asset_id_text.fontSize = 14;
+                            child.asset_name = animal_data.name;
+                            child.LoadingPanel = LoadingPanel;
+                            child.can_claim = false;
+                            child.unregister_btn.SetActive(true);
+                            child.time = animal_data.last_claim;
+                            child.delayValue = animal_data.delay;
+                            child.cooldown = animal_data.cooldown;
+                            child.boost_btn.gameObject.SetActive(true);
+                            child.current_harvest.gameObject.transform.parent.gameObject.SetActive(true);
+                            child.current_harvest.text = "Harvests : " + animal_data.current_harvests + " / " + animal_data.max_harvests;
+                            string asset_animal = animal_data.asset_id + " " + animal_data.boost;
+                            child.boost_btn.gameObject.GetComponent<Button>().onClick.AddListener(delegate { show_boost("animal", asset_animal); });
+                            if (animal_data.cooldown == "1" || Int64.Parse(animal_data.current_harvests) == Int64.Parse(animal_data.max_harvests))
+                                child.maxed_harvests = true;
+                            else
+                                child.start_timer = true;
+                            dereg_ids.Add(animal_data.asset_id);
+                            child.level = animal_data.level;
+                            string nums = new String(animal_data.level.Where(Char.IsDigit).ToArray());
+                            child.level_text.text = nums;
+                            var child_level_gb = child.level_text.gameObject.transform.parent.gameObject;
+                            child_level_gb.SetActive(true);
+                            for (int i = 0; i < animal_data.cost_level.Length; i++)
+                            {
+                                double levl_num = Double.Parse(new String(animal_data.cost_level[i].in_name.Where(Char.IsDigit).ToArray()));
+                                double incr_nums = Double.Parse(nums);
+                                incr_nums++;
+                                Debug.Log(incr_nums);
+                                Debug.Log(levl_num);
+                                if (levl_num == incr_nums)
+                                {
+                                    string fees = animal_data.cost_level[i].in_qty;
+                                    string level = animal_data.cost_level[i].in_name;
+                                    string a_id = animal_data.asset_id;
+                                    child_level_gb.GetComponent<Button>().onClick.RemoveAllListeners();
+                                    child_level_gb.GetComponent<Button>().onClick.AddListener(delegate { Levelup(a_id, fees, nums, "animal"); });
+                                    break;
+                                }
+                            }
+                            var sprite_img = Resources.Load<Sprite>("Sprites/" + animal_data.name);
+                            if (sprite_img)
+                                child.asset_image.sprite = sprite_img;
+                            break;
+                        }
                     }
                 }
             }
@@ -2252,7 +2324,7 @@ public class MainView : BaseView
 
         shelter_child_asset = child_obj;
         shelter_claim_all_btn.onClick.RemoveAllListeners();
-        //shelter_claim_all_btn.onClick.AddListener(delegate { recipes_claim_all(child_obj.asset_id, "shelter"); });
+        shelter_claim_all_btn.onClick.AddListener(delegate { claim_all_animals(child_obj.asset_id); });
     }
 
     public void all_assets_claim()
@@ -2266,6 +2338,13 @@ public class MainView : BaseView
             MessageHandler.Server_Claim_All_Assets("crop", "");
         else if (onShelters)
             MessageHandler.Server_Claim_All_Assets("shelter", stack_shelter_type);
+    }
+
+    public void claim_all_animals(string asset_id)
+    {
+        LoadingPanel.SetActive(true);
+        string data = asset_id + " " + stack_shelter_type;
+        MessageHandler.Server_Claim_All_Assets("shelter", data);
     }
 
     public void recipes_claim_all(string asset_id, string type)
@@ -2305,7 +2384,6 @@ public class MainView : BaseView
             else
                 crop_claim_all_btn.interactable = true;
         }
-
         if(claim_ids.Count > 0)
         {
             LoadingPanel.SetActive(true);
@@ -2423,6 +2501,7 @@ public class MainView : BaseView
                     SSTools.ShowMessage("No Registered Machine", SSTools.Position.bottom, SSTools.Time.twoSecond);
                 else
                 {
+                    shelter_rarity_dropdown.gameObject.SetActive(true);
                     parent_transform_machine_reg.gameObject.SetActive(true);
                     parent_transform_machine_reg.parent.gameObject.transform.parent.gameObject.GetComponent<ScrollRect>().content = parent_transform_machine_reg.GetComponent<RectTransform>();
                     machine_subheading_text.GetComponent<TMP_Text>().text = "Registered Machines";
@@ -2553,6 +2632,7 @@ public class MainView : BaseView
                     SSTools.ShowMessage("No Un-Registered Shelter", SSTools.Position.bottom, SSTools.Time.twoSecond);
                 else
                 {
+                    shelter_rarity_dropdown.gameObject.SetActive(true);
                     parent_transform_shelter_unreg.gameObject.SetActive(true);
                     parent_transform_shelter_unreg.parent.gameObject.transform.parent.gameObject.GetComponent<ScrollRect>().content = parent_transform_shelter_unreg.GetComponent<RectTransform>();
                     shelter_subheading_text.GetComponent<TMP_Text>().text = "Un-Registered Shelters";
@@ -2678,6 +2758,7 @@ public class MainView : BaseView
             string[] a_data = asset_id.Split(' ');
             boost_child.asset_id = a_data[0];
             TMP_Text text_data = boost_child.animal_obj.transform.GetChild(0).gameObject.GetComponent<TMP_Text>();
+            boost_child.animal_obj.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[a_data[2]]);
             text_data.text = "Use " + a_data[1].Split('.')[0] + " " + helper.recipes_abv[a_data[2]] + " to boost " + helper.recipes_abv[a_data[2]].Split(' ')[0] + " production ?";
         }
         else
@@ -3258,6 +3339,7 @@ public class MainView : BaseView
                 showRegisteredAssets("machines");
                 break;
             case ("on_registered_shelter"):
+                onAnimals = false;
                 shelter_deregister_all_btn.gameObject.SetActive(true);
                 shelter_rarity_dropdown.gameObject.SetActive(true);
                 shelter_show_panel.gameObject.SetActive(true);
@@ -3708,7 +3790,7 @@ public class MainView : BaseView
             {
                 claim_ids.Clear();
                 SetData();
-                //ShowElements_Animal(stack_trees_type);
+                show_shelter_details(shelter_child_asset, "Rarity");
                 SSTools.ShowMessage("Claim Successfull !", SSTools.Position.bottom, SSTools.Time.twoSecond);
             }
             else if (callBack.type == "boost")
@@ -3728,9 +3810,43 @@ public class MainView : BaseView
                         case "crop":
                             showRegisteredAssets("crops");
                             break;
+                        case "shelter":
+                            showRegisteredAssets("shelter");
+                            break;
+                        case "animal":
+                            show_shelter_details(shelter_child_asset, "Rarity");
+                            break;
                     }
                 }
                 SSTools.ShowMessage("Boost Added Successfully !", SSTools.Position.bottom, SSTools.Time.twoSecond);
+            }
+            else if (callBack.type == "levelup")
+            {
+                CloseBtn();
+                SetData();
+                SetElements();
+                SSTools.ShowMessage("Level Up Successfull !", SSTools.Position.bottom, SSTools.Time.twoSecond);
+                if (!string.IsNullOrEmpty(callBack.helper))
+                {
+                    switch (callBack.helper)
+                    {
+                        case "tree":
+                            showRegisteredAssets("trees");
+                            break;
+                        case "machine":
+                            showRegisteredAssets("machines");
+                            break;
+                        case "crop":
+                            showRegisteredAssets("crops");
+                            break;
+                        case "shelter":
+                            showRegisteredAssets("shelter");
+                            break;
+                        case "animal":
+                            show_shelter_details(shelter_child_asset, "Rarity");
+                            break;
+                    }
+                }
             }
             else if (callBack.type == "recipe_claim")
             {
@@ -3786,7 +3902,7 @@ public class MainView : BaseView
                 }
                 else if(callBack.helper == "shelter")
                 {
-                    showRegisteredAssets("shelter");
+                    show_shelter_details(shelter_child_asset, "Rarity");
                     SSTools.ShowMessage("All Animal Products Claimed Successfully !", SSTools.Position.bottom, SSTools.Time.twoSecond);
                 }
                 else if(callBack.helper == "none")
