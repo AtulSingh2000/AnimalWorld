@@ -19,4 +19,5 @@ public class AssetModel
     public string max_harvests;
     public string boost;
     public string level_boost;
+    public Level_CostModel[] cost_level;
 }

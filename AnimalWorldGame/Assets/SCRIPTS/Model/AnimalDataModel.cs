@@ -4,18 +4,19 @@ using System;
 public class AnimalDataModel
 {
     public string name;
+    public string type;
     public string asset_id;
-    public string template_id;
-    public string slots;
-    public string cd_start;
-    public string harvests;
-    public string max_harvests;
     public string land_id;
-    public string level;
-    public string prod_sec;
-    public On_RecipeDataModel[] on_recipe;
-    public string reg;
+    public string prod_pwer;
     public string rarity;
-    public string img;
+    public string cooldown;
+    public string last_claim;
+    public string delay;
+    public string reg;
+    public string level;
+    public string current_harvests;
+    public string max_harvests;
+    public string boost;
+    public string level_boost;
     public IngModel[] cost_level;
 }

@@ -11,8 +11,10 @@ public class ShelterAssetCall : MonoBehaviour
     public string slot_size;
     public string land_id;
     public string cooldown;
+    public IngModel[] animals;
     public TMP_Text slots_text;
     public TMP_Text asset_id_text;
+    public TMP_Text level_text;
     public GameObject register_btn;
     public GameObject unregister_btn;
     public GameObject select_btn;

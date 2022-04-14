@@ -24,7 +24,7 @@ public class MessageHandler : MonoBehaviour
     private static extern void getburnids();
     [DllImport("__Internal")]
     private static extern void getshopdata();
-        [DllImport("__Internal")]
+    [DllImport("__Internal")]
     private static extern void burnid(string id);
     [DllImport("__Internal")]
     private static extern void depositawc(string amount);
@@ -55,6 +55,9 @@ public class MessageHandler : MonoBehaviour
 
     [DllImport("__Internal")]
     private static extern void tree_claim(string symbol);
+
+    [DllImport("__Internal")]
+    private static extern void animal_claim(string asset_ids);
 
     [DllImport("__Internal")]
     private static extern void claim_all_assets(string type,string subtype,string land);
@@ -142,6 +145,11 @@ public class MessageHandler : MonoBehaviour
         tree_claim(symbol);
     }
 
+    public static void Server_ClaimAnimal(string asset_ids)
+    {
+        animal_claim(asset_ids);
+    }
+
     public static void Server_GetBurnids()
     {
         getburnids();
@@ -191,6 +199,20 @@ public static void Server_BurnNFT(string asset_id)
         string jsonData = JsonHelper.fixJson(data);
         userModel.trees = JsonHelper.FromJson<AssetModel>(jsonData);
         Debug.Log("set tree data");
+    }
+
+    public void Client_SetAnimalData(string data)
+    {
+        string jsonData = JsonHelper.fixJson(data);
+        userModel.animals = JsonHelper.FromJson<AnimalDataModel>(jsonData);
+        Debug.Log("set animal data");
+    }
+
+    public void Client_SetShelterData(string data)
+    {
+        string jsonData = JsonHelper.fixJson(data);
+        userModel.shelters = JsonHelper.FromJson<ShelterDataModel>(jsonData);
+        Debug.Log("set shelter data");
     }
 
     public void Client_SetMachineData(string data)

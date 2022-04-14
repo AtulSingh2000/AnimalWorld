@@ -120,7 +120,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 127388378790770774}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 127388378790771649}
+        m_TargetAssemblyTypeName: AnimalCall, Assembly-CSharp
+        m_MethodName: Claim_Produce
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &127388378790771650
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,6 +222,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a509a1890637eec458c9210c6f3947ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  asset_id: 
+  asset_name: 
+  time: 
+  delayValue: 
+  cooldown: 
+  level: 
+  shelter_id: 
+  asset_id_text: {fileID: 127388378790770771}
+  time_to_claim: {fileID: 7252143047584475509}
+  current_harvest: {fileID: 3299284125813122361}
+  level_text: {fileID: 4275132286182628931}
+  register_btn: {fileID: 0}
+  unregister_btn: {fileID: 5435244068406429267}
+  claim_btn: {fileID: 127388378790771507}
+  LoadingPanel: {fileID: 0}
+  boost_btn: {fileID: 2767627139698121302}
+  start_timer: 0
+  maxed_harvests: 0
+  asset_image: {fileID: 127388378790770796}
+  can_claim: 0
 --- !u!1 &127388378790771657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1269,7 +1301,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ccf97ddb50dc9437e9899ba23fab088a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7dfd1cc2b84b24ff4a7ac0d3412df080, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1654,7 +1686,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5435244068406429264}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 127388378790771649}
+        m_TargetAssemblyTypeName: AnimalCall, Assembly-CSharp
+        m_MethodName: DeRegisterAsset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5681110896557021917
 GameObject:
   m_ObjectHideFlags: 0

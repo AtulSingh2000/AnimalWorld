@@ -13,7 +13,7 @@ public class ShelterDataModel
     public string land_id;
     public string level;
     public string prod_sec;
-    public On_RecipeDataModel[] on_recipe;
+    public IngModel[] animals;
     public string reg;
     public string rarity;
     public string img;

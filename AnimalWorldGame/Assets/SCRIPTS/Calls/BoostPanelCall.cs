@@ -6,6 +6,7 @@ public class BoostPanelCall : MonoBehaviour
 {
     public GameObject oil_obj;
     public GameObject fertilizer_obj;
+    public GameObject animal_obj;
     public GameObject LoadingPanel;
 
     public string asset_id;

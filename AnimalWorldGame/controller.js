@@ -2,18 +2,22 @@
 var loggedIn = false;
 var anchorAuth = "owner";
 var machine_obj = [];
+var machine_config = [];
+var tree_config = [];
 var crop_obj = [];
 var tree_obj = [];
 var land_obj = [];
+var shelter_obj = [];
+var animal_obj = [];
 
 const dapp = "AnimalWorld";
-//var endpoint = "https://wax.cryptolions.io";
-//var atomic_api = "https://wax-aa.eu.eosamsterdam.net/";
-var endpoint = "https://animalworld-wax-rpc.global.binfra.one";
-var atomic_api = "https://animalworld-wax-aa.global.binfra.one/";
+var endpoint = "https://waxtestnet.greymass.com";
+var atomic_api = "https://test.wax.api.atomicassets.io/";
+//var endpoint = "https://animalworld-wax-rpc.global.binfra.one";
+//var atomic_api = "https://animalworld-wax-aa.global.binfra.one/";
 const contract = "anmworldgame";
 const tokenContract = 'tokenanimal1';
-const collectionName = 'animalworld1';
+const collectionName = 'animaltestin';//'animalworld1';
 const tree_schema = 'gametrees';
 const mch_schema = 'machine';
 
@@ -41,7 +45,8 @@ const wallet_isAutoLoginAvailable = async () => {
     const anchorLink = new AnchorLink({
       transport,
       chains: [{
-        chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+        //chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+        chainId: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
         nodeUrl: endpoint,
       }],
     });
@@ -78,7 +83,8 @@ const logout = async () => {
   const anchorLink = new AnchorLink({
     transport,
     chains: [{
-      chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+      //chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+      chainId: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
       nodeUrl: endpoint,
     }],
   });
@@ -102,7 +108,8 @@ const wallet_login = async () => {
     const anchorLink = new AnchorLink({
       transport,
       chains: [{
-        chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+        //chainId: '1064487b3cd1a897ce03ae5b6a865651747e2e152090f99c1d19d44e01aea5a4',
+        chainId: 'f16b1833c747c43682f4386fca9cbb327929334a762755ebec17f6f23c9b8a12',
         nodeUrl: endpoint,
       }],
     });
@@ -166,11 +173,13 @@ const delay = async (delayInms) => {
 const sendUserData = async () => {
   try {
     await fetchingData();
-    balance = await getAwcBalance();
+    balance = 0//await getAwcBalance();
     landData = await getLandData();
     treeData = await getTreeData();
     recipeData = await getRecipeData();
+    animalData = await getAnimalData();
     machineData = await getMachineData();
+    shelterData = await getShelterData();
     cropfieldData = await getCropsData();
     userBalanceData = await getUserBalance();
     let obj = {
@@ -182,6 +191,8 @@ const sendUserData = async () => {
       machine_recipes: recipeData,
       user_balance: userBalanceData,
       crops: cropfieldData,
+      shelters : shelterData,
+      animals : animalData
     }
     console.log(obj);
     unityInstance.SendMessage(
@@ -546,15 +557,23 @@ const getTreeConfig = async () => {
     let obj = [];
     if (body.rows.length != 0) {
       for (const data of Object.values(body.rows)) {
+        let cost_level = [];
+        for(const c_data of data.cost_level){
+          cost_level.push({
+            in_name : c_data.level,
+            in_qty : c_data.count
+          });
+        }
         obj.push({
           template_id: data.template_id,
           max_harvests: data.max_harvests,
           boost: data.tree_boost,
-          level_boost: data.level_boost
+          level_boost: data.level_boost,
+          cost_level : cost_level
         })
       }
     }
-    return obj;
+    tree_config = obj;
   } catch (e) {
     unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
   }
@@ -588,7 +607,7 @@ const getMachineConfig = async () => {
         })
       }
     }
-    return obj;
+    machine_config = obj;
   } catch (e) {
     unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
   }
@@ -597,7 +616,8 @@ const getMachineConfig = async () => {
 const getTreeData = async () => {
   try {
     let assetData = await getAssets("gametrees");
-    let config = Object.values(await getTreeConfig());
+    if(tree_config.length < 1) await getTreeConfig();
+    let config = Object.values(tree_config);
     var tree_data = [];
     const arr = Object.values(assetData);
     console.log(arr);
@@ -620,6 +640,7 @@ const getTreeData = async () => {
                     harvest = c_data.max_harvests;
                     boost = c_data.boost;
                     level_boost = c_data.level_boost;
+                    cost_level = c_data.cost_level;
                     break;
                   }
                 }
@@ -645,7 +666,7 @@ const getTreeData = async () => {
                   boost: boost,
                   level_boost: level_boost,
                   reg: "1",
-                  //cost_level: cost_level
+                  cost_level: cost_level
                 });
               }
             }
@@ -707,10 +728,133 @@ const getTreeData = async () => {
   }
 }
 
+const getAnimalData = async () => {
+  try {
+    let assetData = await getAssets("animals");
+    if(tree_config.length < 1) await getTreeConfig();
+    let config = Object.values(tree_config);
+    var animal_data = [];
+    let harvest = "";
+    let boost = "";
+    let level_boost = "";
+    let cost_level = "";
+    const arr = Object.values(assetData);
+    if (arr.length != 0) {
+      const check_data = await checkAssetIds("animals");
+      console.log(check_data);
+      if (typeof check_data !== 'undefined') {
+        const check_ids = check_data[0];
+        for (const asset of arr) {
+          if (check_ids.includes(asset.asset_id)) {
+            const check_body_data = check_data[1];
+            for (const bodyData of check_body_data) {
+              if (bodyData.id == asset.asset_id) {
+                for (const c_data of config) {
+                  if (asset.template_id == c_data.template_id) {
+                    harvest = c_data.max_harvests;
+                    boost = c_data.boost;
+                    level_boost = c_data.level_boost;
+                    cost_level = c_data.cost_level;
+                    break;
+                  }
+                }
+                let land_id = "";
+                if(land_obj.includes(bodyData.land_id))
+                  land_id = bodyData.land_id;
+                else
+                  land_id = "0";
+                animal_data.push({
+                  name: asset.name,
+                  type: "animal",
+                  asset_id: asset.asset_id,
+                  land_id: land_id,
+                  prod_pwer: bodyData.prod_power,
+                  rarity: asset.rarity,
+                  cooldown: bodyData.cooldown,
+                  last_claim: bodyData.last_claim,
+                  delay: bodyData.delay,
+                  max_harvests: harvest,
+                  level: "Level" + asset.level,
+                  current_harvests: asset.harvests,
+                  boost: boost,
+                  level_boost: level_boost,
+                  reg: "1",
+                  cost_level: cost_level
+                });
+              }
+            }
+          } else {
+            animal_data.push({
+              name: asset.name,
+              type: "animal",
+              asset_id: asset.asset_id,
+              land_id: "null",
+              prod_pwer: "0",
+              rarity: asset.rarity,
+              cooldown: "0",
+              last_claim: "0",
+              delay: "0",
+              reg: "0",
+              max_harvests: harvest,
+              level: "Level" + asset.level,
+              current_harvests: asset.harvests,
+              boost: boost,
+              level_boost: level_boost,
+            });
+          }
+        }
+      } else {
+        for (const c_data of config) {
+          if (asset.template_id == c_data.template_id) {
+            harvest = c_data.max_harvests;
+            boost = c_data.boost;
+            level_boost = c_data.level_boost;
+            cost_level = c_data.cost_level;
+            break;
+          }
+        }
+        animal_data.push({
+          name: asset.name,
+          type: "animal",
+          asset_id: asset.asset_id,
+          land_id: "null",
+          prod_pwer: "0",
+          rarity: asset.rarity,
+          cooldown: "0",
+          last_claim: "0",
+          delay: "0",
+          reg: "0",
+          max_harvests: harvest,
+          level: "Level" + asset.level,
+          current_harvests: asset.harvests,
+          boost: boost,
+          level_boost: level_boost,
+          cost_level : cost_level
+        });
+      }
+    }
+    animal_obj = animal_data;
+    return animal_data;
+  } catch (e) {
+    console.log(e);
+    unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
+  }
+}
+
+const getAnimalD = async() => {
+  updated_anm_data = await getAnimalData();
+  unityInstance.SendMessage(
+    "GameController",
+    "Client_SetAnimalData",
+    updated_anm_data === undefined ? JSON.stringify({}) : JSON.stringify(updated_anm_data)
+  );
+}
+
 const getMachineData = async () => {
   try {
     let assetData = await getAssets("machines");
-    let config = Object.values(await getMachineConfig());
+    if(machine_config.length < 1) await getMachineConfig();
+    let config = Object.values(machine_config);
     console.log(config);
     var machine_data = [];
     const arr = Object.values(assetData);
@@ -814,6 +958,115 @@ const getMachineD = async () => {
   }
 }
 
+const getShelterData = async () => {
+  try {
+
+    if(machine_config.length < 1) await getMachineConfig();
+    let config = Object.values(machine_config);
+    console.log(config);
+    var shelter_data = [];
+    const arr = Object.values(await getAssets("shelters"));
+    console.log(arr);
+    if (arr.length != 0) {
+      const check_data = await checkAssetIds("shelters");
+      console.log(check_data);
+      if (typeof check_data !== 'undefined') {
+        const check_ids = check_data[0];
+        for (const asset of arr) {
+          if (check_ids.includes(asset.asset_id)) {
+            const check_body_data = check_data[1];
+            for (const bodyData of check_body_data) {
+              let harvest = "";
+              let cost_level = [];
+              for (const c_data of config) {
+                if (asset.template_id == c_data.template_id) {
+                  harvest = c_data.max_harvests;
+                  for (const cost_data of c_data.cost_level) {
+                    cost_level.push({
+                      in_name: "Level" + cost_data.level,
+                      in_qty: cost_data.count
+                    });
+                  }
+                  break;
+                }
+              }
+              if (bodyData.id == asset.asset_id) {
+                let land_id = "";
+                if(land_obj.includes(bodyData.land_id))
+                  land_id = bodyData.land_id;
+                else
+                  land_id = "0";
+                shelter_data.push({
+                  name: asset.name,
+                  asset_id: asset.asset_id,
+                  template_id: asset.template_id,
+                  slots: bodyData.slots,
+                  land_id: land_id,
+                  level: "Level" + asset.level,
+                  animals: bodyData.animals,
+                  rarity: asset.rarity,
+                  reg: "1",
+                  max_harvests: harvest,
+                  cost_level: cost_level
+                });
+              }
+            }
+          } else {
+            shelter_data.push({
+              name: asset.name,
+              asset_id: asset.asset_id,
+              template_id: asset.template_id,
+              slots: "0",
+              cd_start: "0",
+              harvests: "0",
+              land_id: "null",
+              level: "Level" + asset.level,
+              animals: "0",
+              rarity: asset.rarity,
+              reg: "0",
+            });
+          }
+        }
+      } else {
+        shelter_data.push({
+          name: asset.name,
+              asset_id: asset.asset_id,
+              template_id: asset.template_id,
+              slots: "0",
+              cd_start: "0",
+              harvests: "0",
+              land_id: "null",
+              level: "Level" + asset.level,
+              animals: "0",
+              rarity: asset.rarity,
+              reg: "0",
+        });
+      }
+    }
+
+    shelter_obj = shelter_data;
+    console.log(shelter_data);
+    return shelter_data;
+  } catch (e) {
+    console.log(e);
+    unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
+  }
+}
+
+const getShelterD = async () => {
+  try {
+    shelterData = await getShelterData();
+    unityInstance.SendMessage(
+      "GameController",
+      "Client_SetShelterData",
+      shelterData === undefined ? JSON.stringify({}) : JSON.stringify(shelterData)
+    );
+  } catch (e) {
+    unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
+  }
+}
+
+
 const getLandData = async () => {
   try {
     let assetData = await getAssets("land");
@@ -881,7 +1134,8 @@ const getCropsData = async () => {
   try {
     let assets = getAssets("cropfields");
     assetData = await assets;
-    let config = Object.values(await getMachineConfig());
+    if(machine_config.length < 1) await getMachineConfig();
+    let config = Object.values(machine_config);
     var crop_data = [];
     const arr = Object.values(assetData);
     if (arr.length != 0) {
@@ -1041,7 +1295,6 @@ const checkAssetIds = async (table) => {
     console.log(contract);
     var x=eosjsName.nameToUint64(wallet_userAccount);
     var y=parseInt(x)+1;
-    console.log(y);
     var path = "/v1/chain/get_table_rows";
     var data = JSON.stringify({
       json: true,
@@ -1124,6 +1377,33 @@ const checkAssetIds = async (table) => {
             console.log(data)
             table_data.push({
               id: data.asset_id
+            });
+          }
+          else if (table == "shelters"){
+            let animal_obj = [];
+            for(const a_data of data.animals){
+              animal_obj.push({
+                in_qty : a_data
+              });
+            }
+            console.log(animal_obj);
+              table_data.push({
+                id: data.asset_id,
+                slots: data.slots,
+                land_id: data.land_id,
+                level: data.level,
+                animals: animal_obj,
+              });
+          }
+          else if (table == "animals"){
+            table_data.push({
+              id: data.asset_id,
+              prod_power: (parseFloat(data.prod_power.split(' ')[0]).toFixed(2)),
+              cooldown: data.cooldown,
+              last_claim: data.last_claim,
+              delay: data.delay,
+              level : data.level,
+              shelter_id : data.shelter_id
             });
           }
         } else break;
@@ -1226,8 +1506,14 @@ const register_nft = async (asset_id, name, land_id, type) => {
       case ("cropfield"):
         action_name = "regcf";
         break;
+      case ("shelter"):
+        action_name = "regsh";
+        break;
+      case ("animal"):
+        action_name = "reganm";
+        break;
     }
-    const result = type != "land" ? await wallet_transact([{
+    const result = type != "land" && type != "animal"? await wallet_transact([{
       account: contract,
       name: action_name,
       authorization: [{
@@ -1239,7 +1525,7 @@ const register_nft = async (asset_id, name, land_id, type) => {
         asset_ids: ids,
         land_id: land_id
       },
-    }, ]) : await wallet_transact([{
+    }, ]) : type == "land" ? await wallet_transact([{
       account: contract,
       name: action_name,
       authorization: [{
@@ -1250,7 +1536,19 @@ const register_nft = async (asset_id, name, land_id, type) => {
         player: wallet_userAccount,
         asset_ids: ids,
       },
-    }, ]);
+    }, ]) : type == "animal" ? await wallet_transact([{
+      account: contract,
+      name: action_name,
+      authorization: [{
+        actor: wallet_userAccount,
+        permission: anchorAuth
+      }],
+      data: {
+        player: wallet_userAccount,
+        asset_ids: ids,
+        shelter_id: land_id
+      },
+    }, ]):"";
     let obj = [];
     switch (type) {
       case ("tree"):
@@ -1289,7 +1587,24 @@ const register_nft = async (asset_id, name, land_id, type) => {
           type: "reg"
         });
         break;
-    }
+      case ("shelter"):
+        await getShelterD();
+        obj.push({
+          type: "reg",
+          helper: "shelter"
+        });
+        break;
+      case ("animal"):
+        await getShelterD();
+        await getAnimalD();
+        obj.push({
+          type: "reg",
+          helper: "animal"
+        });
+        break;
+      }
+
+
     console.log(obj);
     unityInstance.SendMessage(
       "GameController",
@@ -1360,6 +1675,21 @@ const deregister_nft = async (asset_id, name, type) => {
         cropData = await getCropsD();
         obj.push({
           type: "dereg"
+        });
+        break;
+      case ("shelter"):
+        await getShelterD();
+        obj.push({
+          type: "dereg",
+          helper: "shelter"
+        });
+        break;
+      case ("animal"):
+        await getShelterD();
+        await getAnimalD();
+        obj.push({
+          type: "dereg",
+          helper: "animal"
         });
         break;
     }
@@ -1605,6 +1935,39 @@ const claim_tree = async (asset_id) => {
     let callback_obj = [];
     callback_obj.push({
       type: "tree_claim"
+    });
+    unityInstance.SendMessage(
+      "GameController",
+      "Client_SetCallBackData",
+      callback_obj === undefined ? JSON.stringify({}) : JSON.stringify(callback_obj)
+    );
+  } catch (e) {
+    console.log(e.message);
+    unityInstance.SendMessage("ErrorHandler", "Client_SetErrorData", e.message);
+  }
+}
+
+const claim_animal = async (asset_id) => {
+  try {
+    var ids = asset_id.split(",");
+    console.log(ids);
+    await wallet_transact([{
+      account: contract,
+      name: "claimanm",
+      authorization: [{
+        actor: wallet_userAccount,
+        permission: anchorAuth
+      }],
+      data: {
+        player: wallet_userAccount,
+        asset_ids: ids
+      },
+    }, ]);
+    await getUserB();
+    await getAnimalD();
+    let callback_obj = [];
+    callback_obj.push({
+      type: "animal_claim"
     });
     unityInstance.SendMessage(
       "GameController",

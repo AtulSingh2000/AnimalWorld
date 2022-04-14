@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 4463970895215808979}
   - component: {fileID: 4463970895166445526}
   - component: {fileID: 4463970895166445527}
+  - component: {fileID: 4596811810506049897}
   m_Layer: 5
   m_Name: Add_Anm_Prefab
   m_TagString: Untagged
@@ -344,6 +345,38 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &4596811810506049897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4463970895166445524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a509a1890637eec458c9210c6f3947ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset_id: 
+  asset_name: 
+  time: 
+  delayValue: 
+  cooldown: 
+  level: 
+  shelter_id: 
+  asset_id_text: {fileID: 4463970894298509786}
+  time_to_claim: {fileID: 0}
+  current_harvest: {fileID: 0}
+  level_text: {fileID: 0}
+  register_btn: {fileID: 4463970896052422508}
+  unregister_btn: {fileID: 0}
+  claim_btn: {fileID: 0}
+  LoadingPanel: {fileID: 0}
+  boost_btn: {fileID: 0}
+  start_timer: 0
+  maxed_harvests: 0
+  asset_image: {fileID: 4463970895896802398}
+  can_claim: 0
 --- !u!1 &4463970895896802396
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,4 +572,16 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4463970896052422510}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4596811810506049897}
+        m_TargetAssemblyTypeName: AnimalCall, Assembly-CSharp
+        m_MethodName: RegisterAsset
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

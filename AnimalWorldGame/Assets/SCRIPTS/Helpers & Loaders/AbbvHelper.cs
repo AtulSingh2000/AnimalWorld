@@ -51,6 +51,11 @@ public class AbbvHelper : MonoBehaviour
 
         recipes.Add("FLZR", "Fertilizer");
         recipes.Add("OIL", "Oil");
+        recipes.Add("BFOOD", "Bee Food");
+        recipes.Add("CFOOD", "Cow Food");
+        recipes.Add("PFOOD", "Pig Food");
+        recipes.Add("GFOOD", "Goat Food");
+        //recipes.Add("BFOOD", "Bee Food");
 
     }
 
