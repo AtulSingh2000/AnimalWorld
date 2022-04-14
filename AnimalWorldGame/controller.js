@@ -1591,6 +1591,7 @@ const register_nft = async (asset_id, name, land_id, type) => {
         });
         break;
       case ("animal"):
+        await delay(1500);
         await getShelterD();
         await getAnimalD();
         obj.push({
@@ -1675,6 +1676,7 @@ const deregister_nft = async (asset_id, name, type) => {
         break;
       case ("shelter"):
         await getShelterD();
+        await getAnimalD();
         obj.push({
           type: "dereg",
           helper: "shelter"
