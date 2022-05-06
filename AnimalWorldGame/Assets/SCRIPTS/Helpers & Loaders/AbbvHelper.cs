@@ -58,7 +58,7 @@ public class AbbvHelper : MonoBehaviour
         recipes.Add("BFEED", "Bee Feed");
         recipes.Add("CFEED", "Cow Feed");
         recipes.Add("PFEED", "Pig Feed");
-        recipes.Add("HFEED", "Bee Feed");
+        recipes.Add("HFEED", "Chicken Feed");
         recipes.Add("GFEED", "Goat Feed");
 
         recipes.Add("HONEY", "Honey");
