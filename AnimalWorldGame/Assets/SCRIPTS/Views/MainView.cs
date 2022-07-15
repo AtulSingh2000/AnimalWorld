@@ -18,9 +18,9 @@ public class MainView : BaseView
     public GameObject mutebtn;
     public GameObject unmutebtn;
     public AudioPlayer a_player;
-
+    public string p_all_id="0";
+    public string m_all_id="0";
     public GameObject audiolistener;
-
     public GameObject shop_parent_panel;
     public GameObject inv_parent_panel;
     public GameObject exchange_parent_panel;
@@ -49,6 +49,10 @@ public class MainView : BaseView
     public GameObject crop_subheading_text_type_2;
     public GameObject crop_show_panel;
     public GameObject crop_stats_panel;
+    public TMP_InputField cplantallqty;
+    public TMP_InputField mplantallqty;
+    public TMP_Text cavailslots;
+    public TMP_Text mavailslots;
     [Header("Machine ING")]
     public GameObject add_ing_prefab;
     public GameObject ing_prefab;
@@ -160,7 +164,7 @@ public class MainView : BaseView
     public Button machine_deregister_all_btn;
     public Button machine_registered_claim_all_btn;
     public Button machine_claim_all_btn;
-    public Button machine_boost_all_btn;
+    public GameObject machine_boost_all_btn;
     [Header("Shelters / Animals")]
     public Button shelter_registered_btn;
     public Button shelter_unregistered_btn;
@@ -183,7 +187,7 @@ public class MainView : BaseView
     public Button crop_unregister_btn;
     public Button crop_register_all_btn;
     public Button crop_deregister_all_btn;
-    public Button crop_registered_claim_all_btn;
+    public GameObject crop_registered_claim_all_btn;
     public Button crop_claim_all_btn;
     [Header("Land")]
     public Button land_registered_btn;
@@ -199,6 +203,9 @@ public class MainView : BaseView
     [Header("Machine Dropdown")]
     public TMP_Dropdown machine_level_dropdown;
     public TMP_Dropdown machine_rarity_dropdown;
+    [Header("Machine Dropdown")]
+    public TMP_Dropdown plant_all_dropdown;
+    public TMP_Dropdown mplant_all_dropdown;
     [Header("Shelter Dropdown")]
     public TMP_Dropdown shelter_rarity_dropdown;
     public TMP_Dropdown animal_level_dropdown;
@@ -345,6 +352,8 @@ public class MainView : BaseView
         MessageHandler.OnBalanceUpdate += OnBalanceUpdate;
         SSTools.ShowMessage("Welcome Farmer " + MessageHandler.userModel.account, SSTools.Position.bottom, SSTools.Time.twoSecond);
         machine_rarity_dropdown.onValueChanged.AddListener(delegate { changeValue(machine_rarity_dropdown); });
+        plant_all_dropdown.onValueChanged.AddListener(delegate { changepValue(plant_all_dropdown); });
+        mplant_all_dropdown.onValueChanged.AddListener(delegate { changepValue(mplant_all_dropdown); });
         shelter_rarity_dropdown.onValueChanged.AddListener(delegate { changeRarity(shelter_rarity_dropdown); });
         animal_rarity_dropdown.onValueChanged.AddListener(delegate { changeAnimalRarity(animal_rarity_dropdown); });
         //animal_level_dropdown.onValueChanged.AddListener(delegate { changeValue(animal_level_dropdown); });
@@ -378,6 +387,48 @@ public class MainView : BaseView
         if(onAnimals) show_shelter_details(shelter_child_asset, rarity_type);
         if (rarity_type == "Rarity") SSTools.ShowMessage("Showing All Rarities", SSTools.Position.bottom, SSTools.Time.twoSecond);
         else if (rarity_type != "Rarity") SSTools.ShowMessage(rarity_type, SSTools.Position.bottom, SSTools.Time.twoSecond);
+    }
+
+        public void changepValue(TMP_Dropdown dropdown)
+    {
+        Debug.Log(dropdown.options[dropdown.value].text);
+        var stype = dropdown.options[dropdown.value].text;
+        if(onCrops)
+        {
+        if(stype=="CARROT") stype="CRT";
+        if(stype=="CHILLY") stype="CLY";
+        if(stype=="SOYABEAN") stype="SBEAN";
+
+        foreach(RecipesModel r in cropfield_recipe)
+        {
+            if(r.out_name==stype)
+            {
+                p_all_id=r.id;
+                Debug.Log(r.id);
+                break;
+            }
+        }
+        }
+        else if(onMachines)
+        {
+                        string key = "";
+            foreach(var pair in helper.recipes_abv)
+            {
+                if(pair.Value == stype)
+                {
+                    key = pair.Key;
+                }
+            }
+        foreach (RecipesModel recipes in MessageHandler.userModel.machine_recipes)
+        {
+            if (recipes.out_name==key)
+            {
+              m_all_id=recipes.id;
+              Debug.Log(recipes.id);
+                break;
+            }
+        }
+        }
     }
 
     public void changeValue(TMP_Dropdown dropdown)
@@ -2378,6 +2429,42 @@ public class MainView : BaseView
             MessageHandler.Server_Claim_All_Assets("shelter", stack_shelter_type);
     }
 
+        public void all_assets_plant()
+    {
+        LoadingPanel.SetActive(true);
+             if (onCrops)
+            MessageHandler.Server_Plant_All_Assets("crop", p_all_id+"%"+cplantallqty.text);
+             if (onMachines)
+            MessageHandler.Server_Plant_All_Assets("machine", stack_machines_type+"%"+m_all_id+"%"+mplantallqty.text);
+    }
+
+    public int getAvailableSlots(string type,string sub_type)
+    {
+        int slots=0;
+        if(type=="machine")
+        {
+        MachineDataModel[] machines = MessageHandler.userModel.machines;
+        foreach(MachineDataModel machine in machines)
+        {
+            if(machine.name==sub_type)
+            {
+            int aslots=int.Parse(machine.slots)-machine.on_recipe.Length;
+            slots+=aslots;
+            }
+        }
+        }
+        else if(type=="cropfield")
+        {
+        CropDataModel[] crops = MessageHandler.userModel.crops;
+        foreach(CropDataModel crop in crops)
+        {
+            int aslots=int.Parse(crop.slots)-crop.on_recipe.Length;
+            slots+=aslots;
+        }
+        }
+        return slots;
+    }
+    
     public void claim_all_animals(string asset_id)
     {
         LoadingPanel.SetActive(true);
@@ -2525,6 +2612,26 @@ public class MainView : BaseView
                 break;
             case ("machines"):
                 var listAvailableStrings = machine_rarity_dropdown.options.Select(option => option.text).ToList();
+        List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
+        foreach (RecipesModel recipes in MessageHandler.userModel.machine_recipes)
+        {
+            if (helper.machines_abv.ContainsKey(stack_machines_type)?recipes.machine == helper.machines_abv[stack_machines_type]:recipes.machine.ToUpper() == stack_machines_type.ToUpper())
+            {
+                var temp=new TMP_Dropdown.OptionData();
+                temp.text=helper.recipes_abv[recipes.out_name];
+                var sprite_img = Resources.Load<Sprite>("Sprites/" + helper.recipes_abv[recipes.out_name]);
+                            if (sprite_img)
+                                temp.image = sprite_img;
+                options.Add(temp);
+                Debug.Log(recipes.out_name);
+             }
+        }
+        if(mplant_all_dropdown.options.Count>1)
+                mplant_all_dropdown.ClearOptions();
+                mplant_all_dropdown.AddOptions(options);
+        changepValue(mplant_all_dropdown);
+        int slots= getAvailableSlots("machine",stack_machines_type);
+        mavailslots.text=slots.ToString();
                 machine_rarity_dropdown.value = listAvailableStrings.IndexOf("Level");
                 current_back_status = "on_machine_stats_panel";
                 if (!populated_machine_rarity && !populated_machine_level)
@@ -2560,7 +2667,9 @@ public class MainView : BaseView
                 ShowElements_Crops(level_type);
                 current_back_status = "on_crops_stats_panel";
                 parent_transform_crop_unreg.gameObject.SetActive(false);
-                if (parent_transform_crops_reg.childCount == 0)
+                    int slotsz= getAvailableSlots("cropfield","");
+                    cavailslots.text=slotsz.ToString(); 
+                    if (parent_transform_crops_reg.childCount == 0)
                     SSTools.ShowMessage("No Registered Crop Fields", SSTools.Position.bottom, SSTools.Time.twoSecond);
                 else
                 {
@@ -3948,6 +4057,10 @@ public class MainView : BaseView
                 }
                 else if(callBack.helper == "none")
                     SSTools.ShowMessage("Nothing to Claim Yet :(", SSTools.Position.bottom, SSTools.Time.twoSecond);
+                else if(callBack.helper == "pnone" && onCrops)
+                    SSTools.ShowMessage("No Crop Field Available :/", SSTools.Position.bottom, SSTools.Time.twoSecond);
+                                    else if(callBack.helper == "pnone" && onMachines)
+                    SSTools.ShowMessage("No Machine Available :/", SSTools.Position.bottom, SSTools.Time.twoSecond);
             }
             else if (callBack.type == "withdraw")
             {

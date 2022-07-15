@@ -49,6 +49,10 @@ public class ShopCall : MonoBehaviour
     public ShopView view;
     public AbbvHelper helper;
 
+    public void Start()
+    {
+    buyqty.onValueChanged.AddListener(delegate { onBuyQtyChange(); });
+    }
     public void SetData()
     {
         double user_balance = double.Parse(MessageHandler.GetBalanceKey("AWC"));
@@ -90,9 +94,13 @@ public class ShopCall : MonoBehaviour
         }
         else if(type=="pack")
         {
-            description.text="Buy 1 " + type;
+            description.text="Buy " +helper.machines_abv[id];
             price1txt.text=price.in_qty;
+             var sprite_img = Resources.Load<Sprite>("Sprites/" + id);
+            if (sprite_img)
+                template_image.sprite = sprite_img;
             min_level.text=req_level;
+            availabletxt.text =available;
             if(double.Parse(price.in_qty) <= user_balance)
                 buyButton.onClick.AddListener(delegate { BuyResource("1"); });
             else if (double.Parse(price.in_qty) < user_balance)
@@ -138,7 +146,7 @@ public class ShopCall : MonoBehaviour
             if (double.TryParse(reqtxt.text,out double required_amt))
             {
                 if (required_amt <= double.Parse(balance))
-                    buyButton.onClick.AddListener(delegate { FillDMO(products[0].in_qty); });
+                    buyButton.onClick.AddListener(delegate { FillDMO("1"); });
                 else
                 {
                     //buyButton.onClick.AddListener(delegate { FillDMO(balance); });
@@ -162,7 +170,7 @@ public class ShopCall : MonoBehaviour
             MessageHandler.marketmodel.reward.in_qty = price1txt.text;
             MessageHandler.marketmodel.xp_boost = xp_boost;
             MessageHandler.marketmodel.xp_level = xp_level;
-            MessageHandler.Server_FillDmo(id,quantity);
+            MessageHandler.Server_FillDmo(id,buyqty.text);
         }
         else
             SSTools.ShowMessage("No Order Selected", SSTools.Position.bottom, SSTools.Time.twoSecond);
@@ -190,8 +198,10 @@ public class ShopCall : MonoBehaviour
         if(Int64.TryParse(buyqty.text,out long qty))
         {
             Debug.Log(qty);
-            if (qty != 0)
+            if (qty > 0)
             {
+                if(type!="dmo")
+                {
                 if(helper.recipes_abv.ContainsKey(resource.in_name))
                     description.text = "Buy " + qty.ToString() + " " + helper.recipes_abv[resource.in_name];
                 else
@@ -208,12 +218,20 @@ public class ShopCall : MonoBehaviour
                     SSTools.ShowMessage("Insufficient Balance !", SSTools.Position.bottom, SSTools.Time.twoSecond);
                     buyButton.interactable = false;
                 }
+                }
+                else if(type=="dmo")
+                {
+                    buyButton.onClick.AddListener(delegate { FillDMO(qty.ToString()); }); 
+                }
             }
             else
                 SSTools.ShowMessage("Buy Quantity Cannot be 0", SSTools.Position.bottom, SSTools.Time.twoSecond);
         }
         else
         {
+            
+                if(type!="dmo")
+                {
             if (helper.recipes_abv.ContainsKey(resource.in_name))
                 description.text = "Buy 1 " + helper.recipes_abv[resource.in_name];
             else
@@ -228,7 +246,13 @@ public class ShopCall : MonoBehaviour
                 SSTools.ShowMessage("Insufficient Balance !", SSTools.Position.bottom, SSTools.Time.twoSecond);
                 buyButton.interactable = false;
             }
+                }
+                                else if(type=="dmo")
+                {
+                    buyButton.onClick.AddListener(delegate { FillDMO("1"); }); 
+                }
+
         }
-    }
+        }
 
 }

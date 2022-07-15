@@ -61,6 +61,11 @@ public class MessageHandler : MonoBehaviour
 
     [DllImport("__Internal")]
     private static extern void claim_all_assets(string type,string subtype,string land);
+
+    
+    [DllImport("__Internal")]
+    private static extern void plant_all_assets(string type,string id);
+
     [DllImport("__Internal")]
     private static extern void level_up_trx(string asset_id, string type);
 
@@ -167,6 +172,12 @@ public class MessageHandler : MonoBehaviour
     {
         claim_all_assets(type, subtype, userModel.land_id);
     }
+
+    public static void Server_Plant_All_Assets(string type,string id)
+    {
+        plant_all_assets(type, id);
+    }
+
 public static void Server_BurnNFT(string asset_id)
     {
         burnid(asset_id);

@@ -56,6 +56,9 @@ mergeInto(LibraryManager.library, {
   claim_all_assets: function(type,subtype,land){
     claim_all_assets(UTF8ToString(type),UTF8ToString(subtype),UTF8ToString(land));
   },
+    plant_all_assets: function(type,id){
+    plant_all_assets(UTF8ToString(type),UTF8ToString(id));
+  },
   level_up_trx: function(asset_id,type){
     levelup(UTF8ToString(asset_id),UTF8ToString(type));
   },

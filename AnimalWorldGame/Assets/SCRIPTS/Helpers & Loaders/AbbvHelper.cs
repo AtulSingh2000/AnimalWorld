@@ -17,6 +17,9 @@ public class AbbvHelper : MonoBehaviour
         machines.Add("icecreammaker", "Ice Cream Maker");
         machines.Add("BBQ", "bbq");
         machines.Add("Feeder", "feeder");
+        machines.Add("445189", "Premium Machine Crate V.2");
+        machines.Add("445188", "Standard Machine Crate V.2");
+
 
         //Popcorn Maker
         recipes.Add("CPOPCORN", "Cheese Popcorn");
