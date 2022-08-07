@@ -19,6 +19,10 @@ public class AbbvHelper : MonoBehaviour
         machines.Add("Feeder", "feeder");
         machines.Add("445189", "Premium Machine Crate V.2");
         machines.Add("445188", "Standard Machine Crate V.2");
+        machines.Add("445662", "CropField");
+        machines.Add("485528", "Legendary Animal Crate");
+        machines.Add("485500", "Standard Animal Crate");
+        machines.Add("485501", "Standard Shelter Crate");
 
 
         //Popcorn Maker
